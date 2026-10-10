@@ -1,0 +1,67 @@
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+x-default-config: &default-config
+  restart: unless-stopped
+  logging: *default-logging
+
+services:
+  postgres:
+    <<: *default-config
+    image: postgres:18.6
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?set POSTGRES_USER in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - db:/var/lib/postgresql/data/pgdata
+    shm_size: 128mb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  odoo:
+    <<: *default-config
+    image: odoo:19.0
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      HOST: postgres
+      USER: ${POSTGRES_USER:?set POSTGRES_USER in .env}
+      PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:8069:8069"
+    volumes:
+      - data:/var/lib/odoo
+      - ./my_modules:/mnt/extra-addons:z
+      - ./odoo.conf:/etc/odoo/odoo.conf:ro,z
+
+  caddy:
+    <<: *default-config
+    image: ghcr.io/caddybuilds/caddy-cloudflare:2.11.7
+    depends_on:
+      - odoo
+    environment:
+      CF_API_TOKEN: ${CF_API_TOKEN:?set CF_API_TOKEN in .env}
+      DOMAIN: ${DOMAIN:?set DOMAIN in .env}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro,z
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  data:
+  db:
+  caddy_data:
+  caddy_config:
