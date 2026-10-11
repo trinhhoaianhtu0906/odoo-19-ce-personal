@@ -1,0 +1,3 @@
+[submodule "my_modules/rfm_segmentation"]
+	path = my_modules/rfm_segmentation
+	url = git@github.com:Tricasia/rfm_segmentation.git
