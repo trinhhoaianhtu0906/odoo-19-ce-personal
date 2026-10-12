@@ -1,0 +1,62 @@
+# AGENTS.md
+
+Odoo 19 (Community) development stack, run with Docker Compose on an OCI VM.
+
+## Layout
+
+| Path | What it is |
+| --- | --- |
+| `docker-compose.yml` | `postgres` (18.6), `odoo` (`odoo:19.0`, started with `--dev=all`), `caddy` (TLS via Cloudflare DNS) |
+| `odoo.conf` | Mounted read-only at `/etc/odoo/odoo.conf`. `addons_path = /mnt/extra-addons` |
+| `Caddyfile` | Reverse proxy from `$DOMAIN` to `odoo:8069` |
+| `.env` / `.env.tmpl` | Secrets (`DOMAIN`, `CF_API_TOKEN`, `POSTGRES_*`). `.env` is gitignored. Never commit it or print its values |
+| `my_modules/` | Mounted at `/mnt/extra-addons`. **Gitignored**, except for the submodules listed below |
+
+### `my_modules/`
+
+- `rfm_segmentation/` is **first-party code**: a git submodule (`git@github.com:Tricasia/rfm_segmentation.git`). This is where development happens.
+- Everything else (`om_*` from Odoo Mates, `muk_*` from MuK, `odoo_bi_connector`, `accounting_pdf_reports`, and the `*.zip` files) is third-party, unpacked by hand and not under version control. Don't edit these modules. Extend them from a first-party module instead.
+- To add another first-party module as a submodule, use `git submodule add -f …`. The `-f` is required because `my_modules/` is ignored.
+- Work on `rfm_segmentation` is committed inside the submodule. Push it there, then commit the updated submodule pointer in this repo.
+
+## Common commands
+
+Run all commands from the repo root. The dev database is `dev-pg18.6`.
+
+```sh
+docker compose up -d                 # start the stack
+docker compose logs -f odoo          # follow Odoo logs
+docker compose restart odoo          # full restart
+```
+
+Odoo is reachable at `127.0.0.1:8069` on the host, and publicly through Caddy at `https://$DOMAIN`.
+
+**Run Odoo CLI commands through `docker compose run --rm odoo odoo …`** (or `docker compose exec odoo /entrypoint.sh odoo …`). A plain `docker compose exec odoo odoo …` skips the entrypoint, so the DB host and credentials are missing and the connection fails.
+
+```sh
+# Install or upgrade a module in the dev DB (needed after changing fields, XML data, security, or the manifest)
+docker compose run --rm odoo odoo -d dev-pg18.6 -u rfm_segmentation --stop-after-init
+
+# Run a module's tests in a throwaway DB
+docker compose run --rm -T odoo odoo -d rfm_test_tmp -i rfm_segmentation \
+  --test-tags /rfm_segmentation --stop-after-init --log-level=test
+# then clean up:
+docker compose exec -T postgres sh -c 'dropdb -U "$POSTGRES_USER" rfm_test_tmp'
+docker compose exec -T odoo rm -rf /var/lib/odoo/filestore/rfm_test_tmp
+```
+
+`--dev=all` (with watchdog) restarts the server automatically when Python files change, and it reloads view XML from disk. Model or field changes and data files still need a `-u` upgrade.
+
+## Odoo 19 conventions (follow `rfm_segmentation`)
+
+- Manifest version format is `19.0.x.y.z`. License is `LGPL-3`.
+- Use `models.Constraint(...)` class attributes, not `_sql_constraints`.
+- Security uses `res.groups.privilege` plus `res.groups` (the `privilege_id` field), with access rules in `security/ir.model.access.csv`.
+- Views use `<list>`, not `<tree>`. Inherit views with `xpath`.
+- Tests subclass `TransactionCase` and use `@tagged("post_install", "-at_install")`.
+- Python style matches the existing code: double quotes and Black-style formatting.
+
+## Config notes
+
+- `odoo.conf` is in single-process dev mode: `workers` and the time and memory limits are commented out. If you re-enable `workers`, also uncomment `gevent_port = 8072` and add back a Caddy route for `/websocket*` to `odoo:8072`.
+- This stack is the instance running live on the VM. Changing `odoo.conf`, `Caddyfile`, `docker-compose.yml`, or `.env` and recreating containers affects the public site. Check with the user first.
