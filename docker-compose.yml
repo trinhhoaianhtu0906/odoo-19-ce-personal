@@ -37,6 +37,8 @@ services:
       HOST: postgres
       USER: ${POSTGRES_USER:?set POSTGRES_USER in .env}
       PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      ODOO_ADMIN_PASSWD: ${ODOO_ADMIN_PASSWD:?set ODOO_ADMIN_PASSWD in .env}
+
     ports:
       - "127.0.0.1:8069:8069"
     volumes:
