@@ -45,6 +45,7 @@ services:
       - data:/var/lib/odoo
       - ./my_modules:/mnt/extra-addons:z
       - ./odoo.conf:/etc/odoo/odoo.conf:ro,z
+    command: ["odoo", "--dev=all"]
 
   caddy:
     <<: *default-config
