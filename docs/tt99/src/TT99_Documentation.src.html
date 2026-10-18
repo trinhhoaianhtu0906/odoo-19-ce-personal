@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kế toán VAS TT99 trên Odoo 19</title>
+<style>
+  :root { --ink: #1f2933; --muted: #52606d; --line: #cbd2d9; --accent: #714b67; --soft: #f5f2f4; --code: #f4f5f7; }
+  @page { size: A4; margin: 16mm 14mm 18mm 14mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; color: var(--ink); font-size: 10.5pt; line-height: 1.5; margin: 0; background: #fff; }
+  main { max-width: 190mm; margin: 0 auto; }
+  h1 { font-size: 22pt; color: var(--accent); margin: 0 0 4mm; }
+  h2 { font-size: 15pt; color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 1.5mm; margin: 9mm 0 4mm; page-break-after: avoid; }
+  h3 { font-size: 12pt; margin: 6mm 0 2.5mm; page-break-after: avoid; }
+  h4 { font-size: 10.5pt; margin: 4mm 0 2mm; color: var(--muted); page-break-after: avoid; }
+  p { margin: 0 0 2.5mm; }
+  ul, ol { margin: 0 0 3mm 5mm; padding-left: 4mm; }
+  li { margin-bottom: 1mm; }
+  code, .mono { font-family: Consolas, "Cascadia Mono", monospace; font-size: 9pt; background: var(--code); padding: 0 1mm; border-radius: 1mm; }
+  pre { font-family: Consolas, "Cascadia Mono", monospace; font-size: 8.6pt; background: var(--code); padding: 3mm; border-radius: 1.5mm; white-space: pre-wrap; page-break-inside: avoid; margin: 0 0 3mm; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 4mm; font-size: 9pt; page-break-inside: auto; }
+  tr { page-break-inside: avoid; }
+  th, td { border: 1px solid var(--line); padding: 1.2mm 1.8mm; vertical-align: top; text-align: left; }
+  th { background: var(--soft); font-weight: 600; }
+  td.num, th.num { text-align: right; }
+  .cover { height: 250mm; display: flex; flex-direction: column; justify-content: center; page-break-after: always; }
+  .cover .sub { font-size: 13pt; color: var(--muted); margin-bottom: 10mm; }
+  .cover table { width: auto; font-size: 10pt; }
+  .cover td { border: none; padding: 1mm 6mm 1mm 0; }
+  .note { border-left: 3mm solid var(--accent); background: var(--soft); padding: 2.5mm 4mm; margin: 0 0 4mm; page-break-inside: avoid; }
+  .warn { border-left: 3mm solid #c27c0e; background: #fdf6e7; padding: 2.5mm 4mm; margin: 0 0 4mm; page-break-inside: avoid; }
+  .toc ol { columns: 2; column-gap: 8mm; }
+  .diagram { border: 1px solid var(--line); border-radius: 2mm; padding: 3mm; margin: 0 0 4mm; text-align: center; page-break-inside: avoid; }
+  .diagram .caption { font-size: 8.5pt; color: var(--muted); margin-top: 2mm; }
+  .mermaid { font-size: 10pt; }
+  .page-break { page-break-before: always; }
+  .appendix td:first-child, .appendix td:nth-child(2) { white-space: nowrap; }
+  .appendix td code { background: none; padding: 0; word-break: break-word; }
+  .small { font-size: 8.5pt; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+
+<section class="cover">
+  <h1>Kế toán VAS theo Thông tư 99/2025 trên Odoo 19</h1>
+  <div class="sub">Tài liệu kỹ thuật và nghiệp vụ: báo cáo tài chính riêng, báo cáo hợp nhất, tra cứu MST VietQR</div>
+  <table>
+    <tr><td><b>Hệ thống</b></td><td>Odoo 19.0 Community — repo <code>Tricasia/odoo-dev</code></td></tr>
+    <tr><td><b>Module</b></td><td><code>l10n_vn_tt99_reports</code>, <code>l10n_vn_tt99_consolidation</code>, <code>vietqr_tax_lookup</code></td></tr>
+    <tr><td><b>Người đọc</b></td><td>BA (nghiệp vụ, luồng, kiểm tra số liệu) và Dev (bảng, field, logic, mở rộng)</td></tr>
+    <tr><td><b>Phiên bản</b></td><td>19.0.1.0.0 — {{BUILD_DATE}}</td></tr>
+  </table>
+</section>
+
+<section class="toc">
+  <h2>Mục lục</h2>
+  <ol>
+    <li>Tổng quan và phạm vi</li>
+    <li>Căn cứ pháp lý và hệ thống tài khoản</li>
+    <li>Kiến trúc tổng thể</li>
+    <li>Module báo cáo tài chính TT99</li>
+    <li>Ngôn ngữ công thức chỉ tiêu</li>
+    <li>Engine tính toán</li>
+    <li>Màn hình báo cáo động, kỳ so sánh, xuất file</li>
+    <li>Module hợp nhất</li>
+    <li>Các bút toán loại trừ</li>
+    <li>Module tra cứu MST VietQR</li>
+    <li>Phân quyền, đa công ty</li>
+    <li>Cài đặt, vận hành, dữ liệu mẫu</li>
+    <li>Kiểm thử và kết quả đối chiếu</li>
+    <li>Giới hạn và hướng phát triển</li>
+    <li>Phụ lục: ánh xạ chỉ tiêu B01, B02, B03, B01/HN, B02/HN</li>
+  </ol>
+</section>
+
+<h2>1. Tổng quan và phạm vi</h2>
+<p>Bộ module bổ sung cho Odoo 19 Community những phần kế toán Việt Nam mà Odoo không có sẵn:</p>
+<table>
+  <tr><th style="width:28%">Module</th><th>Chức năng</th><th style="width:22%">Phụ thuộc</th></tr>
+  <tr><td><code>l10n_vn_tt99_reports</code></td><td>Báo cáo tài chính riêng theo TT99: B01-DN (tình hình tài chính), B02-DN (kết quả kinh doanh), B03-DN (lưu chuyển tiền tệ, trực tiếp và gián tiếp). Mỗi chỉ tiêu có công thức sửa được. Màn hình xem động, so sánh nhiều kỳ, chênh lệch, xuất Excel và PDF đúng mẫu, bấm chỉ tiêu xem bút toán.</td><td><code>account</code>, <code>l10n_vn</code></td></tr>
+  <tr><td><code>l10n_vn_tt99_consolidation</code></td><td>Báo cáo hợp nhất B01-DN/HN, B02-DN/HN cho nhiều công ty trong cùng database. Bút toán loại trừ được <b>tính</b>, không ghi vào sổ các công ty thành viên.</td><td><code>l10n_vn_tt99_reports</code></td></tr>
+  <tr><td><code>vietqr_tax_lookup</code></td><td>Trên khách hàng doanh nghiệp: nút “Lấy thông tin MST” gọi VietQR, tự điền tên, địa chỉ, tỉnh, tên viết tắt, tên quốc tế, tình trạng MST.</td><td><code>contacts</code></td></tr>
+</table>
+<p>Ngoài ra trên server có bộ addon kế toán của Odoo Mates (<code>om_account_accountant</code>, <code>accounting_pdf_reports</code> và 16 module liên quan, bản 19.0). Đây là code bên thứ ba, không sửa; các module ở trên không phụ thuộc vào chúng nhưng chạy chung bình thường (đã kiểm tra trên DB <code>tt99_full</code>).</p>
+<div class="note"><b>Nguyên tắc thiết kế.</b> (1) Không viết lại hệ thống tài khoản: dùng chart <code>l10n_vn</code> của Odoo 19 vốn đã theo TT99. (2) Báo cáo đọc trực tiếp sổ cái (<code>account.move.line</code>), không có bảng số liệu trung gian, nên luôn khớp sổ. (3) Hợp nhất là một “nguồn số dư” khác cho cùng engine: số dư các thành viên cộng bút toán loại trừ tính sẵn.</div>
+
+<h2>2. Căn cứ pháp lý và hệ thống tài khoản</h2>
+<table>
+  <tr><th style="width:30%">Văn bản</th><th>Áp dụng trong hệ thống</th></tr>
+  <tr><td>Thông tư 99/2025/TT-BTC ngày 27/10/2025 (thay TT200/2014), áp dụng từ năm tài chính bắt đầu 01/01/2026</td><td>Hệ thống tài khoản (Phụ lục II), mẫu B01-DN, B02-DN, B03-DN (Phụ lục IV). Đối chiếu văn bản Công báo số 1563–1582 ngày 16/11/2025.</td></tr>
+  <tr><td>Thông tư 202/2014/TT-BTC, sửa đổi bởi Thông tư 43/2026/TT-BTC</td><td>Phương pháp lập báo cáo hợp nhất; chỉ tiêu riêng của mẫu HN: 279 (lợi thế thương mại), 429 (lợi ích cổ đông không kiểm soát), B02 27, 61, 62; mẫu HN bỏ chỉ tiêu 133, 213, 214, 317, 335, 336.</td></tr>
+</table>
+<h3>2.1 Chart of accounts</h3>
+<ul>
+  <li>Chart <code>vn</code> của module lõi <code>l10n_vn</code> (Odoo 19, v2.0.3) đã có đủ 184 tài khoản của TT99 (215 tài sản sinh học, 1383, 2295, 332, 82111/82112, 2414…), dù phần mô tả module vẫn ghi TT200.</li>
+  <li>Chart có sẵn tài khoản chi tiết ngắn hạn / dài hạn (vd. 1311 / 1312; 12811 tiền gửi dưới 3 tháng = tương đương tiền; 12812 3–12 tháng; 12813 dài hạn). Các công thức B01 dùng chính các tài khoản chi tiết này để tách ngắn hạn / dài hạn.</li>
+  <li><code>code_digits = 4</code>: tài khoản 3 chữ số được lưu thêm số 0 (112 → <code>1120</code>, 511 → <code>5110</code>, 911 → <code>9110</code>). Mọi công thức khớp theo <b>tiền tố</b> nên <code>112</code> khớp cả <code>1120</code> và <code>1121</code>.</li>
+  <li>Tài khoản 911 có loại <code>equity_unaffected</code>; bút toán kết chuyển cuối kỳ (có dòng 911) được nhận diện để loại khỏi số phát sinh B02.</li>
+</ul>
+<div class="warn"><b>Lưu ý tài khoản 6415:</b> TT200 dùng cho chi phí bảo hành, TT99 dùng cho thuế, phí, lệ phí. Nếu chuyển số dư từ TT200 sang phải phân loại lại.</div>
+
+<h2>3. Kiến trúc tổng thể</h2>
+<div class="diagram">
+<pre class="mermaid">
+flowchart LR
+  subgraph Sổ cái Odoo
+    AML[(account.move.line<br/>bút toán đã ghi sổ)]
+    ACC[(account.account<br/>chart l10n_vn = TT99)]
+  end
+  subgraph l10n_vn_tt99_reports
+    DEF[(vn.report / vn.report.line<br/>mẫu báo cáo + công thức)]
+    LP[LedgerProvider<br/>số dư 1 công ty + chi nhánh]
+    ENG[ReportEvaluator<br/>tính công thức]
+    WIZ[vn.report.wizard<br/>kết quả, xuất file]
+    UI[Màn hình báo cáo động<br/>OWL client action]
+  end
+  subgraph l10n_vn_tt99_consolidation
+    GRP[(vn.consolidation.group<br/>member, unrealized, adjustment)]
+    CP[ConsolidationProvider<br/>thành viên + bút toán loại trừ]
+  end
+  AML --> LP
+  ACC --> LP
+  LP --> ENG
+  LP --> CP
+  GRP --> CP
+  CP --> ENG
+  DEF --> ENG
+  ENG --> WIZ
+  WIZ --> UI
+  WIZ --> PDF[PDF QWeb]
+  WIZ --> XLSX[Excel xlsxwriter]
+</pre>
+<div class="caption">Hình 1. Các thành phần và hướng dữ liệu. Engine không biết số dư đến từ đâu: một công ty (LedgerProvider) hay cả tập đoàn (ConsolidationProvider).</div>
+</div>
+
+<h3>3.1 Cấu trúc thư mục</h3>
+<pre>my_modules/
+  l10n_vn_tt99_reports/
+    models/engine.py            engine: parser công thức, provider sổ cái, tính toán, kỳ so sánh
+    models/vn_report.py         vn.report, vn.report.line
+    wizard/vn_report_wizard.py  vn.report.wizard(.line): tính, PDF, Excel, drill-down, API cho màn hình động
+    data/vn_report_b0{1,2,3}.xml mẫu B01, B02, B03 (trực tiếp + gián tiếp) — sinh bằng tools/tt99/gen_reports.py
+    report/vn_report_templates.xml  mẫu in PDF
+    static/src/dynamic_report/  màn hình báo cáo động (OWL)
+  l10n_vn_tt99_consolidation/
+    models/consolidation_engine.py  ConsolidationProvider: mọi bút toán loại trừ
+    models/vn_consolidation.py      nhóm, thành viên, số dư ngày mua, lãi chưa thực hiện, điều chỉnh
+    wizard/                         mở rộng wizard báo cáo, bảng tính loại trừ
+    data/vn_report_hn.xml           mẫu B01-DN/HN, B02-DN/HN
+  vietqr_tax_lookup/
+docs/tt99/                    tài liệu này (nguồn HTML + PDF), dữ liệu nghiên cứu TT99
+tools/tt99/                   sinh mẫu báo cáo, sinh dữ liệu mẫu, đối chiếu, kiểm tra giao diện, build tài liệu</pre>
+
+<h2>4. Module báo cáo tài chính TT99 (<code>l10n_vn_tt99_reports</code>)</h2>
+<h3>4.1 Mô hình dữ liệu</h3>
+<div class="diagram">
+<pre class="mermaid">
+erDiagram
+  vn_report ||--o{ vn_report_line : "line_ids"
+  vn_report_wizard }o--|| vn_report : "report_id"
+  vn_report_wizard }o--|| res_company : "company_id"
+  vn_report_wizard ||--o{ vn_report_wizard_line : "line_ids"
+  vn_report_wizard_line }o--|| vn_report_line : "report_line_id"
+  vn_report {
+    char code UK
+    selection kind
+    bool consolidated
+    char check_expression
+  }
+  vn_report_line {
+    char code "mã số"
+    char formula
+    int level
+  }
+  vn_report_wizard {
+    date date_from
+    date date_to
+    selection comparison
+    int comparison_count
+    json comparison_dates
+  }
+  vn_report_wizard_line {
+    float value
+    json values_cmp
+    bool blank
+  }
+</pre>
+<div class="caption">Hình 2. Bảng định nghĩa (lưu lâu dài) và bảng kết quả (transient, Odoo tự dọn).</div>
+</div>
+
+<h4>Bảng <code>vn_report</code> — mẫu báo cáo</h4>
+<table>
+  <tr><th style="width:24%">Field</th><th style="width:16%">Kiểu</th><th>Ý nghĩa</th></tr>
+  <tr><td>name</td><td>Char, dịch được</td><td>Tên hiển thị, vd. “B01-DN Báo cáo tình hình tài chính”.</td></tr>
+  <tr><td>code</td><td>Char, duy nhất</td><td>Ký hiệu mẫu: B01-DN, B02-DN, B03-DN, B03-DN-GT, B01-DN/HN, B02-DN/HN. Dùng trong tên file xuất.</td></tr>
+  <tr><td>sequence, active</td><td>Integer, Boolean</td><td>Thứ tự, ẩn mẫu.</td></tr>
+  <tr><td>kind</td><td>Selection</td><td><code>position</code>: số dư tại ngày (B01); <code>period</code>: phát sinh trong kỳ (B02); <code>cashflow</code>: lưu chuyển tiền (B03). Quyết định engine đọc số liệu nào và hàm nào được dùng.</td></tr>
+  <tr><td>consolidated</td><td>Boolean</td><td>Mẫu hợp nhất, chỉ chạy được khi chọn nhóm hợp nhất.</td></tr>
+  <tr><td>form_code, form_note</td><td>Char</td><td>“Mẫu số B 01 - DN”, dòng căn cứ in góc phải.</td></tr>
+  <tr><td>title, subtitle</td><td>Char</td><td>Tiêu đề in; dòng phụ (vd. phương pháp trực tiếp).</td></tr>
+  <tr><td>check_expression, check_message</td><td>Char</td><td>Biểu thức phải bằng 0, vd. <code>[280] - [440]</code>. Khác 0 thì hiện cảnh báo kèm thông báo.</td></tr>
+  <tr><td>line_ids</td><td>One2many</td><td>Các chỉ tiêu.</td></tr>
+</table>
+<h4>Bảng <code>vn_report_line</code> — chỉ tiêu</h4>
+<table>
+  <tr><th style="width:24%">Field</th><th style="width:16%">Kiểu</th><th>Ý nghĩa</th></tr>
+  <tr><td>report_id</td><td>Many2one</td><td>Mẫu báo cáo (xoá mẫu thì xoá dòng).</td></tr>
+  <tr><td>sequence</td><td>Integer</td><td>Thứ tự in.</td></tr>
+  <tr><td>code</td><td>Char</td><td>Mã số theo mẫu (100, 110, 411a…). Duy nhất trong một mẫu. Dòng tiêu đề mục (I, II, III của B03) dùng mã chữ và không in ra cột mã số.</td></tr>
+  <tr><td>name</td><td>Char</td><td>Tên chỉ tiêu theo văn bản.</td></tr>
+  <tr><td>note_ref</td><td>Char</td><td>Cột Thuyết minh (nhập tay, vd. V.01).</td></tr>
+  <tr><td>formula</td><td>Char</td><td>Công thức (mục 5). Trống = chỉ tiêu không có số liệu tự động.</td></tr>
+  <tr><td>level, bold</td><td>Integer, Boolean</td><td>Thụt lề (0 phần lớn, 1 mục La Mã, 2 chỉ tiêu, 3 dòng chi tiết) và in đậm.</td></tr>
+  <tr><td>hide_if_zero</td><td>Boolean</td><td>Ẩn chỉ tiêu này khi mọi cột bằng 0 (TT99 cho phép không trình bày, nhưng không đánh lại mã số).</td></tr>
+</table>
+<div class="note">Mẫu gốc nằm trong data XML (<code>noupdate=0</code>): nâng cấp module sẽ ghi đè. Muốn tuỳ biến, <b>nhân bản</b> mẫu (menu Mẫu báo cáo và công thức → Hành động → Nhân bản) rồi sửa bản sao; mã của bản sao tự thêm hậu tố <code>-copy</code>.</div>
+
+<h4>Bảng <code>vn_report_wizard</code> (transient) — một lần lập báo cáo</h4>
+<table>
+  <tr><th style="width:24%">Field</th><th style="width:16%">Kiểu</th><th>Ý nghĩa</th></tr>
+  <tr><td>report_id</td><td>Many2one</td><td>Mẫu cần lập.</td></tr>
+  <tr><td>company_id, include_branches</td><td>Many2one, Boolean</td><td>Công ty; có cộng chi nhánh (công ty con trực thuộc trong Odoo, <code>child_of</code>) hay không.</td></tr>
+  <tr><td>consolidation_group_id</td><td>Many2one</td><td>(module hợp nhất) Nhóm hợp nhất khi mẫu là HN.</td></tr>
+  <tr><td>date_from, date_to</td><td>Date</td><td>Kỳ báo cáo. B01 lấy số dư tại <code>date_to</code>; <code>date_from</code> chỉ dùng để xác định độ dài “kỳ trước”.</td></tr>
+  <tr><td>target_move</td><td>Selection</td><td><code>posted</code> chỉ bút toán đã vào sổ; <code>all</code> gồm cả nháp.</td></tr>
+  <tr><td>hide_zero</td><td>Boolean</td><td>Ẩn mọi chỉ tiêu có công thức mà mọi cột bằng 0.</td></tr>
+  <tr><td>comparison</td><td>Selection</td><td><code>default</code> theo mẫu TT99; <code>previous_period</code> kỳ trước liền kề; <code>previous_year</code> cùng kỳ năm trước; <code>none</code>.</td></tr>
+  <tr><td>comparison_count</td><td>Integer 1–6</td><td>Số cột so sánh.</td></tr>
+  <tr><td>show_variance</td><td>Boolean</td><td>Thêm cột Chênh lệch = (kỳ này − kỳ so sánh 1) và % = chênh lệch / |kỳ so sánh 1|.</td></tr>
+  <tr><td>comparison_dates</td><td>Json</td><td>Danh sách [từ ngày, đến ngày] của các cột so sánh đã tính.</td></tr>
+  <tr><td>line_ids, warning_text, computed</td><td></td><td>Kết quả, cảnh báo, cờ đã tính (xuất file dùng lại kết quả nếu đã tính).</td></tr>
+  <tr><td>xlsx_file, xlsx_filename</td><td>Binary, Char</td><td>File Excel vừa xuất (tải qua <code>/web/content</code>).</td></tr>
+</table>
+<h4>Bảng <code>vn_report_wizard_line</code> (transient) — kết quả từng chỉ tiêu</h4>
+<table>
+  <tr><th style="width:24%">Field</th><th style="width:16%">Kiểu</th><th>Ý nghĩa</th></tr>
+  <tr><td>report_line_id</td><td>Many2one</td><td>Chỉ tiêu gốc (lấy công thức để drill-down).</td></tr>
+  <tr><td>code, name, note_ref, level, bold</td><td></td><td>Sao chép từ chỉ tiêu tại thời điểm tính.</td></tr>
+  <tr><td>blank</td><td>Boolean</td><td>Chỉ tiêu không có công thức: in ô trống thay vì 0.</td></tr>
+  <tr><td>value</td><td>Float</td><td>Kỳ này (đã làm tròn theo tiền tệ công ty).</td></tr>
+  <tr><td>value_cmp, values_cmp</td><td>Float, Json</td><td>Kỳ so sánh thứ nhất; danh sách mọi kỳ so sánh.</td></tr>
+  <tr><td>display_code</td><td>Char (tính)</td><td>Mã số in ra (rỗng với dòng tiêu đề I, II, III).</td></tr>
+</table>
+<p>Phương thức chính: <code>cells()</code> trả giá trị mọi cột (kỳ này, các kỳ so sánh, chênh lệch, %); <code>get_drilldown()</code> / <code>action_open_journal_items()</code> mở danh sách bút toán của các tài khoản mà công thức đọc.</p>
+
+<h3>4.2 Mẫu báo cáo có sẵn</h3>
+<table>
+  <tr><th>Mã</th><th>Loại</th><th class="num">Số chỉ tiêu</th><th>Kiểm tra tự động</th></tr>
+  <tr><td>B01-DN</td><td>position</td><td class="num">126</td><td>280 = 440</td></tr>
+  <tr><td>B02-DN</td><td>period</td><td class="num">21</td><td>— (cảnh báo tài khoản lãi lỗ chưa ánh xạ)</td></tr>
+  <tr><td>B03-DN (trực tiếp)</td><td>cashflow</td><td class="num">30</td><td>70 = số dư 111, 112, 113, 12811, 12881 cuối kỳ (khớp tuyệt đối)</td></tr>
+  <tr><td>B03-DN-GT (gián tiếp)</td><td>cashflow</td><td class="num">40</td><td>như trên — chỉ để tham khảo (mục 14)</td></tr>
+  <tr><td>B01-DN/HN</td><td>position, HN</td><td class="num">122</td><td>280 = 440</td></tr>
+  <tr><td>B02-DN/HN</td><td>period, HN</td><td class="num">24</td><td>—</td></tr>
+</table>
+<p>Toàn bộ công thức ở <b>Phụ lục</b>. Mẫu được sinh từ <code>tools/tt99/gen_reports.py</code>: tên chỉ tiêu lấy từ dữ liệu nghiên cứu (đối chiếu Công báo), công thức theo bảng ánh xạ tài khoản <code>l10n_vn</code> trong script. Sửa ánh xạ thì sửa script rồi sinh lại XML, không sửa tay XML.</p>
+
+<h2>5. Ngôn ngữ công thức chỉ tiêu</h2>
+<p>Công thức là biểu thức số học gồm hàm đọc số dư, tham chiếu mã số khác <code>[110]</code>, hằng số, <code>+ - * /</code> và ngoặc. Tham số của hàm là <b>đầu mã tài khoản</b>: <code>131</code> khớp 1311, 1312; dùng chuỗi cho mã giả hợp nhất, vd. <code>BAL("HN_GW")</code>. Công thức được phân tích bằng <code>ast</code> và chỉ chấp nhận các nút trong danh sách cho phép — không bao giờ dùng <code>eval</code>, nên người dùng sửa công thức không thể chạy code.</p>
+<table>
+  <tr><th style="width:22%">Hàm</th><th style="width:14%">Dùng cho</th><th>Ý nghĩa (D = Nợ, C = Có)</th></tr>
+  <tr><td><code>BAL(p…)</code></td><td>B01, B02, B03</td><td>Σ(D − C) các dòng khớp tiền tố. B01: luỹ kế đến ngày; B02/B03: trong kỳ, không tính bút toán kết chuyển 911.</td></tr>
+  <tr><td><code>NBAL(p…)</code></td><td>như trên</td><td>Σ(C − D) = −BAL. Dùng cho nguồn vốn, doanh thu.</td></tr>
+  <tr><td><code>DR(p…)</code> / <code>CR(p…)</code></td><td>như trên</td><td>Gom theo <b>tài khoản</b>; cộng các tài khoản dư Nợ / dư Có (giá trị dương).</td></tr>
+  <tr><td><code>PDR(p…)</code> / <code>PCR(p…)</code></td><td>như trên</td><td>Gom theo <b>tài khoản + đối tượng</b> (commercial partner); cộng dư Nợ / dư Có. Ví dụ 131 phải thu (PDR 1311) và 312 người mua trả trước (PCR 1311).</td></tr>
+  <tr><td><code>DT(p…)</code> / <code>CT(p…)</code></td><td>B02, B03</td><td>Phát sinh Nợ / Có trong kỳ. Dòng loại trừ hợp nhất làm <b>giảm</b> phát sinh ở bên tự nhiên của tài khoản (Dr 511 loại trừ giảm CT 511, không tăng DT).</td></tr>
+  <tr><td><code>PL_CUR()</code> / <code>PL_PRIOR()</code></td><td>B01</td><td>Lãi lỗ chưa kết chuyển (C − D các TK loại 5–9 và mã giả lãi lỗ) của năm tài chính hiện hành / các năm trước. Dùng cho 420b / 420a.</td></tr>
+  <tr><td><code>OPEN</code>, <code>CLOSE</code>, <code>CHG</code></td><td>B03</td><td>Số dư (D − C) đầu kỳ, cuối kỳ, chênh lệch cuối − đầu.</td></tr>
+  <tr><td><code>CASH(p…)</code>, <code>CASHC</code>, <code>CASHD</code></td><td>B03</td><td>Dòng tiền thuần / thu / chi đối ứng với tài khoản (mục 6.4).</td></tr>
+  <tr><td><code>CASH_REST_IN()</code>, <code>CASH_REST_OUT()</code></td><td>B03</td><td>Tiền thu / chi đối ứng với tài khoản chưa thuộc chỉ tiêu tiền nào khác (B03 trực tiếp 06, 07). Nhờ vậy B03 trực tiếp luôn khớp tổng.</td></tr>
+  <tr><td><code>[mã số]</code></td><td>mọi mẫu</td><td>Giá trị chỉ tiêu khác cùng mẫu (tham chiếu vòng bị báo lỗi).</td></tr>
+</table>
+<p>Ví dụ: <code>PDR(1311)</code> = 131 phải thu ngắn hạn khách hàng; <code>NBAL(4212) + PL_CUR()</code> = 420b; <code>CT(511) - CT(5117)</code> = B02 01 doanh thu không gồm bán bất động sản đầu tư.</p>
+
+<h2>6. Engine tính toán</h2>
+<div class="diagram">
+<pre class="mermaid">
+flowchart TD
+  A[evaluate_report<br/>mẫu, provider, từ ngày, đến ngày, kỳ so sánh] --> B[Phân tích công thức mọi chỉ tiêu<br/>kiểm tra hàm hợp lệ theo loại mẫu]
+  B --> C[ReportEvaluator kỳ này]
+  B --> D[ReportEvaluator cho từng kỳ so sánh]
+  C --> E{Loại mẫu}
+  E -->|position| F[rows: số dư luỹ kế đến ngày<br/>pl_cur, pl_prior: lãi lỗ năm nay / năm trước]
+  E -->|period| G[rows: phát sinh trong kỳ<br/>bỏ bút toán có TK 911]
+  E -->|cashflow| H[rows trong kỳ + open/close + cash_rows]
+  F --> I[Tính từng mã số đệ quy<br/>ghi nhớ kết quả, phát hiện vòng]
+  G --> I
+  H --> I
+  I --> J[Tài khoản có số dư chưa vào chỉ tiêu nào → cảnh báo]
+  I --> K[check_expression ≠ 0 → cảnh báo]
+  D --> L[Kết quả: value, value_cmps, warnings]
+  J --> L
+  K --> L
+</pre>
+<div class="caption">Hình 3. Luồng tính một báo cáo. Provider trả về các dòng gộp (mã TK, đối tượng, Nợ, Có); engine chỉ làm việc trên các dòng này.</div>
+</div>
+<h3>6.1 Provider</h3>
+<p><code>LedgerProvider(env, companies, posted_only)</code> đọc <code>account.move.line</code> bằng <code>_read_group</code> theo (tài khoản, đối tượng), đổi tài khoản sang mã theo đúng công ty (mã tài khoản trong Odoo 19 phụ thuộc công ty), đối tượng sang commercial partner. Kết quả là <code>Row(code, partner_id, debit, credit, elim)</code>. Các phương thức:</p>
+<ul>
+  <li><code>rows(date_from, date_to, exclude_closing)</code> — số dư gộp; <code>exclude_closing</code> bỏ các bút toán có dòng TK 911.</li>
+  <li><code>cash_rows(date_from, date_to)</code> — các dòng <b>đối ứng</b> của bút toán có chạm tiền (mục 6.4).</li>
+  <li><code>fiscal_year_start(date)</code>, <code>currency</code>.</li>
+</ul>
+<p>Mọi provider có cùng giao diện; module hợp nhất cung cấp <code>ConsolidationProvider</code> (mục 8).</p>
+<h3>6.2 Kết chuyển cuối kỳ và lãi lỗ chưa kết chuyển</h3>
+<ul>
+  <li>B02 không tính bút toán kết chuyển (có dòng 911), nên số liệu B02 giống nhau dù doanh nghiệp đã hay chưa kết chuyển.</li>
+  <li>B01: Odoo không tự kết chuyển lãi lỗ vào 421. Vì vậy 420a = NBAL(4211) + PL_PRIOR(), 420b = NBAL(4212) + PL_CUR(): phần lãi lỗ còn nằm trên TK 5–9 (kể cả 911) được tự đưa vào đúng năm. Đã kiểm tra: kết chuyển xong, B01 và B02 không đổi một đồng.</li>
+</ul>
+<h3>6.3 Tách dư Nợ / dư Có, ngắn hạn / dài hạn</h3>
+<p>Theo VAS, phải thu và phải trả trình bày theo số dư <b>từng đối tượng</b>: khách hàng trả trước (dư Có 131) nằm ở nguồn vốn (312), nhà cung cấp được ứng trước (dư Nợ 331) nằm ở tài sản (132). PDR/PCR làm việc này. Ngắn hạn / dài hạn được tách bằng tài khoản chi tiết của chart (1311/1312, 3311/3312, 33xx1/33xx2…). Mỗi tài khoản bảng cân đối đều xuất hiện ở cả phía dư Nợ và dư Có (hoặc BAL) để B01 luôn cân; một test sinh số dư trên <b>mọi</b> tài khoản của chart để chứng minh.</p>
+<h3>6.4 Phân bổ dòng tiền (B03)</h3>
+<p>Tiền = các TK bắt đầu bằng 111, 112, 113, 12811, 12881 (tiền và tương đương tiền). Với mỗi bút toán có chạm tiền, phần (C − D) của từng dòng <b>không phải tiền</b> chính là phần dòng tiền đối ứng với tài khoản đó (vì bút toán cân). Ví dụ thu tiền khách hàng Nợ 112 / Có 1311 → dòng tiền vào 100 đối ứng 1311. Chuyển tiền giữa các tài khoản tiền không tạo dòng tiền. Do đó B03 trực tiếp: tổng mọi chỉ tiêu = biến động tiền trên sổ, chỉ tiêu 70 khớp tuyệt đối.</p>
+<h3>6.5 Kỳ so sánh</h3>
+<table>
+  <tr><th style="width:24%">Chế độ</th><th>B01 (position)</th><th>B02, B03</th></tr>
+  <tr><td>Theo mẫu TT99 (mặc định)</td><td>Số dư cuối năm tài chính trước (“Số đầu năm”), dù kỳ chọn là quý hay tháng. Kỳ thứ n: lùi n năm.</td><td>Cùng kỳ năm trước.</td></tr>
+  <tr><td>Kỳ trước liền kề</td><td>Cuối kỳ liền trước cùng độ dài (Q3 → 30/06).</td><td>Kỳ liền trước cùng độ dài. Kỳ trọn tháng lùi theo tháng (tháng 3 → 01/02–28/02); kỳ lẻ ngày lùi theo số ngày.</td></tr>
+  <tr><td>Cùng kỳ năm trước</td><td>Cùng ngày năm trước.</td><td>Cùng khoảng ngày, lùi 1 năm (kỳ thứ n lùi n năm).</td></tr>
+  <tr><td>Không so sánh</td><td colspan="2">Chỉ cột kỳ này.</td></tr>
+</table>
+<p>Hàm: <code>engine.comparison_periods(kind, date_from, date_to, mode, count, fiscal_year_start)</code>. Cảnh báo (tài khoản chưa ánh xạ, kiểm tra cân) chỉ tính cho kỳ này.</p>
+
+<h2>7. Màn hình báo cáo động, xuất file, drill-down</h2>
+<div class="diagram">
+<pre class="mermaid">
+sequenceDiagram
+  actor U as Người dùng
+  participant C as OWL VnTt99DynamicReport
+  participant W as vn.report.wizard
+  participant E as Engine + Provider
+  U->>C: Mở menu Xem báo cáo
+  C->>W: get_dynamic_options()
+  W-->>C: mẫu, công ty, nhóm HN, năm tài chính
+  C->>W: get_dynamic_report(options)
+  W->>W: create(wizard) + _compute_report()
+  W->>E: comparison_periods + evaluate_report
+  E-->>W: giá trị, cảnh báo
+  W-->>C: cột, dòng (cells), cảnh báo, wizard_id
+  U->>C: Đổi bộ lọc (kỳ, so sánh, công ty…)
+  C->>W: get_dynamic_report(options mới) — tự động, request cũ bị bỏ
+  U->>C: Xuất Excel / In PDF
+  C->>W: action_export_xlsx / action_print_pdf [wizard_id]
+  W-->>C: action tải file (dùng lại kết quả đã tính)
+  U->>C: Bấm một chỉ tiêu
+  C->>W: get_drilldown [line id]
+  W-->>C: action danh sách bút toán + công ty đang tắt
+</pre>
+<div class="caption">Hình 4. Màn hình báo cáo động: mọi tính toán ở server, màn hình chỉ hiển thị.</div>
+</div>
+<ul>
+  <li>Menu: <b>Kế toán → Báo cáo → Báo cáo tài chính TT99</b>: <i>Xem báo cáo</i> (màn hình động), <i>Lập báo cáo (hộp thoại)</i> (wizard cũ), <i>Mẫu báo cáo và công thức</i> (quản trị), <i>Hợp nhất</i> → Xem báo cáo hợp nhất, Bảng tính loại trừ, Nhóm hợp nhất.</li>
+  <li>Bộ lọc: báo cáo; công ty hoặc nhóm hợp nhất; năm; kỳ (cả năm, quý, 6 tháng, 9 tháng, từng tháng, tự chọn ngày); so sánh với; số kỳ; chênh lệch; bút toán đã vào sổ / gồm nháp; ẩn chỉ tiêu bằng 0. Đổi là tự tính lại.</li>
+  <li>PDF (QWeb, A4) và Excel (xlsxwriter) in đúng mẫu: đơn vị báo cáo, địa chỉ, MST, mẫu số, căn cứ, tiêu đề, kỳ, đơn vị tính, cột 1–5 (thêm cột khi so sánh nhiều kỳ), số âm trong ngoặc, khối chữ ký Người lập / Kế toán trưởng / Người đại diện theo pháp luật.</li>
+  <li>Drill-down chỉ có ở chỉ tiêu đọc trực tiếp tài khoản (không phải tổng của mã số khác). Danh sách bút toán do Odoo lọc theo các công ty đang bật ở bộ chọn công ty; màn hình nhắc bật thêm công ty nếu thiếu.</li>
+</ul>
+
+<h2>8. Module hợp nhất (<code>l10n_vn_tt99_consolidation</code>)</h2>
+<h3>8.1 Nguyên lý</h3>
+<p>Số dư hợp nhất của một khoảng ngày <code>[F, T]</code> được tính là:</p>
+<pre>Σ số dư sổ cái các công ty hợp nhất toàn bộ trong [F, T]  +  E(T)  −  E(F − 1)</pre>
+<p>trong đó <code>E(d)</code> là <b>vị thế luỹ kế</b> của mọi bút toán loại trừ tại ngày d (đã làm tròn). Nhờ vậy các khoảng ngày cộng dồn khớp nhau tuyệt đối: B02 một năm đúng bằng chênh lệch giữa hai B01, B01 đầu kỳ và cuối kỳ luôn cân. Bút toán loại trừ không bao giờ ghi vào sổ của thành viên.</p>
+<div class="diagram">
+<pre class="mermaid">
+flowchart LR
+  G[vn.consolidation.group<br/>công ty mẹ + thành viên] --> P[ConsolidationProvider]
+  P --> M1[Sổ công ty mẹ<br/>trừ công ty đã là thành viên]
+  P --> M2[Sổ từng công ty con full<br/>chỉ từ ngày mua; lãi lỗ trước ngày mua → HN_PREACQ]
+  P --> EL[Loại trừ luỹ kế E·d]
+  EL --> E1[Đầu tư – vốn, LTTM, LICĐKKS ngày mua]
+  EL --> E2[Phân bổ LTTM]
+  EL --> E3[LICĐKKS sau ngày mua]
+  EL --> E4[Công ty liên kết: vốn chủ sở hữu]
+  EL --> E5[Công nợ nội bộ]
+  EL --> E6[Doanh thu, chi phí, cổ tức nội bộ]
+  EL --> E7[Lãi chưa thực hiện]
+  EL --> E8[Điều chỉnh tay]
+  M1 --> R[rows hợp nhất]
+  M2 --> R
+  EL --> R
+  R --> ENG[Engine + mẫu B01-DN/HN, B02-DN/HN]
+</pre>
+<div class="caption">Hình 5. Luồng hợp nhất.</div>
+</div>
+<h3>8.2 Mô hình dữ liệu</h3>
+<div class="diagram">
+<pre class="mermaid">
+erDiagram
+  vn_consolidation_group ||--o{ vn_consolidation_member : member_ids
+  vn_consolidation_member ||--o{ vn_consolidation_snapshot_line : snapshot_line_ids
+  vn_consolidation_group ||--o{ vn_consolidation_unrealized : unrealized_ids
+  vn_consolidation_group ||--o{ vn_consolidation_adjustment : adjustment_ids
+  vn_consolidation_adjustment ||--o{ vn_consolidation_adjustment_line : line_ids
+  vn_consolidation_group }o--|| res_company : parent_company_id
+  vn_consolidation_member }o--|| res_company : company_id
+</pre>
+<div class="caption">Hình 6. Bảng của module hợp nhất.</div>
+</div>
+<h4><code>vn_consolidation_group</code> — nhóm hợp nhất</h4>
+<table>
+  <tr><th style="width:24%">Field</th><th style="width:16%">Kiểu</th><th>Ý nghĩa</th></tr>
+  <tr><td>name, active, note</td><td></td><td>Tên nhóm, lưu trữ, ghi chú.</td></tr>
+  <tr><td>parent_company_id</td><td>Many2one</td><td>Công ty mẹ (gồm các chi nhánh của nó, trừ công ty đã khai báo là thành viên).</td></tr>
+  <tr><td>currency_id</td><td>related</td><td>Tiền tệ của công ty mẹ; mọi thành viên phải cùng tiền tệ.</td></tr>
+  <tr><td>goodwill_years</td><td>Integer 1–10</td><td>Số năm phân bổ lợi thế thương mại (mặc định 10).</td></tr>
+  <tr><td>cit_rate</td><td>Float</td><td>Thuế suất TNDN mặc định (20%) cho thuế hoãn lại của lãi chưa thực hiện.</td></tr>
+</table>
+<h4><code>vn_consolidation_member</code> — thành viên</h4>
+<table>
+  <tr><th style="width:24%">Field</th><th style="width:16%">Kiểu</th><th>Ý nghĩa</th></tr>
+  <tr><td>company_id</td><td>Many2one</td><td>Công ty thành viên (một công ty chỉ khai một lần; không được là công ty mẹ).</td></tr>
+  <tr><td>method</td><td>Selection</td><td><code>full</code> công ty con, hợp nhất toàn bộ; <code>equity</code> liên doanh, liên kết, phương pháp vốn chủ sở hữu.</td></tr>
+  <tr><td>ownership_pct</td><td>Float (0, 100]</td><td>Tỷ lệ lợi ích của công ty mẹ (kể cả gián tiếp — nhập tỷ lệ hữu hiệu).</td></tr>
+  <tr><td>acquisition_date</td><td>Date</td><td>Ngày nắm quyền kiểm soát / ảnh hưởng đáng kể.</td></tr>
+  <tr><td>investment_cost</td><td>Monetary</td><td>Giá gốc khoản đầu tư. Trống: lấy số dư TK 221 (hoặc 222) của công ty mẹ, chi tiết theo đối tượng là công ty này, tại ngày mua.</td></tr>
+  <tr><td>snapshot_line_ids</td><td>One2many</td><td>Vốn chủ sở hữu tại ngày mua theo từng tài khoản. Trống: tự đọc từ sổ công ty con. Nút “Lấy số dư tại ngày mua” lưu lại để rà soát, sửa (vd. chênh lệch đánh giá lại theo giá trị hợp lý).</td></tr>
+</table>
+<h4><code>vn_consolidation_snapshot_line</code></h4>
+<p><code>member_id</code>, <code>code</code> (TK 4xxx hoặc <code>HN_PREACQ</code> = lãi lỗ trước ngày mua chưa kết chuyển), <code>amount</code> (số dư Có).</p>
+<h4><code>vn_consolidation_unrealized</code> — lãi chưa thực hiện tại một ngày lập báo cáo</h4>
+<table>
+  <tr><th style="width:24%">Field</th><th style="width:16%">Kiểu</th><th>Ý nghĩa</th></tr>
+  <tr><td>date</td><td>Date</td><td>Ngày lập báo cáo (cuối kỳ). Bản ghi chỉ áp dụng đúng ngày này và tự “hoàn nhập” ngày hôm sau.</td></tr>
+  <tr><td>seller_company_id, buyer_company_id</td><td>Many2one</td><td>Bên bán, bên mua trong tập đoàn.</td></tr>
+  <tr><td>kind</td><td>Selection</td><td><code>inventory</code> hàng tồn kho; <code>fixed_asset</code> tài sản cố định.</td></tr>
+  <tr><td>goods_value, margin_pct</td><td>Monetary, Float</td><td>Giá trị tài sản mua nội bộ còn lại (theo giá bên mua) và tỷ suất lãi gộp bên bán.</td></tr>
+  <tr><td>amount</td><td>Monetary (tính, sửa được)</td><td>Lãi chưa thực hiện = goods_value × margin_pct.</td></tr>
+  <tr><td>tax_rate</td><td>Float</td><td>Thuế suất cho thuế hoãn lại (mặc định từ nhóm).</td></tr>
+</table>
+<h4><code>vn_consolidation_adjustment</code> và <code>_line</code> — bút toán điều chỉnh tay</h4>
+<p>Đầu phiếu: <code>name</code>, <code>date</code> (hiệu lực từ ngày này trở đi), <code>state</code> (<code>draft</code> / <code>confirmed</code>; chỉ phiếu “Áp dụng” được tính, và phải cân Nợ – Có). Dòng: <code>code</code> (mã TK hoặc mã giả), <code>partner_id</code>, <code>debit</code>, <code>credit</code>.</p>
+<h4><code>vn_consolidation_worksheet</code> (transient) — bảng tính loại trừ</h4>
+<p>Chọn nhóm và ngày → liệt kê mọi dòng loại trừ luỹ kế tại ngày đó (loại bút toán, thành viên, tài khoản, đối tượng, Nợ, Có) và cảnh báo. Tổng Nợ luôn bằng tổng Có.</p>
+<h3>8.3 Mã giả (pseudo account)</h3>
+<table>
+  <tr><th style="width:20%">Mã</th><th>Ý nghĩa</th><th style="width:28%">Chỉ tiêu</th></tr>
+  <tr><td><code>HN_PREACQ</code></td><td>Lãi lỗ của công ty con phát sinh trước ngày mua (được coi là vốn chủ tại ngày mua, bị loại trừ hết).</td><td>B01-HN 420a (bằng 0 sau loại trừ)</td></tr>
+  <tr><td><code>HN_GW</code></td><td>Lợi thế thương mại còn lại.</td><td>B01-HN 279</td></tr>
+  <tr><td><code>HN_NCI</code></td><td>Lợi ích cổ đông không kiểm soát (LICĐKKS) trong vốn chủ.</td><td>B01-HN 429</td></tr>
+  <tr><td><code>HN_PLNCI</code></td><td>Phần lãi lỗ thuộc LICĐKKS (tính như một khoản lãi lỗ nên tự giảm 420b).</td><td>B02-HN 62</td></tr>
+  <tr><td><code>HN_EQPL</code></td><td>Phần lãi lỗ trong công ty liên doanh, liên kết.</td><td>B02-HN 27</td></tr>
+</table>
+<div class="warn">Công thức khớp mã theo tiền tố, nên <b>không mã giả nào được là tiền tố của mã khác</b> (lỗi thật đã gặp: <code>HN_NCI</code> từng khớp nhầm <code>HN_NCI_PL</code>). Có test riêng kiểm tra điều này.</div>
+
+<h2>9. Các bút toán loại trừ</h2>
+<p>p = tỷ lệ lợi ích của công ty mẹ; t = thuế suất TNDN. Mọi số tiền làm tròn theo tiền tệ nhóm. Tên trong cột “Loại” là tên hiện trên bảng tính loại trừ.</p>
+<table>
+  <tr><th style="width:20%">Loại</th><th style="width:34%">Bút toán (vị thế luỹ kế tại ngày d)</th><th>Số liệu và điều kiện</th></tr>
+  <tr><td>Loại trừ khoản đầu tư vào công ty con</td><td>Nợ từng TK vốn chủ tại ngày mua (100%)<br>Nợ HN_GW (lợi thế thương mại)<br>Có 221 (giá gốc)<br>Có HN_NCI ((1 − p) × VCSH ngày mua)<br>— nếu LTTM âm: Có 711 (lãi mua rẻ)</td><td>Áp dụng khi ngày mua ≤ d. LTTM = giá gốc − p × VCSH ngày mua. Nếu mua trước năm báo cáo, số dư 4212 tại ngày mua được trình bày là 4211.</td></tr>
+  <tr><td>Phân bổ lợi thế thương mại</td><td>Nợ 642 / Có HN_GW</td><td>LTTM × số tháng tròn từ ngày mua đến d / (số năm × 12), tối đa bằng LTTM.</td></tr>
+  <tr><td>Lợi ích cổ đông không kiểm soát</td><td>Nợ HN_PLNCI: (1 − p) × LNST sau ngày mua<br>Nợ từng TK 4xx: (1 − p) × biến động<br>Có HN_NCI: tổng</td><td>LNST và biến động vốn chủ của công ty con từ sau ngày mua đến d, không tính bút toán kết chuyển. Cổ tức công ty con chia cho cổ đông ngoài tự làm giảm LICĐKKS.</td></tr>
+  <tr><td>Phương pháp vốn chủ sở hữu</td><td>Nợ 222 (đối tượng: công ty liên kết)<br>Có HN_EQPL: p × LNST<br>Có 4211: p × biến động vốn chủ khác</td><td>Công ty liên kết phải có sổ trong cùng DB. Cổ tức tập đoàn nhận từ công ty liên kết (515, đối tượng là công ty liên kết): Nợ 515 / Có 4211.</td></tr>
+  <tr><td>Loại trừ công nợ nội bộ</td><td>Đảo số dư của các TK công nợ có đối tượng là thành viên khác: 128, 131, 136, 138, 244, 331, 332, 335, 336, 338, 341, 343, 344</td><td>Chỉ thành viên hợp nhất toàn bộ đã mua đến ngày d. Hai bên lệch nhau: phần lệch treo 13881 / 33881 và cảnh báo. Không đảo các TK khác (hàng tồn kho, tài sản mua nội bộ cũng mang đối tượng trên hoá đơn).</td></tr>
+  <tr><td>Loại trừ doanh thu, chi phí nội bộ</td><td>Nợ 511, 515, 711 (bên bán, đối tượng bên mua)<br>Có 6xx, 8xx (bên mua, đối tượng bên bán, trừ 632)<br>Phần chênh lệch hàng hoá, dịch vụ: Có 632<br>Phần chênh lệch tài chính: Có 4211 (cổ tức nội bộ)</td><td>Tính từ sau ngày cả hai bên cùng trong tập đoàn, không tính kết chuyển, bỏ 5117. Doanh thu nội bộ không có chi phí tương ứng được coi là hàng đã bán ra ngoài (giảm giá vốn).</td></tr>
+  <tr><td>Lãi chưa thực hiện</td><td>Hàng tồn kho: Nợ 632 / Có 156<br>TSCĐ: Nợ 711 / Có 211<br>Thuế hoãn lại: Nợ 243 / Có 8212 (× t)<br>Bên bán là công ty con có LICĐKKS: Nợ HN_NCI / Có HN_PLNCI ((1 − p) × U × (1 − t))</td><td>Chỉ ở đúng ngày của bản ghi; ngày sau tự hoàn nhập, nên kỳ sau ghi nhận phần đã thực hiện.</td></tr>
+  <tr><td>Điều chỉnh tay</td><td>Theo dòng phiếu</td><td>Phiếu đã “Áp dụng”, ngày hiệu lực ≤ d.</td></tr>
+</table>
+<h3>9.1 Ví dụ đối chiếu (có trong test tự động)</h3>
+<p>Công ty mẹ P mua 80% công ty con S ngày 31/12/2025, giá 1.100. Vốn chủ S tại ngày mua 1.200 (vốn 1.000 + lãi chưa kết chuyển 200). LTTM = 1.100 − 80% × 1.200 = 140, phân bổ 10 năm (14/năm). LICĐKKS ngày mua = 240. Năm 2026: P mua hàng 500, bán cho S 300 (giá vốn 180); S bán hết ra ngoài 450, trả P 100, chi phí 50. Kết quả hợp nhất: doanh thu 450, giá vốn 180, chi phí quản lý 64, LNST 206 (công ty mẹ 186, LICĐKKS 20); tổng tài sản = nguồn vốn = 5.446; LICĐKKS 260; LTTM còn 126.</p>
+
+<h2>10. Module tra cứu MST VietQR (<code>vietqr_tax_lookup</code>)</h2>
+<div class="diagram">
+<pre class="mermaid">
+sequenceDiagram
+  actor U as Người dùng
+  participant F as Form khách hàng
+  participant S as res.partner
+  participant V as api.vietqr.io
+  U->>F: Chọn Công ty, nhập MST
+  alt Khách hàng mới, chưa có tên
+    F->>S: onchange vat
+    S->>V: GET /v2/business/{mst}
+    V-->>S: name, address, shortName, internationalName, status
+    S-->>F: tự điền (chưa lưu)
+  else Đã lưu
+    U->>F: Bấm Lấy thông tin MST
+    F->>S: action_vietqr_fetch_tax_info
+    S->>V: GET /v2/business/{mst}
+    S->>S: write(tên, địa chỉ, tỉnh, quốc gia, 3 field VietQR)
+  end
+</pre>
+<div class="caption">Hình 7. Hai đường tự điền: onchange khi tạo mới (vì nút cần lưu bản ghi trước mà công ty chưa có tên thì không lưu được), nút bấm khi đã lưu.</div>
+</div>
+<table>
+  <tr><th style="width:30%">Field mới trên <code>res.partner</code></th><th>Ý nghĩa</th></tr>
+  <tr><td>vietqr_short_name</td><td>Tên viết tắt.</td></tr>
+  <tr><td>vietqr_international_name</td><td>Tên quốc tế.</td></tr>
+  <tr><td>vietqr_tax_status</td><td>Tình trạng MST, vd. “NNT đang hoạt động”.</td></tr>
+</table>
+<ul>
+  <li>Nút chỉ hiện khi khách hàng là Công ty. MST được làm sạch (bỏ khoảng trắng, tiền tố VN) và phải là 10 số hoặc 10 số-3 số (chi nhánh).</li>
+  <li>Địa chỉ: phần sau dấu phẩy cuối được so với danh sách tỉnh của Việt Nam (bỏ dấu, bỏ “TP”, “Tỉnh”); khớp thì điền Tỉnh, phần còn lại vào Đường; không khớp thì để nguyên địa chỉ ở Đường.</li>
+  <li>Lỗi mạng, MST không tồn tại (mã VietQR 51), MST sai định dạng: báo lỗi tiếng Việt, không ghi gì.</li>
+</ul>
+
+<h2>11. Phân quyền, đa công ty</h2>
+<table>
+  <tr><th style="width:34%">Đối tượng</th><th>Quyền</th></tr>
+  <tr><td>Mẫu báo cáo, chỉ tiêu, nhóm hợp nhất và dữ liệu hợp nhất</td><td>Đọc: <code>account.group_account_readonly</code>; sửa: <code>account.group_account_manager</code>.</td></tr>
+  <tr><td>Wizard, màn hình báo cáo, bảng tính loại trừ</td><td><code>account.group_account_readonly</code> và <code>account.group_account_manager</code> (trong Odoo 19 nhóm quản trị hoá đơn không bao gồm nhóm xem kế toán).</td></tr>
+  <tr><td>Menu</td><td>Báo cáo: hai nhóm trên; Mẫu báo cáo và công thức: quản trị.</td></tr>
+</table>
+<p><b>Đa công ty.</b> Odoo lọc dữ liệu theo các công ty đang bật ở bộ chọn công ty. Báo cáo cần đọc đúng các công ty nó bao phủ, nên provider dùng hàm <code>with_companies(env, companies)</code>: mở quyền đọc cho các công ty đó <b>nếu người dùng đã được cấp quyền</b>; công ty chưa cấp quyền thì báo lỗi rõ ràng. Không dùng <code>sudo</code> để đọc sổ.</p>
+
+<h2>12. Cài đặt, vận hành, dữ liệu mẫu</h2>
+<pre># cài / nâng cấp (từ thư mục odoo-dev)
+docker compose run --rm odoo odoo -d &lt;db&gt; -i l10n_vn_tt99_consolidation,vietqr_tax_lookup --stop-after-init
+docker compose run --rm odoo odoo -d &lt;db&gt; -u l10n_vn_tt99_reports,l10n_vn_tt99_consolidation --stop-after-init
+
+# chạy test trong DB tạm
+docker compose run --rm -T odoo odoo -d tt99_test -i l10n_vn_tt99_consolidation,vietqr_tax_lookup \
+  --test-tags /l10n_vn_tt99_reports,/l10n_vn_tt99_consolidation,/vietqr_tax_lookup --stop-after-init --log-level=test
+docker compose exec -T postgres sh -c 'dropdb -U "$POSTGRES_USER" --force tt99_test'</pre>
+<h3>12.1 Thiết lập cho một doanh nghiệp</h3>
+<ol>
+  <li>Công ty: quốc gia Việt Nam, tiền tệ VND, MST, địa chỉ. Đặt trước khi cài <code>account</code> để Odoo tự nạp chart <code>vn</code> (hoặc chọn chart ở Cấu hình kế toán).</li>
+  <li>Sổ ngân hàng: nên đặt tài khoản thanh toán của phương thức thanh toán = TK ngân hàng (1121/1120) để thanh toán ghi thẳng vào tiền; nếu dùng 1131/1132 (đang chuyển) thì vẫn được tính là tiền.</li>
+  <li>Hợp nhất: tạo nhóm, khai thành viên, tỷ lệ, ngày mua; bấm “Lấy số dư tại ngày mua” và rà soát; ghi TK 221/222 của công ty mẹ chi tiết theo đối tượng là công ty con / liên kết; giao dịch nội bộ phải ghi đúng đối tượng là đối tác của công ty thành viên; cuối mỗi kỳ nhập lãi chưa thực hiện.</li>
+  <li>Cấp quyền cho kế toán tập đoàn vào mọi công ty của nhóm.</li>
+</ol>
+<h3>12.2 Công cụ trong <code>tools/tt99/</code></h3>
+<table>
+  <tr><th style="width:28%">File</th><th>Công dụng</th></tr>
+  <tr><td>gen_reports.py</td><td>Sinh <code>data/vn_report_b01/b02/b03.xml</code> và <code>vn_report_hn.xml</code> từ dữ liệu nghiên cứu + bảng ánh xạ tài khoản.</td></tr>
+  <tr><td>full_data.py</td><td>Sinh dữ liệu mẫu (chạy trong <code>odoo shell</code>): 3 công ty, 01/2025–09/2026, ~1.800 bút toán qua đúng luồng Odoo (hoá đơn, thanh toán, khấu hao <code>om_account_asset</code>, kết chuyển…), nhóm hợp nhất.</td></tr>
+  <tr><td>demo_data.py</td><td>Bộ dữ liệu nhỏ cho DB demo (2 công ty).</td></tr>
+  <tr><td>verify.py</td><td>Đối chiếu báo cáo với sổ cái bằng phép tính độc lập (101 điểm kiểm tra).</td></tr>
+  <tr><td>ui_check.mjs, ui_compare.mjs</td><td>Điều khiển Chrome headless qua DevTools Protocol: mở màn hình, đổi bộ lọc, xuất file, drill-down, ghi lỗi JS, chụp ảnh.</td></tr>
+  <tr><td>build_docs.py</td><td>Dựng tài liệu này: chèn phụ lục từ data XML, vẽ sơ đồ, in PDF bằng Chrome.</td></tr>
+</table>
+<p>Dữ liệu nghiên cứu TT99 (danh sách tài khoản, chỉ tiêu và căn cứ) ở <code>docs/tt99/research/</code>.</p>
+
+<h2>13. Kiểm thử và kết quả đối chiếu</h2>
+<h3>13.1 Test tự động (Odoo TransactionCase)</h3>
+{{TEST_TABLE}}
+<h3>13.2 Đối chiếu trên dữ liệu mẫu (<code>verify.py</code>, DB <code>tt99_full</code>)</h3>
+<p>101/101 điểm kiểm tra khớp, cho cả 3 công ty và báo cáo hợp nhất, tại 31/12/2025 và 30/09/2026. Nhóm kiểm tra:</p>
+<ul>
+  <li>B01 không cảnh báo; 280 = 440; 110 = số dư tiền; 141 = số dư hàng tồn kho; 400 = vốn chủ + lãi lỗ chưa kết chuyển; 131 − 312 = số dư 1311.</li>
+  <li>B02 60 = lãi lỗ trên sổ (không tính kết chuyển); 50 = 60 + 51 + 52.</li>
+  <li>B03: 70 = B01 110 cuối kỳ; 60 = B01 110 đầu kỳ.</li>
+  <li>B01 đầu năm 2026 = B01 cuối năm 2025 trên mọi dòng.</li>
+  <li>Hợp nhất: cân; 261 = 0; 279 = LTTM − phân bổ; 429 = 20% vốn chủ công ty con; 262 = giá gốc + 30% biến động vốn chủ công ty liên kết; 141 = hàng tồn kho mẹ + con − lãi chưa thực hiện; 60 = LN mẹ + LN con sau mua + 30% LN liên kết − cổ tức nội bộ − phân bổ LTTM − biến động lãi chưa thực hiện sau thuế; 62 = 20% LN con; 27 = 30% LN liên kết.</li>
+</ul>
+<h3>13.3 Lỗi đã phát hiện nhờ kiểm thử</h3>
+<table>
+  <tr><th style="width:34%">Lỗi</th><th>Khắc phục</th></tr>
+  <tr><td>Hợp nhất loại nhầm hàng tồn kho mua nội bộ (hoá đơn mua gắn đối tượng lên dòng hàng)</td><td>Chỉ loại trừ công nợ trên danh sách TK công nợ.</td></tr>
+  <tr><td>Chỉ bật một công ty thì báo cáo hợp nhất thiếu số thành viên</td><td><code>with_companies</code> mở quyền đọc các công ty của báo cáo (đã được cấp quyền).</td></tr>
+  <tr><td>Mã giả HN_NCI khớp nhầm HN_NCI_PL</td><td>Đổi tên HN_PLNCI; test chống trùng tiền tố.</td></tr>
+  <tr><td>Xuất file làm mất dòng đang hiển thị (drill-down báo “Bản ghi thiếu”)</td><td>Xuất dùng lại kết quả đã tính.</td></tr>
+</table>
+
+<h2>14. Giới hạn và hướng phát triển</h2>
+<ul>
+  <li><b>B03 gián tiếp</b> mang tính tham khảo: các dòng 04, 07, 16, 17 cần nhập / điều chỉnh tay, mẫu hiện cảnh báo nếu 70 chưa khớp sổ. B03 trực tiếp khớp tuyệt đối. Ánh xạ chỉ tiêu đầu tư, tài chính (21–36) là suy luận theo tài khoản đối ứng; mua TSCĐ qua công nợ 331 rồi trả tiền sẽ rơi vào hoạt động kinh doanh.</li>
+  <li>Chưa có: B03 hợp nhất; thuyết minh B09; mẫu giữa niên độ dạng tóm lược; chuyển đổi báo cáo ngoại tệ khi hợp nhất (thành viên phải cùng tiền tệ); lãi cơ bản trên cổ phiếu (70, 71 để trống).</li>
+  <li>Hợp nhất: sở hữu nhiều tầng nhập tỷ lệ hữu hiệu; khoản đầu tư chỉ của công ty mẹ trực tiếp; lãi chưa thực hiện nhập theo từng ngày báo cáo; điều chỉnh khấu hao TSCĐ bán nội bộ và chênh lệch giá trị hợp lý tại ngày mua làm bằng bút toán tay; công ty liên kết phải có sổ trong DB (nếu không, dùng điều chỉnh tay).</li>
+  <li>B01 124 (dự phòng đầu tư nắm giữ đến ngày đáo hạn ngắn hạn) để trống vì chart không có TK riêng; tách 2292 dùng TK chi tiết 22921–22924 của chart.</li>
+  <li>Nội dung TT43/2026 lấy từ nguồn thứ cấp (luatvietnam.vn), cần đối chiếu bản Công báo. Kế toán trưởng nên duyệt lại bảng ánh xạ trước khi dùng thật.</li>
+  <li>Drill-down chỉ hiện bút toán của các công ty đang bật ở bộ chọn công ty (giới hạn của Odoo).</li>
+</ul>
+
+<h2 class="page-break">15. Phụ lục: ánh xạ chỉ tiêu</h2>
+<p class="small">Sinh tự động từ data XML của module tại thời điểm build. Tham số hàm là tiền tố mã tài khoản của chart <code>l10n_vn</code>.</p>
+{{APPENDIX}}
+
+</main>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: false, theme: "neutral", securityLevel: "loose", flowchart: { htmlLabels: true, useMaxWidth: true }, er: { useMaxWidth: true }, sequence: { useMaxWidth: true } });
+  mermaid.run({ querySelector: ".mermaid" }).then(() => { document.body.dataset.diagrams = "ready"; });
+</script>
+</body>
+</html>

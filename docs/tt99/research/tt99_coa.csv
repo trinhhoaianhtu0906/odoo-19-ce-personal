@@ -1,0 +1,253 @@
+﻿code,name_vi,name_en,parent_code,status,nature,source_url
+111,Tiền mặt,Cash on hand,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+112,Tiền gửi không kỳ hạn,Demand deposits,,renamed,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+113,Tiền đang chuyển,Cash in transit,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+121,Chứng khoán kinh doanh,Trading securities,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+128,Đầu tư nắm giữ đến ngày đáo hạn,Held-to-maturity investments,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+1281,Tiền gửi có kỳ hạn,Term deposits,128,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+1282,Trái phiếu,Bonds,128,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+1283,Cho vay,Loans receivable,128,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+1288,Các khoản đầu tư khác nắm giữ đến ngày đáo hạn,Other held-to-maturity investments,128,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+131,Phải thu của khách hàng,Trade receivables,,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+133,Thuế GTGT được khấu trừ,Deductible VAT,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+1331,"Thuế GTGT được khấu trừ của hàng hóa, dịch vụ",Deductible VAT on goods and services,133,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+1332,Thuế GTGT được khấu trừ của TSCĐ,Deductible VAT on fixed assets,133,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+136,Phải thu nội bộ,Intra-company receivables,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+1361,Vốn kinh doanh ở đơn vị trực thuộc,Business capital in dependent units,136,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+1362,Phải thu nội bộ về chênh lệch tỷ giá,Intra-company receivables - exchange differences,136,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+1363,Phải thu nội bộ về chi phí đi vay đủ điều kiện được vốn hóa,Intra-company receivables - capitalisable borrowing costs,136,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+1368,Phải thu nội bộ khác,Other intra-company receivables,136,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+138,Phải thu khác,Other receivables,,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+1381,Tài sản thiếu chờ xử lý,Shortage of assets awaiting resolution,138,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+1383,Thuế TTĐB của hàng nhập khẩu,Special consumption tax on imported goods,138,new,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+1388,Phải thu khác,Other receivables,138,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+141,Tạm ứng,Advances to employees,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+151,Hàng mua đang đi đường,Goods in transit,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+152,"Nguyên liệu, vật liệu",Raw materials,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+153,"Công cụ, dụng cụ",Tools and supplies,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+154,"Chi phí sản xuất, kinh doanh dở dang",Work in progress,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+155,Sản phẩm,Products,,renamed,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+156,Hàng hóa,Merchandise,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+157,Hàng gửi đi bán,Goods on consignment,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+158,"Nguyên liệu, vật tư tại kho bảo thuế",Materials in bonded warehouse,,renamed,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+171,"Giao dịch mua, bán lại trái phiếu chính phủ",Government bond repurchase transactions,,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+211,Tài sản cố định hữu hình,Tangible fixed assets,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+212,Tài sản cố định thuê tài chính,Finance-leased fixed assets,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+213,Tài sản cố định vô hình,Intangible fixed assets,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+214,Hao mòn tài sản cố định,Accumulated depreciation and amortisation,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2141,Hao mòn TSCĐ hữu hình,Accumulated depreciation - tangible FA,214,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2142,Hao mòn TSCĐ thuê tài chính,Accumulated depreciation - finance-leased FA,214,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2143,Hao mòn TSCĐ vô hình,Accumulated amortisation - intangible FA,214,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2147,Hao mòn BĐSĐT,Accumulated depreciation - investment property,214,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+215,Tài sản sinh học,Biological assets,,new,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2151,Súc vật nuôi cho sản phẩm định kỳ,Livestock producing periodic products,215,new,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+21511,Súc vật nuôi cho sản phẩm định kỳ chưa đạt đến giai đoạn trưởng thành,Periodic-product livestock - immature,2151,new,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+21512,Súc vật nuôi cho sản phẩm định kỳ đạt đến giai đoạn trưởng thành,Periodic-product livestock - mature,2151,new,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+215121,Nguyên giá,Mature livestock - cost,21512,new,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+215122,Giá trị khấu hao lũy kế,Mature livestock - accumulated depreciation,21512,new,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2152,Súc vật nuôi lấy sản phẩm một lần,Livestock for one-time harvest,215,new,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2153,Cây trồng theo mùa vụ hoặc lấy sản phẩm một lần,Seasonal or one-time-harvest crops,215,new,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+217,Bất động sản đầu tư,Investment property,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+221,Đầu tư vào công ty con,Investments in subsidiaries,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+222,"Đầu tư vào công ty liên doanh, liên kết",Investments in joint ventures and associates,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+228,Đầu tư khác,Other investments,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2281,Đầu tư góp vốn vào đơn vị khác,Equity investments in other entities,228,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2288,Đầu tư khác,Other investments,228,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+229,Dự phòng tổn thất tài sản,Provisions for asset losses,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2291,Dự phòng giảm giá chứng khoán kinh doanh,Provision for decline in trading securities,229,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2292,Dự phòng tổn thất đầu tư vào đơn vị khác,Provision for investment losses,229,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2293,Dự phòng phải thu khó đòi,Allowance for doubtful receivables,229,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2294,Dự phòng giảm giá hàng tồn kho,Inventory write-down provision,229,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2295,Dự phòng tổn thất tài sản sinh học,Provision for biological asset losses,229,new,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+241,Xây dựng cơ bản dở dang,Construction in progress,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2411,Mua sắm TSCĐ,Fixed asset acquisitions,241,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2412,Xây dựng cơ bản,Capital construction,241,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2413,"Sửa chữa, bảo dưỡng định kỳ TSCĐ",Periodic repair and maintenance of fixed assets,241,renamed,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+2414,"Nâng cấp, cải tạo TSCĐ",Fixed asset upgrades and renovation,241,new,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+242,Chi phí chờ phân bổ,Deferred costs (costs awaiting allocation),,renamed,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+243,Tài sản thuế thu nhập hoãn lại,Deferred tax assets,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+244,"Ký quỹ, ký cược",Deposits and collateral paid,,renamed,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+331,Phải trả cho người bán,Trade payables,,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+332,"Phải trả cổ tức, lợi nhuận",Dividends and profits payable,,new,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+333,Thuế và các khoản phải nộp Nhà nước,Taxes and amounts payable to the State,,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3331,Thuế giá trị gia tăng phải nộp,VAT payable,333,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+33311,Thuế GTGT đầu ra,Output VAT,3331,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+33312,Thuế GTGT hàng nhập khẩu,VAT on imports,3331,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3332,Thuế tiêu thụ đặc biệt,Special consumption tax,333,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3333,"Thuế xuất, nhập khẩu",Import and export duties,333,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3334,Thuế thu nhập doanh nghiệp,Corporate income tax payable (incl. global minimum top-up tax),333,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3335,Thuế thu nhập cá nhân,Personal income tax,333,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3336,Thuế tài nguyên,Natural resource tax,333,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3337,"Thuế nhà đất, tiền thuê đất","Land and housing tax, land rent",333,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3338,Thuế bảo vệ môi trường và các loại thuế khác,Environmental protection tax and other taxes,333,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+33381,Thuế bảo vệ môi trường,Environmental protection tax,3338,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+33382,Các loại thuế khác,Other taxes,3338,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3339,"Phí, lệ phí và các khoản phải nộp khác","Fees, charges and other payables to the State",333,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+334,Phải trả người lao động,Payables to employees,,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+335,Chi phí phải trả,Accrued expenses,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+336,Phải trả nội bộ,Intra-company payables,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3361,Phải trả nội bộ về vốn kinh doanh,Intra-company payables - business capital,336,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3362,Phải trả nội bộ về chênh lệch tỷ giá,Intra-company payables - exchange differences,336,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3363,Phải trả nội bộ về chi phí đi vay đủ điều kiện được vốn hóa,Intra-company payables - capitalisable borrowing costs,336,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3368,Phải trả nội bộ khác,Other intra-company payables,336,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+337,Thanh toán theo tiến độ hợp đồng xây dựng,Progress billings on construction contracts,,renamed,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+338,"Phải trả, phải nộp khác",Other payables,,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3381,Tài sản thừa chờ giải quyết,Surplus assets awaiting resolution,338,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3382,Kinh phí công đoàn,Trade union fees,338,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3383,Bảo hiểm xã hội,Social insurance,338,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3384,Bảo hiểm y tế,Health insurance,338,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3386,Bảo hiểm thất nghiệp,Unemployment insurance,338,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3387,Doanh thu chờ phân bổ,Deferred revenue (revenue awaiting allocation),338,renamed,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3388,"Phải trả, phải nộp khác",Other payables,338,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+341,Vay và nợ thuê tài chính,Borrowings and finance lease liabilities,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3411,Các khoản đi vay,Borrowings,341,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3412,Nợ thuê tài chính,Finance lease liabilities,341,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+343,Trái phiếu phát hành,Bonds issued,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3431,Trái phiếu thường,Ordinary bonds,343,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3432,Trái phiếu chuyển đổi,Convertible bonds,343,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+344,"Nhận ký quỹ, ký cược",Deposits received,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+347,Thuế thu nhập hoãn lại phải trả,Deferred tax liabilities,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+352,Dự phòng phải trả,Provisions,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3521,"Dự phòng bảo hành sản phẩm, hàng hóa",Product warranty provision,352,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3522,Dự phòng bảo hành công trình xây dựng,Construction warranty provision,352,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3523,Dự phòng tái cơ cấu doanh nghiệp,Restructuring provision,352,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3525,Dự phòng phải trả khác,Other provisions,352,new,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+353,"Quỹ khen thưởng, phúc lợi",Bonus and welfare funds,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3531,Quỹ khen thưởng,Bonus fund,353,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3532,Quỹ phúc lợi,Welfare fund,353,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3533,Quỹ phúc lợi đã hình thành TSCĐ,Welfare fund used for fixed assets,353,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3534,Quỹ thưởng ban quản lý điều hành công ty,Management bonus fund,353,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+356,Quỹ phát triển khoa học và công nghệ,Science and technology development fund,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3561,Quỹ phát triển khoa học và công nghệ,Science and technology development fund,356,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+3562,Quỹ phát triển khoa học và công nghệ đã hình thành tài sản,S&T fund used for assets,356,renamed,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+357,Quỹ bình ổn giá,Price stabilisation fund,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+411,Vốn đầu tư của chủ sở hữu,Owner invested capital,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+4111,Vốn góp của chủ sở hữu,Owner contributed capital,411,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+41111,Cổ phiếu phổ thông có quyền biểu quyết,Voting ordinary shares,4111,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+41112,Cổ phiếu ưu đãi,Preference shares,4111,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+4112,Thặng dư vốn,Capital surplus,411,renamed,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+4113,Quyền chọn chuyển đổi trái phiếu,Bond conversion options,411,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+4118,Vốn khác,Other capital,411,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+412,Chênh lệch đánh giá lại tài sản,Asset revaluation differences,,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+413,Chênh lệch tỷ giá hối đoái,Foreign exchange differences,,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+414,Quỹ đầu tư phát triển,Development investment fund,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+418,Các quỹ khác thuộc vốn chủ sở hữu,Other equity funds,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+419,Cổ phiếu mua lại của chính mình,Own shares repurchased (treasury shares),,renamed,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+421,Lợi nhuận sau thuế chưa phân phối,Undistributed profit after tax,,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+4211,Lợi nhuận sau thuế chưa phân phối lũy kế đến cuối năm trước,Undistributed profit accumulated to prior year-end,421,renamed,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+4212,Lợi nhuận sau thuế chưa phân phối năm nay,Undistributed profit - current year,421,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+511,Doanh thu bán hàng và cung cấp dịch vụ,Revenue from sales and services,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+515,Doanh thu hoạt động tài chính,Financial income,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+521,Các khoản giảm trừ doanh thu,Revenue deductions,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+621,"Chi phí nguyên liệu, vật liệu trực tiếp",Direct materials,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+622,Chi phí nhân công trực tiếp,Direct labour,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+623,Chi phí sử dụng máy thi công,Construction machinery costs,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6231,Chi phí nhân công,Machinery - labour,623,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6232,Chi phí vật liệu,Machinery - materials,623,renamed,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6233,Chi phí dụng cụ sản xuất,Machinery - tools,623,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6234,Chi phí khấu hao máy thi công,Machinery - depreciation,623,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6237,Chi phí dịch vụ mua ngoài,Machinery - outsourced services,623,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6238,Chi phí bằng tiền khác,Machinery - other cash expenses,623,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+627,Chi phí sản xuất chung,Manufacturing overheads,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6271,Chi phí nhân viên phân xưởng,Overheads - workshop staff,627,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6272,Chi phí vật liệu,Overheads - materials,627,renamed,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6273,Chi phí dụng cụ sản xuất,Overheads - tools,627,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6274,Chi phí khấu hao TSCĐ,Overheads - depreciation,627,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6275,"Thuế, phí, lệ phí","Overheads - taxes, fees and charges",627,new,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6277,Chi phí dịch vụ mua ngoài,Overheads - outsourced services,627,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6278,Chi phí bằng tiền khác,Overheads - other cash expenses,627,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+632,Giá vốn hàng bán,Cost of goods sold,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+635,Chi phí tài chính,Financial expenses,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+641,Chi phí bán hàng,Selling expenses,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6411,Chi phí nhân viên,Selling - staff,641,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6412,"Chi phí vật liệu, bao bì",Selling - materials and packaging,641,renamed,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6413,"Chi phí dụng cụ, đồ dùng",Selling - tools and supplies,641,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6414,Chi phí khấu hao TSCĐ,Selling - depreciation,641,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6415,"Thuế, phí, lệ phí","Selling - taxes, fees and charges (code reused; TT200 6415 was warranty)",641,new,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6417,Chi phí dịch vụ mua ngoài,Selling - outsourced services,641,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6418,Chi phí bằng tiền khác,Selling - other cash expenses,641,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+642,Chi phí quản lý doanh nghiệp,General and administrative expenses,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6421,Chi phí nhân viên quản lý,G&A - staff,642,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6422,Chi phí vật liệu quản lý,G&A - materials,642,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6423,Chi phí đồ dùng văn phòng,G&A - office supplies,642,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6424,Chi phí khấu hao TSCĐ,G&A - depreciation,642,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6425,"Thuế, phí và lệ phí","G&A - taxes, fees and charges",642,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6426,Chi phí dự phòng,G&A - provisions,642,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6427,Chi phí dịch vụ mua ngoài,G&A - outsourced services,642,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+6428,Chi phí bằng tiền khác,G&A - other cash expenses,642,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+711,Thu nhập khác,Other income,,unchanged,credit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+811,Chi phí khác,Other expenses,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+821,Chi phí thuế thu nhập doanh nghiệp,Corporate income tax expense,,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+8211,Chi phí thuế TNDN hiện hành,Current CIT expense,821,unchanged,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+82111,Chi phí thuế thu nhập doanh nghiệp hiện hành theo quy định của Luật thuế thu nhập doanh nghiệp,Current CIT expense under the CIT Law,8211,new,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+82112,Chi phí thuế thu nhập doanh nghiệp bổ sung theo quy định về thuế tối thiểu toàn cầu,Top-up CIT expense under global minimum tax rules,8211,new,debit,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+8212,Chi phí thuế TNDN hoãn lại,Deferred CIT expense,821,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+911,Xác định kết quả kinh doanh,Income summary (P&L determination),,unchanged,both,https://congbao.chinhphu.vn/van-ban/thong-tu-so-99-2025-tt-btc-46529.htm (Cong bao 1565+1566 Phu luc II A pp.34-44)
+1111,Tiền Việt Nam,Cash - VND,111,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1112,Ngoại tệ,Cash - foreign currency,111,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1113,Vàng tiền tệ,Cash - monetary gold,111,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1121,Tiền Việt Nam,Bank - VND,112,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1122,Ngoại tệ,Bank - foreign currency,112,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1123,Vàng tiền tệ,Bank - monetary gold,112,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1131,Tiền Việt Nam,Cash in transit - VND,113,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1132,Ngoại tệ,Cash in transit - foreign currency,113,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1211,Cổ phiếu,Trading securities - shares,121,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1212,Trái phiếu,Trading securities - bonds,121,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1218,Chứng khoán và công cụ tài chính khác,Other securities and financial instruments,121,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1385,Phải thu về cổ phần hoá,Receivables from equitisation,138,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1531,"Công cụ, dụng cụ",Tools and supplies,153,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1532,Bao bì luân chuyển,Returnable packaging,153,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1533,Đồ dùng cho thuê,Items for rent,153,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1534,"Thiết bị, phụ tùng thay thế",Spare parts and equipment,153,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1551,Thành phẩm nhập kho,Finished goods in stock,155,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1557,Thành phẩm bất động sản,Real-estate finished goods,155,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1561,Giá mua hàng hóa,Merchandise purchase price,156,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1562,Chi phí thu mua hàng hóa,Merchandise purchasing costs,156,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1567,Hàng hóa bất động sản,Real-estate merchandise,156,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+161,Chi sự nghiệp,Non-business expenditure,,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1611,Chi sự nghiệp năm trước,Non-business expenditure - prior year,161,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+1612,Chi sự nghiệp năm nay,Non-business expenditure - current year,161,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+2111,"Nhà cửa, vật kiến trúc",Buildings and structures,211,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+2112,"Máy móc, thiết bị",Machinery and equipment,211,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+2113,"Phương tiện vận tải, truyền dẫn",Vehicles and transmission,211,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+2114,"Thiết bị, dụng cụ quản lý",Office equipment,211,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+2115,"Cây lâu năm, súc vật làm việc và cho sản phẩm","Perennial plants, working and productive animals",211,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+2118,TSCĐ khác,Other tangible FA,211,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+2121,TSCĐ hữu hình thuê tài chính,Finance-leased tangible FA,212,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+2122,TSCĐ vô hình thuê tài chính,Finance-leased intangible FA,212,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+2131,Quyền sử dụng đất,Land use rights,213,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+2132,Quyền phát hành,Publishing rights,213,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+2133,"Bản quyền, bằng sáng chế",Copyrights and patents,213,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+2134,"Nhãn hiệu, tên thương mại",Trademarks and trade names,213,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+2135,Chương trình phần mềm,Software,213,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+2136,Giấy phép và giấy phép nhượng quyền,Licences and franchises,213,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+2138,TSCĐ vô hình khác,Other intangible FA,213,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+3341,Phải trả công nhân viên,Payables to staff,334,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+3348,Phải trả người lao động khác,Payables to other workers,334,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+3385,Phải trả về cổ phần hoá,Payables from equitisation,338,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+34311,Mệnh giá trái phiếu,Bond par value,3431,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+34312,Chiết khấu trái phiếu,Bond discount,3431,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+34313,Phụ trội trái phiếu,Bond premium,3431,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+3524,Dự phòng phải trả khác,Other provisions (TT99 uses 3525),352,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+4131,Chênh lệch tỷ giá do đánh giá lại các khoản mục tiền tệ có gốc ngoại tệ,FX differences on revaluation of monetary items,413,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+4132,Chênh lệch tỷ giá hối đoái trong giai đoạn trước hoạt động,FX differences in pre-operating stage,413,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+417,Quỹ hỗ trợ sắp xếp doanh nghiệp,Enterprise restructuring support fund,,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+441,Nguồn vốn đầu tư xây dựng cơ bản,Capital construction funding (balance moves to 4118),,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+461,Nguồn kinh phí sự nghiệp,Non-business funding,,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+4611,Nguồn kinh phí sự nghiệp năm trước,Non-business funding - prior year,461,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+4612,Nguồn kinh phí sự nghiệp năm nay,Non-business funding - current year,461,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+466,Nguồn kinh phí đã hình thành TSCĐ,Funding used for fixed assets (balance moves to 4118),,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+5111,Doanh thu bán hàng hóa,Revenue - merchandise,511,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+5112,Doanh thu bán các thành phẩm,Revenue - finished goods,511,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+5113,Doanh thu cung cấp dịch vụ,Revenue - services,511,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+5114,"Doanh thu trợ cấp, trợ giá",Revenue - subsidies,511,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+5117,Doanh thu kinh doanh bất động sản đầu tư,Revenue - investment property,511,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+5118,Doanh thu khác,Other revenue,511,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+5211,Chiết khấu thương mại,Trade discounts,521,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+5212,Hàng bán bị trả lại,Sales returns,521,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+5213,Giảm giá hàng bán,Sales allowances,521,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+611,Mua hàng,Purchases (periodic inventory),,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+6111,"Mua nguyên liệu, vật liệu",Purchases - materials,611,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+6112,Mua hàng hóa,Purchases - merchandise,611,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+631,Giá thành sản xuất,Production cost (periodic inventory),,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
+6415,Chi phí bảo hành,Selling - warranty costs (TT200 meaning of 6415),641,removed_from_tt200,,https://ketoanthienung.net/so-sanh-tai-khoan-ke-toan-thong-tu-200-va-thong-tu-99.htm
