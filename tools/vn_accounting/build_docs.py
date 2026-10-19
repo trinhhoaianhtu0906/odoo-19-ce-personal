@@ -16,6 +16,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ifrs_terms_vi import IFRS_TERMS  # noqa: E402
 from report_terms import vietnamese_by_english  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -30,10 +31,12 @@ REPORT_FILES = [
     MODULES / "l10n_vn_financial_statements" / "data" / "vn_report_b02.xml",
     MODULES / "l10n_vn_financial_statements" / "data" / "vn_report_b03.xml",
     MODULES / "l10n_vn_consolidation" / "data" / "vn_report_hn.xml",
+    MODULES / "l10n_vn_ifrs" / "data" / "vn_report_ifrs.xml",
 ]
 TEST_DIRS = {
     "l10n_vn_financial_statements": MODULES / "l10n_vn_financial_statements" / "tests",
     "l10n_vn_consolidation": MODULES / "l10n_vn_consolidation" / "tests",
+    "l10n_vn_ifrs": MODULES / "l10n_vn_ifrs" / "tests",
     "vietqr_tax_lookup": MODULES / "vietqr_tax_lookup" / "tests",
 }
 
@@ -43,7 +46,7 @@ def esc(text):
 
 
 def appendix():
-    vietnamese = vietnamese_by_english()
+    vietnamese = {**IFRS_TERMS, **vietnamese_by_english()}
     reports, lines = {}, {}
     for path in REPORT_FILES:
         for record in ET.parse(path).getroot().iter("record"):

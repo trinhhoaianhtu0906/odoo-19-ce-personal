@@ -27,9 +27,16 @@ def run(report, provider, period):
             {i["line"].code: i["value_cmp"] or 0 for i in res["lines"]}, res["warnings"])
 
 
-def ledger(company, date_from=None, date_to=None, exclude_closing=False):
-    """{code: balance} straight from the journal items."""
+def ledger(company, date_from=None, date_to=None, exclude_closing=False, journals="vas"):
+    """{code: balance} straight from the journal items.
+
+    ``journals``: "vas" leaves the IFRS adjustment journals out, "ifrs_only" reads only them.
+    """
     domain = [("company_id", "=", company.id), ("parent_state", "=", "posted")]
+    if journals == "vas":
+        domain.append(("journal_id.vn_ledger", "!=", "ifrs"))
+    else:
+        domain.append(("journal_id.vn_ledger", "=", "ifrs"))
     if date_from:
         domain.append(("date", ">=", date_from))
     if date_to:
@@ -48,14 +55,14 @@ def total(balances, *prefixes):
     return sum(v for k, v in balances.items() if k.startswith(prefixes))
 
 
-def profit(company, date_from, date_to):
+def profit(company, date_from, date_to, journals="vas"):
     """Profit after tax from the ledger, closing entries excluded."""
-    return -total(ledger(company, date_from, date_to, exclude_closing=True), "5", "6", "7", "8")
+    return -total(ledger(company, date_from, date_to, exclude_closing=True, journals=journals), "5", "6", "7", "8")
 
 
-def equity(company, day):
+def equity(company, day, journals="vas"):
     """Total equity at ``day``: 4xx plus every unclosed P&L balance."""
-    return -total(ledger(company, None, day), "4", "5", "6", "7", "8", "9")
+    return -total(ledger(company, None, day, journals=journals), "4", "5", "6", "7", "8", "9")
 
 
 # ---------------------------------------------------------------- standalone
@@ -130,6 +137,49 @@ for period in PERIODS:
     check(f"{tag} | B02-HN 62 = 20% LN con sau ngày mua", 0.2 * pat_s, h02["62"], 2)
     check(f"{tag} | B02-HN 27 = 30% LN công ty liên kết", 0.3 * pat_a, h02["27"], 2)
     check(f"{tag} | B02-HN 61 = 60 - 62", h02["60"] - h02["62"], h02["61"])
+
+# ---------------------------------------------------------------- IFRS = VAS + IFRS adjustments
+IFRS_SFP, IFRS_PL, IFRS_CF = R("l10n_vn_ifrs.report_ifrs_sfp"), R("l10n_vn_ifrs.report_ifrs_pl"), R("l10n_vn_ifrs.report_ifrs_cf")
+IFRS_SFP_C, IFRS_PL_C = R("l10n_vn_ifrs.report_ifrs_sfp_c"), R("l10n_vn_ifrs.report_ifrs_pl_c")
+for company in (P, S):
+    for period in PERIODS:
+        tag = f"IFRS {company.name[:22]} {period[1]:%d/%m/%Y}"
+        vas01, _o, _w = run(B01, LedgerProvider(env, company), period)
+        vas02, _p, _w = run(B02, LedgerProvider(env, company), period)
+        ifrs_provider = LedgerProvider(env, company, ledger="ifrs")
+        sfp, _o, w1 = run(IFRS_SFP, ifrs_provider, period)
+        pl, _p, w2 = run(IFRS_PL, ifrs_provider, period)
+        cf, _p, w3 = run(IFRS_CF, ifrs_provider, period)
+        check(f"{tag} | SFP không cảnh báo ({w1})", 0, len(w1), 0)
+        check(f"{tag} | PL không cảnh báo ({w2})", 0, len(w2), 0)
+        check(f"{tag} | CF không cảnh báo ({w3})", 0, len(w3), 0)
+        check(f"{tag} | Tổng tài sản = tổng nguồn vốn", sfp["TA"], sfp["TEL"])
+        check(f"{tag} | Vốn chủ IFRS = vốn chủ VAS + điều chỉnh IFRS",
+              vas01["400"] + equity(company, period[1], "ifrs_only"), sfp["EQ"])
+        check(f"{tag} | Lợi nhuận IFRS = lợi nhuận VAS + điều chỉnh IFRS",
+              vas02["60"] + profit(company, *period, journals="ifrs_only"), pl["PFY"])
+        check(f"{tag} | Tiền IFRS = tiền VAS (điều chỉnh không chạm tiền)", vas01["110"], sfp["CASH"])
+        check(f"{tag} | CF 70 = tiền trên SFP", sfp["CASH"], cf["70"])
+
+ifrs_group = group._get_provider(ledger="ifrs")
+e_acq_ifrs = e_acq + equity(S, acq_s, "ifrs_only")
+goodwill_ifrs = 24_000_000_000 - 0.8 * e_acq_ifrs
+for period in PERIODS:
+    date_from, date_to = period
+    tag = f"IFRS HỢP NHẤT {date_to:%d/%m/%Y}"
+    sfp, _o, w1 = run(IFRS_SFP_C, ifrs_group, period)
+    pl, _p, w2 = run(IFRS_PL_C, ifrs_group, period)
+    vas_c, _p, _w = run(B02HN, provider, period)
+    check(f"{tag} | SFP không cảnh báo ({w1})", 0, len(w1), 0)
+    check(f"{tag} | PL không cảnh báo ({w2})", 0, len(w2), 0)
+    check(f"{tag} | Tổng tài sản = tổng nguồn vốn", sfp["TA"], sfp["TEL"])
+    check(f"{tag} | LTTM IFRS = giá gốc - 80% vốn chủ IFRS ngày mua, không phân bổ", goodwill_ifrs, sfp["GW"], 2)
+    s_equity_ifrs = equity(S, date_to) + equity(S, date_to, "ifrs_only")
+    check(f"{tag} | LICĐKKS IFRS = 20% vốn chủ IFRS công ty con", 0.2 * s_equity_ifrs, sfp["NCI"], 3)
+    s_from = max(date_from, acq_s + timedelta(days=1))
+    expected = (vas_c["60"] + profit(P, date_from, date_to, "ifrs_only") + profit(S, s_from, date_to, "ifrs_only")
+                + amort(date_to) - amort(date_from - timedelta(days=1)))
+    check(f"{tag} | LN IFRS = LN VAS hợp nhất + điều chỉnh IFRS mẹ, con + hoàn phân bổ LTTM", expected, pl["PFY"], 3)
 
 # ---------------------------------------------------------------- summary
 moves = env["account.move"]._read_group([("state", "=", "posted")], ["company_id", "move_type"], ["__count"])

@@ -12,7 +12,7 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-MODULES = ["l10n_vn_financial_statements", "l10n_vn_consolidation", "vietqr_tax_lookup"]
+MODULES = ["l10n_vn_financial_statements", "l10n_vn_consolidation", "l10n_vn_ifrs", "vietqr_tax_lookup"]
 SKIP_DIRS = {".git", "__pycache__"}
 SKIP_SUFFIXES = {".pyc", ".pyo"}
 

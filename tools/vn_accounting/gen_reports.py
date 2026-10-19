@@ -306,7 +306,7 @@ def flow_style(code, caption):
     return 2, False
 
 
-def xml_lines(prefix, report_ref, items):
+def xml_lines(prefix, report_ref, items, translate=True):
     out = []
     for seq, (code, caption, formula, level, bold) in enumerate(items, start=1):
         xmlid = f"{prefix}_{code}".replace(".", "_")
@@ -315,7 +315,7 @@ def xml_lines(prefix, report_ref, items):
             f'        <field name="report_id" ref="{report_ref}"/>\n'
             f'        <field name="sequence">{seq * 10}</field>\n'
             f'        <field name="code">{escape(code)}</field>\n'
-            f'        <field name="name">{escape(english(caption))}</field>\n'
+            f'        <field name="name">{escape(english(caption) if translate else caption)}</field>\n'
             f'        <field name="formula">{escape(formula)}</field>\n'
             f'        <field name="level">{level}</field>\n'
             f'        <field name="bold" eval="{bold}"/>\n'
@@ -324,11 +324,11 @@ def xml_lines(prefix, report_ref, items):
     return out
 
 
-def report_record(xmlid, fields):
+def report_record(xmlid, fields, translate=True):
     body = "\n".join(
         f'        <field name="{k}" eval="{v}"/>'
         if isinstance(v, bool)
-        else f'        <field name="{k}">{escape(english(v) if k in TRANSLATED_FIELDS else str(v))}</field>'
+        else f'        <field name="{k}">{escape(english(v) if translate and k in TRANSLATED_FIELDS else str(v))}</field>'
         for k, v in fields.items()
     )
     return f'    <record id="{xmlid}" model="vn.report">\n{body}\n    </record>'
@@ -547,3 +547,231 @@ write(
     + xml_lines("b02hn", "report_b02_hn", b02_hn),
 )
 print("B01", len(b01), "B02", len(b02), "B03d", len(b03d), "B03i", len(b03i), "B01HN", len(b01_hn), "B02HN", len(b02_hn))
+
+
+# ======================================================================== IFRS
+# IFRS statements = VAS books + IFRS adjustment journals (ledger "ifrs").
+# The statement of financial position is assembled from the leaf lines of
+# B01-DN, so every account lands in exactly one IFRS line and it balances.
+# Captions are English (IAS 1 / IAS 7); Vietnamese goes to i18n/vi.po.
+
+def _leaves(codes, formulas):
+    return " + ".join(f"({formulas[c]})" for c in codes if formulas.get(c))
+
+
+def ifrs_sfp(formulas, consolidated):
+    """[(code, caption, formula, level, bold)] of the IFRS statement of financial position."""
+    receivables_nc = ["211", "212", "215", "216"] if consolidated else ["211", "212", "213", "214", "215", "216"]
+    receivables_c = ["131", "132", "135", "136", "137"] if consolidated else ["131", "132", "133", "135", "136", "137"]
+    other_nc_liab = ["331", "332", "333", "334", "337", "338", "341", "344"]
+    if not consolidated:
+        other_nc_liab = ["331", "332", "333", "334", "335", "336", "337", "338", "341", "344"]
+    payables = ["311", "313", "315", "316", "320", "323", "324"] if consolidated else [
+        "311", "313", "315", "316", "317", "320", "323", "324"]
+    # Leases are shown apart (IFRS 16): borrowings without finance lease liabilities.
+    split = {"321": "NBAL(34111, 34311) + CR(171) | NBAL(34121)", "339": "NBAL(34112, 34312) | NBAL(34122)"}
+    nca = [
+        ("PPE", "Property, plant and equipment", ["222", "223", "252"]),
+        ("ROU", "Right-of-use assets", ["225", "226"]),
+        ("INTANG", "Intangible assets", ["228", "229"]),
+    ]
+    if consolidated:
+        nca.append(("GW", "Goodwill", ["279"]))
+    nca += [
+        ("IP", "Investment property", ["241", "242"]),
+        ("BIO", "Biological assets", ["232", "234", "235", "236", "237", "238"]),
+        ("INVEST", "Investments in associates and joint ventures" if consolidated
+         else "Investments in subsidiaries, associates and joint ventures", ["261", "262"]),
+        ("OFANC", "Other financial assets", ["263", "264", "265", "266"]),
+        ("TRNC", "Trade and other receivables", receivables_nc),
+        ("DTA", "Deferred tax assets", ["272"]),
+        ("ONCA", "Other non-current assets", ["251", "271", "273", "274"]),
+    ]
+    ca = [
+        ("INV", "Inventories", ["141", "142"]),
+        ("BIOC", "Biological assets", ["151", "152", "153"]),
+        ("TRC", "Trade and other receivables", receivables_c),
+        ("CTA", "Contract assets", ["134"]),
+        ("OFAC", "Other financial assets", ["121", "122", "123", "124", "125", "126", "164"]),
+        ("CTAX", "Current tax assets", ["162", "163"]),
+        ("OCA", "Other current assets", ["161", "165"]),
+        ("CASH", "Cash and cash equivalents", ["111", "112"]),
+    ]
+    equity = [
+        ("SC", "Share capital", ["411a", "411b"]),
+        ("SP", "Share premium", ["412"]),
+        ("TS", "Treasury shares", ["415"]),
+        ("RES", "Other reserves", ["413", "414", "416", "417", "418", "419"]),
+        ("RE", "Retained earnings", ["420a", "420b"]),
+    ]
+    ncl = [
+        ("BORNC", "Borrowings", "NBAL(34112, 34312) + NBAL(3432)"),
+        ("LEASENC", "Lease liabilities", "NBAL(34122)"),
+        ("DTL", "Deferred tax liabilities", ["342"]),
+        ("PROVNC", "Provisions", ["343"]),
+        ("OLNC", "Other non-current liabilities", other_nc_liab),
+    ]
+    cl = [
+        ("TP", "Trade and other payables", payables),
+        ("CONTRACT", "Contract liabilities", ["312", "318", "319"]),
+        ("CTL", "Current tax liabilities", ["314"]),
+        ("BORC", "Borrowings", "NBAL(34111, 34311) + CR(171)"),
+        ("LEASEC", "Lease liabilities", "NBAL(34121)"),
+        ("PROVC", "Provisions", ["322"]),
+    ]
+
+    # Every leaf of B01 is used once (321 and 339 through the borrowings/lease split).
+    used = [c for group in (nca, ca, equity, ncl, cl) for _k, _n, src in group if isinstance(src, list) for c in src]
+    used += ["321", "325", "339", "340"]
+    leaves = [c for c, f in formulas.items() if f and not f.lstrip().startswith("[") and "] +" not in f
+              and c not in ("411", "420", "231", "233")]
+    if consolidated:
+        used.append("429")
+        # Not on the consolidated form: their amounts are folded into 135, 215, 320 and 338.
+        leaves = [c for c in leaves if c not in ("133", "213", "214", "317", "335", "336")]
+    missing = sorted(set(leaves) - set(used))
+    duplicated = sorted({c for c in used if used.count(c) > 1})
+    assert not missing and not duplicated, (consolidated, missing, duplicated)
+    del split
+
+    items = [("ASSETS", "ASSETS", "", 0, True)]
+
+    def section(code, caption, rows, level=1):
+        items.append((code, caption, " + ".join(f"[{k}]" for k, _n, _s in rows), level, True))
+        for key, name, src in rows:
+            items.append((key, name, src if isinstance(src, str) else _leaves(src, formulas), 2, False))
+
+    section("NCA", "Non-current assets", nca)
+    section("CA", "Current assets", ca)
+    items.append(("TA", "TOTAL ASSETS", "[NCA] + [CA]", 0, True))
+    items.append(("EQL", "EQUITY AND LIABILITIES", "", 0, True))
+    if consolidated:
+        section("EQP", "Equity attributable to owners of the parent", equity)
+        items.append(("NCI", "Non-controlling interests", _leaves(["429"], formulas), 1, True))
+        items.append(("EQ", "Total equity", "[EQP] + [NCI]", 1, True))
+    else:
+        section("EQ", "Total equity", equity)
+    section("NCL", "Non-current liabilities", ncl)
+    section("CL", "Current liabilities", cl)
+    items.append(("TL", "Total liabilities", "[NCL] + [CL]", 1, True))
+    items.append(("TEL", "TOTAL EQUITY AND LIABILITIES", "[EQ] + [TL]", 0, True))
+    return items
+
+
+def ifrs_pl(consolidated):
+    items = [
+        ("REV", "Revenue", "CT(511) - CT(5117) - (DT(511) - DT(5117) + BAL(521))", 2, False),
+        ("COS", "Cost of sales", "-(BAL(632) - BAL(6327))", 2, False),
+        ("GP", "Gross profit", "[REV] + [COS]", 1, True),
+        ("OI", "Other income", "NBAL(711) + NBAL(5117) - BAL(6327)", 2, False),
+        ("SD", "Selling and distribution expenses", "-BAL(641)", 2, False),
+        ("AE", "Administrative expenses", "-BAL(642)", 2, False),
+        ("OE", "Other expenses", "-BAL(811)", 2, False),
+        ("OP", "Operating profit", "[GP] + [OI] + [SD] + [AE] + [OE]", 1, True),
+        ("FI", "Finance income", "NBAL(515)", 2, False),
+        ("FC", "Finance costs", "-BAL(635)", 2, False),
+    ]
+    pbt = "[OP] + [FI] + [FC]"
+    if consolidated:
+        items.append(("ASSOC", "Share of profit of associates and joint ventures", 'NBAL("HN_EQPL")', 2, False))
+        pbt += " + [ASSOC]"
+    items += [
+        ("PBT", "Profit before tax", pbt, 1, True),
+        ("TAX", "Income tax expense", "-BAL(821)", 2, False),
+        ("PFY", "Profit for the period", "[PBT] + [TAX]", 1, True),
+    ]
+    if consolidated:
+        items += [
+            ("PATTR", "Profit attributable to:", "", 1, False),
+            ("POWN", "Owners of the parent", "[PFY] - [PNCI]", 2, False),
+            ("PNCI", "Non-controlling interests", 'BAL("HN_PLNCI")', 2, False),
+        ]
+    items += [
+        ("OCIH", "Other comprehensive income", "", 1, True),
+        ("OCI1", "Items that will not be reclassified to profit or loss: revaluation surplus", "NBAL(412)", 2, False),
+        ("OCI2", "Items that may be reclassified to profit or loss: exchange differences", "NBAL(413)", 2, False),
+        ("OCIT", "Other comprehensive income for the period", "[OCI1] + [OCI2]", 1, True),
+        ("TCI", "Total comprehensive income for the period", "[PFY] + [OCIT]", 0, True),
+    ]
+    return items
+
+
+IFRS_CF_CAPTIONS = {
+    "I": "Cash flows from operating activities",
+    "01": "Receipts from customers",
+    "02": "Payments to suppliers",
+    "03": "Payments to employees",
+    "04": "Interest paid",
+    "05": "Income taxes paid",
+    "06": "Other operating receipts",
+    "07": "Other operating payments",
+    "20": "Net cash from operating activities",
+    "II": "Cash flows from investing activities",
+    "21": "Purchase of property, plant and equipment and other long-term assets",
+    "22": "Proceeds from sale of property, plant and equipment and other long-term assets",
+    "23": "Loans granted and debt instruments purchased",
+    "24": "Loans repaid and debt instruments sold",
+    "25": "Investments in other entities",
+    "26": "Proceeds from investments in other entities",
+    "27": "Interest and dividends received",
+    "30": "Net cash used in investing activities",
+    "III": "Cash flows from financing activities",
+    "31": "Proceeds from issue of shares",
+    "32": "Capital returned and shares repurchased",
+    "33": "Proceeds from borrowings",
+    "34": "Repayment of borrowings",
+    "35": "Payment of lease liabilities",
+    "36": "Dividends paid",
+    "40": "Net cash from financing activities",
+    "50": "Net increase (decrease) in cash and cash equivalents",
+    "60": "Cash and cash equivalents at the beginning of the period",
+    "61": "Effect of exchange rate changes",
+    "70": "Cash and cash equivalents at the end of the period",
+}
+
+
+def ifrs_cf():
+    items = []
+    for code, _vi in B03_DIRECT_CAPTIONS:
+        caption = IFRS_CF_CAPTIONS[code]
+        level, bold = flow_style(code, _vi)
+        items.append((code, caption, B03_DIRECT[code], level, bold))
+    return items
+
+
+if len(sys.argv) > 4:
+    ifrs_dir = sys.argv[4]
+    ifrs_common = {
+        "ledger": "ifrs",
+        "show_codes": False,
+        "form_code": "IFRS",
+        "form_note": "(Prepared under IFRS Accounting Standards from the VAS books and the IFRS adjustments)",
+    }
+    blocks = []
+    definitions = [
+        ("ifrs_sfp", "IFRS Statement of Financial Position", "IFRS-SFP", 110, "position", False,
+         "STATEMENT OF FINANCIAL POSITION (IFRS)", ifrs_sfp(B01, False),
+         {"check_expression": "[TA] - [TEL]", "check_message": "Total assets differ from total equity and liabilities"}),
+        ("ifrs_pl", "IFRS Statement of Profit or Loss and Other Comprehensive Income", "IFRS-PL", 120, "period", False,
+         "STATEMENT OF PROFIT OR LOSS AND OTHER COMPREHENSIVE INCOME (IFRS)", ifrs_pl(False), {}),
+        ("ifrs_cf", "IFRS Statement of Cash Flows", "IFRS-CF", 130, "cashflow", False,
+         "STATEMENT OF CASH FLOWS (IFRS)", ifrs_cf(),
+         {"subtitle": "(Direct method)", "check_expression": f"[70] - CLOSE({CASH_SET})",
+          "check_message": "Closing cash (70) does not match the ledger balance of cash and cash equivalents"}),
+        ("ifrs_sfp_c", "IFRS Consolidated Statement of Financial Position", "IFRS-SFP-C", 140, "position", True,
+         "CONSOLIDATED STATEMENT OF FINANCIAL POSITION (IFRS)", ifrs_sfp({**B01_HN, "279": 'BAL("HN_GW")', "429": 'NBAL("HN_NCI")'}, True),
+         {"check_expression": "[TA] - [TEL]", "check_message": "Total assets differ from total equity and liabilities"}),
+        ("ifrs_pl_c", "IFRS Consolidated Statement of Profit or Loss and Other Comprehensive Income", "IFRS-PL-C", 150,
+         "period", True, "CONSOLIDATED STATEMENT OF PROFIT OR LOSS AND OTHER COMPREHENSIVE INCOME (IFRS)",
+         ifrs_pl(True), {}),
+    ]
+    counts = {}
+    for xmlid, name, code, seq, kind, consolidated, title, items, extra in definitions:
+        fields = {"name": name, "code": code, "sequence": seq, "kind": kind, **ifrs_common, "title": title, **extra}
+        if consolidated:
+            fields["consolidated"] = True
+        blocks.append(report_record(f"report_{xmlid}", fields, translate=False))
+        blocks += xml_lines(xmlid, f"report_{xmlid}", items, translate=False)
+        counts[code] = len(items)
+    write(f"{ifrs_dir}/data/vn_report_ifrs.xml", blocks)
+    print("IFRS", counts)

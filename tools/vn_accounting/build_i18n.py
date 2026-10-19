@@ -21,8 +21,9 @@ sys.path.insert(0, str(HERE))
 
 from report_terms import vietnamese_by_english  # noqa: E402
 from ui_terms_vi import UI_TERMS  # noqa: E402
+from ifrs_terms_vi import IFRS_TERMS  # noqa: E402
 
-MODULES = ["vietqr_tax_lookup", "l10n_vn_financial_statements", "l10n_vn_consolidation"]
+MODULES = ["vietqr_tax_lookup", "l10n_vn_financial_statements", "l10n_vn_consolidation", "l10n_vn_ifrs"]
 
 
 def parse_po(text):
@@ -72,7 +73,7 @@ msgstr ""
 
 def main():
     terms = dict(vietnamese_by_english())
-    for en, vi in UI_TERMS.items():
+    for en, vi in list(UI_TERMS.items()) + list(IFRS_TERMS.items()):
         if en in terms and terms[en] != vi:
             raise SystemExit(f"Conflicting translations for {en!r}")
         terms[en] = vi

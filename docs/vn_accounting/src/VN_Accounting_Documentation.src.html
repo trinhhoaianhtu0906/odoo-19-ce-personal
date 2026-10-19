@@ -71,7 +71,8 @@
     <li>Cài đặt, vận hành, dữ liệu mẫu</li>
     <li>Kiểm thử và kết quả đối chiếu</li>
     <li>Giới hạn và hướng phát triển</li>
-    <li>Phụ lục: ánh xạ chỉ tiêu B01, B02, B03, B01/HN, B02/HN</li>
+    <li>Báo cáo IFRS từ sổ VAS</li>
+    <li>Phụ lục: ánh xạ chỉ tiêu VAS và IFRS</li>
   </ol>
 </section>
 
@@ -81,6 +82,7 @@
   <tr><th style="width:28%">Module</th><th>Chức năng</th><th style="width:22%">Phụ thuộc</th></tr>
   <tr><td><code>l10n_vn_financial_statements</code></td><td>Báo cáo tài chính riêng theo TT99: B01-DN (tình hình tài chính), B02-DN (kết quả kinh doanh), B03-DN (lưu chuyển tiền tệ, trực tiếp và gián tiếp). Mỗi chỉ tiêu có công thức sửa được. Màn hình xem động, so sánh nhiều kỳ, chênh lệch, xuất Excel và PDF đúng mẫu, bấm chỉ tiêu xem bút toán.</td><td><code>account</code>, <code>l10n_vn</code></td></tr>
   <tr><td><code>l10n_vn_consolidation</code></td><td>Báo cáo hợp nhất B01-DN/HN, B02-DN/HN cho nhiều công ty trong cùng database. Bút toán loại trừ được <b>tính</b>, không ghi vào sổ các công ty thành viên.</td><td><code>l10n_vn_financial_statements</code></td></tr>
+  <tr><td><code>l10n_vn_ifrs</code></td><td>Báo cáo IFRS = sổ VAS + sổ điều chỉnh IFRS: tình hình tài chính, lãi lỗ và OCI, lưu chuyển tiền tệ (riêng và hợp nhất). Mục 15.</td><td><code>l10n_vn_consolidation</code></td></tr>
   <tr><td><code>vietqr_tax_lookup</code></td><td>Trên khách hàng doanh nghiệp: nút “Lấy thông tin MST” gọi VietQR, tự điền tên, địa chỉ, tỉnh, tên viết tắt, tên quốc tế, tình trạng MST.</td><td><code>contacts</code></td></tr>
 </table>
 <p>Ngoài ra trên server có bộ addon kế toán của Odoo Mates (<code>om_account_accountant</code>, <code>accounting_pdf_reports</code> và 16 module liên quan, bản 19.0). Đây là code bên thứ ba, không sửa; các module ở trên không phụ thuộc vào chúng nhưng chạy chung bình thường (đã kiểm tra trên DB <code>vn_acc_full</code>).</p>
@@ -572,7 +574,52 @@ docker compose exec -T postgres sh -c 'dropdb -U "$POSTGRES_USER" --force vn_fs_
   <li>Drill-down chỉ hiện bút toán của các công ty đang bật ở bộ chọn công ty (giới hạn của Odoo).</li>
 </ul>
 
-<h2 class="page-break">15. Phụ lục: ánh xạ chỉ tiêu</h2>
+<h2>15. Báo cáo IFRS từ sổ VAS (<code>l10n_vn_ifrs</code>)</h2>
+<p>Odoo không có sổ cái song song như SAP (leading / non-leading ledger). Cách làm: <b>VAS là sổ gốc</b>, mọi nghiệp vụ hằng ngày ghi theo VAS; <b>IFRS = VAS + các bút toán điều chỉnh IFRS</b> ghi vào sổ nhật ký riêng.</p>
+<div class="diagram">
+<pre class="mermaid">
+flowchart LR
+  OPS[Nghiệp vụ hằng ngày<br/>hoá đơn, thanh toán, lương...] --> J1[(Sổ nhật ký thường<br/>Sổ = VAS và IFRS)]
+  ADJ[Điều chỉnh IFRS theo kỳ<br/>IFRS 16, IFRS 9, IAS 12...] --> J2[(Sổ Điều chỉnh IFRS<br/>Sổ = Chỉ điều chỉnh IFRS)]
+  LOC[Bút toán chỉ có ở VAS] --> J3[(Sổ nhật ký<br/>Sổ = Chỉ VAS)]
+  J1 --> VAS[Báo cáo VAS<br/>B01, B02, B03, HN]
+  J3 --> VAS
+  J1 --> IFRS[Báo cáo IFRS<br/>IAS 1, IAS 7, hợp nhất]
+  J2 --> IFRS
+</pre>
+<div class="caption">Hình 8. Một bộ số, hai bộ báo cáo: báo cáo VAS bỏ sổ điều chỉnh IFRS, báo cáo IFRS bỏ sổ chỉ dành cho VAS.</div>
+</div>
+<h3>15.1 Field mới</h3>
+<table>
+  <tr><th style="width:30%">Field</th><th>Ý nghĩa</th></tr>
+  <tr><td><code>account.journal.vn_ledger</code></td><td>Sổ của sổ nhật ký: <code>all</code> (VAS và IFRS, mặc định), <code>vas</code> (chỉ VAS), <code>ifrs</code> (chỉ điều chỉnh IFRS). Hiện trên form sổ nhật ký loại Tổng hợp.</td></tr>
+  <tr><td><code>vn.report.ledger</code></td><td>Mẫu báo cáo đọc sổ nào: <code>vas</code> hoặc <code>ifrs</code>. Engine bỏ các dòng bút toán của sổ dành cho sổ còn lại (<code>LedgerProvider(..., ledger=...)</code>).</td></tr>
+  <tr><td><code>vn.report.show_codes</code></td><td>In cột mã số và hàng đánh số cột (mẫu VAS). Mẫu IFRS tắt.</td></tr>
+  <tr><td><code>vn.consolidation.worksheet.ledger</code></td><td>Bảng tính loại trừ theo VAS hoặc IFRS.</td></tr>
+</table>
+<h3>15.2 Mẫu IFRS</h3>
+<ul>
+  <li><b>Statement of Financial Position</b> (riêng, hợp nhất): ghép từ các dòng chi tiết của B01 (ví dụ Property, plant and equipment = 222 + 223 + 252; Right-of-use assets = 225 + 226), nên mọi tài khoản thuộc đúng một dòng và báo cáo luôn cân. Vay và nợ thuê tách riêng (Borrowings / Lease liabilities theo IFRS 16). Script sinh mẫu kiểm tra phủ đủ.</li>
+  <li><b>Statement of Profit or Loss and OCI</b> (riêng, hợp nhất): phân loại chi phí theo chức năng; OCI gồm chênh lệch đánh giá lại (412) và chênh lệch tỷ giá (413) phát sinh trong kỳ; hợp nhất có phần phân bổ cho cổ đông công ty mẹ và cổ đông không kiểm soát.</li>
+  <li><b>Statement of Cash Flows</b>: phương pháp trực tiếp, cùng logic phân bổ dòng tiền với B03.</li>
+</ul>
+<h3>15.3 Hợp nhất theo IFRS</h3>
+<ul>
+  <li>Lợi thế thương mại <b>không phân bổ</b> (IFRS 3, IAS 36): bỏ bút toán phân bổ khi đọc sổ IFRS. Kiểm tra suy giảm giá trị làm bằng bút toán điều chỉnh.</li>
+  <li>Tài sản thuần tại ngày mua theo IFRS = số dư vốn chủ VAS đã lưu + ảnh hưởng của các điều chỉnh IFRS ghi đến ngày mua, nên lợi thế thương mại IFRS có thể khác VAS.</li>
+  <li>Các thành viên đọc theo cùng sổ (IFRS) nên lợi ích cổ đông không kiểm soát, phương pháp vốn chủ sở hữu tự phản ánh điều chỉnh IFRS của công ty con, công ty liên kết.</li>
+</ul>
+<h3>15.4 Điều chỉnh IFRS thường gặp (ghi ở sổ Điều chỉnh IFRS)</h3>
+<table>
+  <tr><th style="width:22%">Chuẩn mực</th><th>Bút toán (dùng tài khoản VAS)</th></tr>
+  <tr><td>IFRS 16 thuê tài sản</td><td>Ghi nhận: Nợ 212 / Có 34122 (và Có 2421 phần trả trước). Hằng tháng: Nợ 2421 / Có 6427 (đảo chi phí thuê VAS), Nợ 6424 / Có 2142 (khấu hao), Nợ 6351 / Có 34122 (lãi). Cuối kỳ chuyển phần ngắn hạn 34122 → 34121.</td></tr>
+  <tr><td>IFRS 9 tổn thất tín dụng dự kiến</td><td>Nợ 6426 / Có 22931 phần chênh lệch so với dự phòng VAS, tự đảo đầu kỳ sau.</td></tr>
+  <tr><td>IAS 12 thuế hoãn lại</td><td>Nợ 243 / Có 8212 (hoặc Nợ 8212 / Có 347) trên chênh lệch luỹ kế, tự đảo đầu kỳ sau.</td></tr>
+  <tr><td>Khác</td><td>IFRS 15 doanh thu, giá trị hợp lý bất động sản đầu tư, suy giảm giá trị, phúc lợi nhân viên… cùng cách.</td></tr>
+</table>
+<p>Dữ liệu demo: <code>tools/vn_accounting/ifrs_demo_data.py</code> ghi IFRS 16 (thuê văn phòng 5 năm, lãi suất 8%), IFRS 9 (2% phải thu) và IAS 12 cho công ty mẹ và công ty con. Đối chiếu (<code>verify.py</code>): 145/145 khớp, gồm vốn chủ IFRS = vốn chủ VAS + điều chỉnh, lợi nhuận IFRS = lợi nhuận VAS + điều chỉnh, lợi thế thương mại IFRS không phân bổ, lợi ích cổ đông không kiểm soát = 20% vốn chủ IFRS của công ty con.</p>
+
+<h2 class="page-break">16. Phụ lục: ánh xạ chỉ tiêu</h2>
 <p class="small">Sinh tự động từ data XML của module tại thời điểm build. Tham số hàm là tiền tố mã tài khoản của chart <code>l10n_vn</code>.</p>
 {{APPENDIX}}
 
