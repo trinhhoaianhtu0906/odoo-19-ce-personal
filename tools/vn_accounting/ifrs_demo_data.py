@@ -10,6 +10,8 @@ from datetime import date
 
 from dateutil.relativedelta import relativedelta
 
+from odoo.tools.translate import get_translation
+
 M = 1_000_000
 RATE = 0.08
 YEARS = 5
@@ -23,8 +25,7 @@ stats = {"entries": 0}
 # Journal names in every installed language (journals created before the translations were loaded).
 for journal in env["account.journal"].search([("vn_ledger", "=", "ifrs")]):
     for lang, _name in env["res.lang"].get_installed():
-        lang_env = env(context=dict(env.context, lang=lang))
-        journal.with_env(lang_env).name = lang_env._("IFRS Adjustments")
+        journal.with_context(lang=lang).name = get_translation("l10n_vn_ifrs", lang, "IFRS Adjustments", ())
 
 
 def cenv(company):

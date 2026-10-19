@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Báo cáo VAS và IFRS</title>
+<style>
+  :root { --ink: #1f2933; --muted: #52606d; --line: #cbd2d9; --accent: #714b67; --soft: #f5f2f4; --ok: #2f7d4f; --code: #f4f5f7; }
+  @page { size: A4; margin: 16mm 14mm 18mm 14mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; color: var(--ink); font-size: 10.5pt; line-height: 1.5; margin: 0; background: #fff; }
+  main { max-width: 190mm; margin: 0 auto; }
+  h1 { font-size: 22pt; color: var(--accent); margin: 0 0 3mm; line-height: 1.25; }
+  h2 { font-size: 15pt; color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 1.5mm; margin: 9mm 0 4mm; page-break-after: avoid; }
+  h3 { font-size: 12pt; margin: 6mm 0 2.5mm; page-break-after: avoid; }
+  p { margin: 0 0 2.5mm; }
+  ul, ol { margin: 0 0 3mm 5mm; padding-left: 4mm; }
+  li { margin-bottom: 1mm; }
+  code { font-family: Consolas, "Cascadia Mono", monospace; font-size: 9pt; background: var(--code); padding: 0 1mm; border-radius: 1mm; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 4mm; font-size: 9.3pt; }
+  tr { page-break-inside: avoid; }
+  th, td { border: 1px solid var(--line); padding: 1.3mm 2mm; vertical-align: top; text-align: left; }
+  th { background: var(--soft); font-weight: 600; }
+  td.num, th.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  tr.total td { font-weight: 700; background: #fafafa; }
+  .cover { height: 250mm; display: flex; flex-direction: column; justify-content: center; page-break-after: always; }
+  .cover .sub { font-size: 13pt; color: var(--muted); margin-bottom: 10mm; }
+  .cover table { width: auto; font-size: 10pt; }
+  .cover td { border: none; padding: 1mm 6mm 1mm 0; }
+  .key { border: 2px solid var(--accent); border-radius: 2mm; padding: 4mm 5mm; margin: 0 0 4mm; text-align: center; font-size: 13pt; font-weight: 600; color: var(--accent); page-break-inside: avoid; }
+  .note { border-left: 3mm solid var(--accent); background: var(--soft); padding: 2.5mm 4mm; margin: 0 0 4mm; page-break-inside: avoid; }
+  .warn { border-left: 3mm solid #c27c0e; background: #fdf6e7; padding: 2.5mm 4mm; margin: 0 0 4mm; page-break-inside: avoid; }
+  .diagram { border: 1px solid var(--line); border-radius: 2mm; padding: 3mm; margin: 0 0 4mm; text-align: center; page-break-inside: avoid; }
+  .caption { font-size: 8.5pt; color: var(--muted); margin-top: 2mm; text-align: center; }
+  .shot { border: 1px solid var(--line); border-radius: 2mm; overflow: hidden; margin: 0 0 1mm; page-break-inside: avoid; }
+  .shot img { width: 100%; display: block; }
+  .shot.top { max-height: 105mm; }
+  figure { margin: 0 0 4mm; page-break-inside: avoid; }
+  .toc ol { columns: 2; column-gap: 8mm; }
+  .check { color: var(--ok); font-weight: 700; }
+  .page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+<main>
+
+<section class="cover">
+  <h1>Báo cáo VAS và IFRS trên cùng một bộ sổ</h1>
+  <div class="sub">Mô tả tính năng cho BA — Odoo 19, bộ addon kế toán Việt Nam của Tricasia</div>
+  <table>
+    <tr><td><b>Tính năng</b></td><td>Lập báo cáo tài chính IFRS từ sổ kế toán VAS, kể cả báo cáo hợp nhất</td></tr>
+    <tr><td><b>Module</b></td><td><code>l10n_vn_ifrs</code> (dựa trên <code>l10n_vn_financial_statements</code>, <code>l10n_vn_consolidation</code>)</td></tr>
+    <tr><td><b>Người đọc</b></td><td>BA, tư vấn triển khai, kế toán trưởng phía khách hàng</td></tr>
+    <tr><td><b>Phiên bản</b></td><td>19.0.1.0.0 — 19/10/2026</td></tr>
+  </table>
+</section>
+
+<section class="toc">
+  <h2>Nội dung</h2>
+  <ol>
+    <li>Bối cảnh và mục tiêu</li>
+    <li>Nguyên lý: một bộ sổ, hai bộ báo cáo</li>
+    <li>Thuật ngữ</li>
+    <li>Quy trình hằng kỳ</li>
+    <li>Cấu hình</li>
+    <li>Màn hình và thao tác</li>
+    <li>Danh mục báo cáo IFRS</li>
+    <li>Ví dụ số liệu: từ VAS sang IFRS</li>
+    <li>Hợp nhất theo IFRS</li>
+    <li>Quy tắc nghiệp vụ</li>
+    <li>Tiêu chí nghiệm thu</li>
+    <li>Câu hỏi thường gặp</li>
+    <li>Giới hạn và lộ trình</li>
+  </ol>
+</section>
+
+<h2>1. Bối cảnh và mục tiêu</h2>
+<p>Nhiều doanh nghiệp tại Việt Nam, nhất là công ty có vốn nước ngoài hoặc công ty chuyển từ SAP sang, phải lập <b>hai bộ báo cáo</b>:</p>
+<ul>
+  <li><b>VAS</b> (Thông tư 99/2025): bắt buộc cho báo cáo tài chính nộp cơ quan nhà nước, quyết toán thuế, kiểm toán theo luật Việt Nam.</li>
+  <li><b>IFRS</b>: cho công ty mẹ nước ngoài, nhà đầu tư, ngân hàng, hoặc báo cáo hợp nhất tập đoàn.</li>
+</ul>
+<p>Trên SAP, việc này thường dùng <i>sổ cái song song</i> (leading ledger và non-leading ledger). Odoo không có cơ chế này. Tính năng mô tả ở đây giải quyết bài toán theo cách đơn giản hơn, phù hợp với thực tế phần lớn doanh nghiệp Việt Nam:</p>
+<div class="key">VAS là sổ gốc &nbsp;·&nbsp; IFRS = số liệu VAS + bút toán điều chỉnh IFRS</div>
+<p><b>Mục tiêu:</b></p>
+<ul>
+  <li>Kế toán chỉ ghi nghiệp vụ hằng ngày <b>một lần</b>, theo VAS.</li>
+  <li>Chênh lệch giữa hai chuẩn mực được ghi riêng, có thể truy vết, theo kỳ (tháng, quý, năm).</li>
+  <li>Báo cáo VAS <b>không bao giờ</b> bị ảnh hưởng bởi bút toán IFRS.</li>
+  <li>Xem, so sánh, xuất Excel, in PDF báo cáo IFRS giống hệt báo cáo VAS, cả báo cáo riêng và hợp nhất.</li>
+</ul>
+
+<h2>2. Nguyên lý: một bộ sổ, hai bộ báo cáo</h2>
+<div class="diagram">
+<pre class="mermaid">
+flowchart LR
+  OPS["Nghiệp vụ hằng ngày<br/>hoá đơn, thanh toán, lương, khấu hao..."] --> J1[("Sổ nhật ký thường<br/>Sổ = VAS và IFRS")]
+  ADJ["Điều chỉnh IFRS theo kỳ<br/>IFRS 16, IFRS 9, IAS 12..."] --> J2[("Sổ Điều chỉnh IFRS<br/>Sổ = Chỉ điều chỉnh IFRS")]
+  LOC["Bút toán chỉ có ở VAS<br/>(nếu có)"] --> J3[("Sổ nhật ký riêng<br/>Sổ = Chỉ VAS")]
+  J1 --> VAS["Báo cáo VAS<br/>B01, B02, B03, hợp nhất"]
+  J3 --> VAS
+  J1 --> IFRS["Báo cáo IFRS<br/>tình hình tài chính, lãi lỗ, lưu chuyển tiền"]
+  J2 --> IFRS
+</pre>
+<div class="caption">Hình 1. Mỗi sổ nhật ký được gắn "Sổ". Báo cáo VAS bỏ sổ Điều chỉnh IFRS; báo cáo IFRS bỏ sổ Chỉ VAS.</div>
+</div>
+<table>
+  <tr><th style="width:30%">Tiêu chí</th><th>SAP (sổ cái song song)</th><th>Odoo (cách làm này)</th></tr>
+  <tr><td>Ghi nghiệp vụ</td><td>Mỗi nghiệp vụ được ghi vào cả hai sổ</td><td>Ghi một lần theo VAS</td></tr>
+  <tr><td>Chênh lệch chuẩn mực</td><td>Ghi riêng ở sổ IFRS (non-leading)</td><td>Ghi ở sổ nhật ký "Điều chỉnh IFRS"</td></tr>
+  <tr><td>Hệ thống tài khoản</td><td>Có thể tách tài khoản theo sổ</td><td>Dùng chung chart VAS (TT99); báo cáo IFRS ánh xạ từ tài khoản VAS</td></tr>
+  <tr><td>Truy vết chênh lệch</td><td>So sánh hai sổ</td><td>Toàn bộ chênh lệch nằm trong một sổ nhật ký, xem ngay danh sách bút toán</td></tr>
+  <tr><td>Phù hợp khi</td><td>Chênh lệch nhiều, phát sinh liên tục</td><td>Chênh lệch tập trung ở một số khoản mục, điều chỉnh được theo kỳ (đa số doanh nghiệp)</td></tr>
+</table>
+
+<h2>3. Thuật ngữ</h2>
+<table>
+  <tr><th style="width:28%">Thuật ngữ</th><th>Ý nghĩa</th></tr>
+  <tr><td><b>Sổ</b> của sổ nhật ký</td><td>Trường mới trên mỗi sổ nhật ký (loại Tổng hợp), 3 giá trị:
+    <br>• <b>VAS và IFRS</b> (mặc định): bút toán dùng cho cả hai bộ báo cáo — toàn bộ nghiệp vụ hằng ngày.
+    <br>• <b>Chỉ điều chỉnh IFRS</b>: chỉ cộng vào báo cáo IFRS.
+    <br>• <b>Chỉ VAS</b>: chỉ có trong báo cáo VAS (ví dụ khoản dự phòng theo quy định thuế mà IFRS không công nhận).</td></tr>
+  <tr><td><b>Sổ</b> của mẫu báo cáo</td><td>Mẫu báo cáo đọc sổ VAS hay IFRS. Các mẫu B01/B02/B03 đọc VAS; các mẫu IFRS đọc IFRS.</td></tr>
+  <tr><td>Bút toán điều chỉnh IFRS</td><td>Bút toán ghi vào sổ "Điều chỉnh IFRS" để chuyển số VAS thành số IFRS. Dùng tài khoản trong chart VAS.</td></tr>
+  <tr><td>Bút toán tự đảo</td><td>Bút toán ghi cuối kỳ và đảo ngược đầu kỳ sau (ví dụ dự phòng tổn thất tín dụng dự kiến, thuế hoãn lại). Mỗi kỳ ghi lại theo số mới.</td></tr>
+  <tr><td>Mẫu IFRS</td><td>Báo cáo trình bày theo IAS 1 / IAS 7, không có cột "Mã số" như mẫu Việt Nam.</td></tr>
+</table>
+
+<h2>4. Quy trình hằng kỳ</h2>
+<div class="diagram">
+<pre class="mermaid">
+flowchart TD
+  A["1. Kế toán viên ghi nghiệp vụ hằng ngày<br/>(sổ nhật ký thường)"] --> B["2. Khoá sổ VAS cuối kỳ<br/>đối chiếu, kết chuyển"]
+  B --> C["3. Lập báo cáo VAS<br/>B01, B02, B03 — nộp theo luật"]
+  B --> D["4. Chuyên viên IFRS lập bút toán điều chỉnh<br/>vào sổ Điều chỉnh IFRS"]
+  D --> E["5. Kế toán trưởng duyệt bút toán điều chỉnh"]
+  E --> F["6. Xem báo cáo IFRS<br/>kiểm tra cảnh báo, so sánh với VAS"]
+  F --> G["7. Xuất Excel / In PDF<br/>gửi công ty mẹ, nhà đầu tư"]
+  F -->|"Lệch, cần sửa"| D
+</pre>
+<div class="caption">Hình 2. Báo cáo VAS hoàn tất trước, không phụ thuộc vào bước điều chỉnh IFRS.</div>
+</div>
+<p>Danh mục điều chỉnh IFRS thường gặp (chi tiết ở mục 8):</p>
+<table>
+  <tr><th style="width:26%">Chuẩn mực</th><th>Nội dung điều chỉnh</th><th style="width:20%">Tần suất</th></tr>
+  <tr><td>IFRS 16 Thuê tài sản</td><td>VAS ghi chi phí thuê; IFRS ghi tài sản quyền sử dụng và nợ thuê, khấu hao và lãi</td><td>Ghi nhận ban đầu + hằng tháng</td></tr>
+  <tr><td>IFRS 9 Công cụ tài chính</td><td>Dự phòng phải thu theo tổn thất tín dụng dự kiến thay cho dự phòng theo quy định VAS</td><td>Mỗi kỳ báo cáo, tự đảo</td></tr>
+  <tr><td>IAS 12 Thuế thu nhập</td><td>Thuế hoãn lại trên các chênh lệch do điều chỉnh IFRS</td><td>Mỗi kỳ báo cáo, tự đảo</td></tr>
+  <tr><td>IFRS 15, IAS 40, IAS 36, IAS 19…</td><td>Doanh thu theo nghĩa vụ thực hiện, giá trị hợp lý, suy giảm giá trị, phúc lợi nhân viên</td><td>Theo phát sinh</td></tr>
+</table>
+
+<h2>5. Cấu hình</h2>
+<ol>
+  <li><b>Cài module</b> <code>l10n_vn_ifrs</code>. Mỗi công ty dùng chart Việt Nam được tạo sẵn sổ nhật ký <b>"Điều chỉnh IFRS"</b> (mã IFRS, Sổ = Chỉ điều chỉnh IFRS).</li>
+  <li><b>Không cần</b> tạo hệ thống tài khoản riêng cho IFRS: bút toán điều chỉnh dùng tài khoản VAS (ví dụ tài sản quyền sử dụng ghi vào 212/2142, nợ thuê vào 34121/34122).</li>
+  <li>Nếu có bút toán <b>chỉ đúng theo VAS</b>, tạo một sổ nhật ký Tổng hợp riêng và đặt Sổ = <b>Chỉ VAS</b>.</li>
+  <li><b>Phân quyền</b>: người lập điều chỉnh IFRS cần quyền ghi sổ vào sổ "Điều chỉnh IFRS"; người xem báo cáo cần quyền xem kế toán. Với báo cáo hợp nhất, cấp quyền vào mọi công ty trong nhóm.</li>
+  <li><b>Ngôn ngữ</b>: bật cả Tiếng Việt và Tiếng Anh để in báo cáo IFRS bằng tiếng Anh gửi công ty mẹ.</li>
+</ol>
+<figure>
+  <div class="shot"><img src="img/ba_journal_form.png" alt="Form sổ nhật ký Điều chỉnh IFRS"></div>
+  <div class="caption">Hình 3. Sổ nhật ký "Điều chỉnh IFRS" với trường <b>Sổ = Chỉ điều chỉnh IFRS</b> (Kế toán → Cấu hình → Sổ nhật ký).</div>
+</figure>
+
+<h2>6. Màn hình và thao tác</h2>
+<p>Menu: <b>Kế toán → Báo cáo → Báo cáo tài chính VAS → Xem báo cáo</b>. Ô "Báo cáo" chia 4 nhóm:</p>
+<table>
+  <tr><th>Nhóm</th><th>Báo cáo</th></tr>
+  <tr><td>VAS - Báo cáo riêng</td><td>B01-DN, B02-DN, B03-DN (trực tiếp, gián tiếp)</td></tr>
+  <tr><td>VAS - Báo cáo hợp nhất</td><td>B01-DN/HN, B02-DN/HN</td></tr>
+  <tr><td>IFRS - Báo cáo riêng</td><td>Tình hình tài chính; Lãi lỗ và thu nhập toàn diện khác; Lưu chuyển tiền tệ</td></tr>
+  <tr><td>IFRS - Báo cáo hợp nhất</td><td>Tình hình tài chính hợp nhất; Lãi lỗ và thu nhập toàn diện khác hợp nhất</td></tr>
+</table>
+<p>Các thao tác giống báo cáo VAS: chọn công ty hoặc nhóm hợp nhất, năm, kỳ, so sánh với kỳ trước hoặc cùng kỳ năm trước (tối đa 6 kỳ), hiện chênh lệch và %, bấm vào một dòng để xem bút toán, xuất Excel, in PDF. Đổi bộ lọc là số liệu tự tính lại.</p>
+<figure>
+  <div class="shot top"><img src="img/ba_vas_b01_2025.png" alt="B01-DN VAS"></div>
+  <div class="caption">Hình 4. Cùng công ty, cùng ngày 31/12/2025: báo cáo VAS (B01-DN) — có cột Mã số theo mẫu TT99.</div>
+</figure>
+<figure>
+  <div class="shot top"><img src="img/ba_ifrs_sfp_2025.png" alt="IFRS tình hình tài chính"></div>
+  <div class="caption">Hình 5. Báo cáo IFRS tình hình tài chính — có thêm dòng "Tài sản quyền sử dụng" (IFRS 16) và "Tài sản thuế thu nhập hoãn lại".</div>
+</figure>
+
+<h2>7. Danh mục báo cáo IFRS</h2>
+<h3>7.1 Báo cáo tình hình tài chính (IAS 1)</h3>
+<p>Mỗi dòng IFRS là tổng của các chỉ tiêu chi tiết của B01-DN. Mọi tài khoản thuộc đúng <b>một</b> dòng IFRS, nên báo cáo luôn cân và không bỏ sót số dư (hệ thống tự kiểm tra khi sinh mẫu).</p>
+<table>
+  <tr><th style="width:42%">Dòng IFRS</th><th>Lấy từ chỉ tiêu B01-DN</th></tr>
+  <tr><td>Bất động sản, nhà xưởng và thiết bị</td><td>222, 223 (TSCĐ hữu hình) + 252 (XDCB dở dang)</td></tr>
+  <tr><td>Tài sản quyền sử dụng</td><td>225, 226 (TSCĐ thuê tài chính và bút toán IFRS 16)</td></tr>
+  <tr><td>Tài sản vô hình · Bất động sản đầu tư · Tài sản sinh học</td><td>228–229 · 241–242 · 151–153, 232–238</td></tr>
+  <tr><td>Đầu tư vào công ty con, liên kết, liên doanh</td><td>261, 262</td></tr>
+  <tr><td>Tài sản tài chính khác</td><td>121–126, 164, 263–266</td></tr>
+  <tr><td>Phải thu khách hàng và phải thu khác</td><td>131, 132, 133, 135–137 (ngắn hạn); 211–216 (dài hạn)</td></tr>
+  <tr><td>Tài sản hợp đồng · Hàng tồn kho · Tiền</td><td>134 · 141–142 · 111–112</td></tr>
+  <tr><td>Vốn cổ phần · Thặng dư · Cổ phiếu quỹ · Quỹ khác · Lợi nhuận giữ lại</td><td>411 · 412 · 415 · 413, 414, 416–419 · 420</td></tr>
+  <tr><td>Vay (ngắn hạn, dài hạn)</td><td>Vay và trái phiếu (3411x, 3431x, 3432), giao dịch mua bán lại trái phiếu</td></tr>
+  <tr><td><b>Nợ thuê</b> (ngắn hạn, dài hạn)</td><td>Nợ thuê tài chính 34121 / 34122 — tách riêng khỏi vay theo IFRS 16</td></tr>
+  <tr><td>Phải trả người bán và phải trả khác · Nợ phải trả hợp đồng</td><td>311, 313, 315–317, 320, 323, 324 · 312, 318, 319</td></tr>
+  <tr><td>Thuế, dự phòng, thuế hoãn lại, nợ dài hạn khác</td><td>314, 322, 342, 343, 331–338, 341, 344</td></tr>
+</table>
+<h3>7.2 Báo cáo lãi lỗ và thu nhập toàn diện khác</h3>
+<p>Doanh thu · Giá vốn · Lợi nhuận gộp · Thu nhập khác · Chi phí bán hàng · Chi phí quản lý · Chi phí khác · Lợi nhuận từ hoạt động kinh doanh · Doanh thu tài chính · Chi phí tài chính · (hợp nhất: phần lãi công ty liên kết) · Lợi nhuận trước thuế · Thuế · Lợi nhuận trong kỳ · (hợp nhất: phân bổ cho cổ đông công ty mẹ và cổ đông không kiểm soát) · <b>Thu nhập toàn diện khác</b> (chênh lệch đánh giá lại TK 412, chênh lệch tỷ giá TK 413) · Tổng thu nhập toàn diện. Chi phí trình bày số âm.</p>
+<h3>7.3 Báo cáo lưu chuyển tiền tệ (IAS 7)</h3>
+<p>Phương pháp trực tiếp, cùng cách phân loại dòng tiền với B03-DN: mỗi khoản tiền được xếp theo tài khoản đối ứng trên sổ. Các bút toán điều chỉnh IFRS không chạm tài khoản tiền, nên tổng tiền theo IFRS bằng tiền theo VAS.</p>
+<div class="warn">Tiền thuê trả qua công nợ nhà cung cấp (331) vẫn nằm ở dòng "Tiền chi trả nhà cung cấp" (hoạt động kinh doanh). IFRS 16 yêu cầu trình bày phần gốc ở "Tiền trả nợ thuê" (hoạt động tài chính): hiện cần điều chỉnh tay trên file Excel, hoặc hạch toán tiền thuê qua tài khoản nợ thuê 3412.</div>
+
+<h2 class="page-break">8. Ví dụ số liệu: từ VAS sang IFRS</h2>
+<p>Dữ liệu demo (DB <code>vn_acc_full</code>), <b>Công ty CP Tập đoàn Tricasia Demo</b>, năm 2025. Đơn vị: triệu đồng.</p>
+<h3>8.1 Ba điều chỉnh của năm 2025</h3>
+<table>
+  <tr><th style="width:24%">Điều chỉnh</th><th>Tình huống</th><th style="width:38%">Bút toán ở sổ "Điều chỉnh IFRS"</th></tr>
+  <tr><td><b>IFRS 16</b> thuê văn phòng</td><td>Thuê 5 năm từ 01/01/2025, trả trước 1.200/năm, lãi suất 8%. VAS: ghi chi phí trả trước (2421) rồi phân bổ 100/tháng vào 6427.</td><td>02/01/2025: Nợ 212 5.174,5 / Có 34122 3.974,5 / Có 2421 1.200<br>Hằng tháng: Nợ 2421 / Có 6427 100 (đảo chi phí thuê VAS); Nợ 6424 / Có 2142 86,2 (khấu hao); Nợ 6351 / Có 34122 (lãi)<br>31/12: chuyển 1.200 sang nợ thuê ngắn hạn 34121</td></tr>
+  <tr><td><b>IFRS 9</b> tổn thất tín dụng dự kiến</td><td>Dự phòng theo IFRS = 2% công nợ phải thu; VAS đã trích 80.</td><td>31/12/2025: ghi phần chênh lệch (năm 2025 là hoàn nhập 23,2), tự đảo 01/01/2026</td></tr>
+  <tr><td><b>IAS 12</b> thuế hoãn lại</td><td>20% trên tổng chênh lệch lợi nhuận do điều chỉnh IFRS</td><td>31/12/2025: Nợ 243 / Có 8212 28,3, tự đảo 01/01/2026</td></tr>
+</table>
+<h3>8.2 Đối chiếu lợi nhuận năm 2025</h3>
+<table>
+  <tr><th>Khoản mục</th><th class="num">Triệu đồng</th></tr>
+  <tr><td>Lợi nhuận sau thuế theo VAS (B02-DN mã 60)</td><td class="num">(8.456,8)</td></tr>
+  <tr><td>+ Đảo chi phí thuê văn phòng theo VAS (IFRS 16)</td><td class="num">1.200,0</td></tr>
+  <tr><td>− Khấu hao tài sản quyền sử dụng (IFRS 16)</td><td class="num">(1.034,9)</td></tr>
+  <tr><td>− Lãi nợ thuê (IFRS 16)</td><td class="num">(329,9)</td></tr>
+  <tr><td>+ Hoàn nhập dự phòng theo tổn thất tín dụng dự kiến (IFRS 9)</td><td class="num">23,2</td></tr>
+  <tr><td>+ Thu nhập thuế hoãn lại (IAS 12)</td><td class="num">28,3</td></tr>
+  <tr class="total"><td>Lợi nhuận trong kỳ theo IFRS</td><td class="num">(8.570,1)</td></tr>
+</table>
+<h3>8.3 Đối chiếu tình hình tài chính tại 31/12/2025</h3>
+<table>
+  <tr><th>Khoản mục</th><th class="num">VAS</th><th class="num">IFRS</th><th class="num">Chênh lệch</th><th>Nguyên nhân</th></tr>
+  <tr><td>Tài sản quyền sử dụng</td><td class="num">–</td><td class="num">4.139,6</td><td class="num">4.139,6</td><td>IFRS 16</td></tr>
+  <tr><td>Tài sản thuế thu nhập hoãn lại</td><td class="num">–</td><td class="num">28,3</td><td class="num">28,3</td><td>IAS 12</td></tr>
+  <tr><td>Nợ thuê (ngắn hạn 1.200 + dài hạn 3.104,4)</td><td class="num">–</td><td class="num">4.304,4</td><td class="num">4.304,4</td><td>IFRS 16</td></tr>
+  <tr><td>Tiền và tương đương tiền</td><td class="num">87.159,1</td><td class="num">87.159,1</td><td class="num">–</td><td>Điều chỉnh không chạm tiền</td></tr>
+  <tr><td>Tổng tài sản</td><td class="num">126.849,8</td><td class="num">131.041,0</td><td class="num">4.191,2</td><td></td></tr>
+  <tr class="total"><td>Tổng vốn chủ sở hữu</td><td class="num">91.543,2</td><td class="num">91.429,9</td><td class="num">(113,3)</td><td>= chênh lệch lợi nhuận mục 8.2</td></tr>
+</table>
+<div class="note">Hệ thống tự kiểm tra các quan hệ này trên toàn bộ dữ liệu demo (3 công ty, 31/12/2025 và 30/09/2026): vốn chủ IFRS = vốn chủ VAS + điều chỉnh; lợi nhuận IFRS = lợi nhuận VAS + điều chỉnh; tiền không đổi; báo cáo cân. Kết quả: <span class="check">145/145 khớp</span>.</div>
+
+<h2>9. Hợp nhất theo IFRS</h2>
+<p>Báo cáo hợp nhất IFRS dùng chung nhóm hợp nhất với VAS (công ty mẹ, công ty con, công ty liên kết, tỷ lệ lợi ích, ngày mua). Khác biệt:</p>
+<table>
+  <tr><th style="width:30%">Nội dung</th><th>VAS (TT202/TT43)</th><th>IFRS</th></tr>
+  <tr><td>Số liệu các công ty thành viên</td><td>Sổ VAS</td><td>Sổ VAS + điều chỉnh IFRS của từng công ty</td></tr>
+  <tr><td>Lợi thế thương mại</td><td>Phân bổ đều tối đa 10 năm</td><td><b>Không phân bổ</b>, kiểm tra suy giảm giá trị (IFRS 3, IAS 36)</td></tr>
+  <tr><td>Tài sản thuần tại ngày mua</td><td>Vốn chủ VAS của công ty con</td><td>Vốn chủ VAS + điều chỉnh IFRS đã ghi đến ngày mua</td></tr>
+  <tr><td>Lợi ích cổ đông không kiểm soát</td><td>Theo vốn chủ VAS</td><td>Theo vốn chủ IFRS</td></tr>
+  <tr><td>Bút toán loại trừ nội bộ</td><td colspan="2">Giống nhau: đầu tư – vốn, công nợ, doanh thu – chi phí, cổ tức, lãi chưa thực hiện</td></tr>
+</table>
+<p>Demo tại 30/09/2026: lợi thế thương mại theo VAS còn 4.364 triệu (sau 18 tháng phân bổ); theo IFRS là 5.150 triệu (không phân bổ, tính trên tài sản thuần IFRS tại ngày mua).</p>
+<figure>
+  <div class="shot top"><img src="img/ba_ifrs_pl_c.png" alt="IFRS lãi lỗ hợp nhất"></div>
+  <div class="caption">Hình 6. Báo cáo lãi lỗ và thu nhập toàn diện khác hợp nhất (IFRS), có phân bổ lợi nhuận cho cổ đông công ty mẹ và cổ đông không kiểm soát.</div>
+</figure>
+
+<h2>10. Quy tắc nghiệp vụ</h2>
+<ol>
+  <li>Báo cáo VAS đọc mọi sổ nhật ký <b>trừ</b> sổ "Chỉ điều chỉnh IFRS". Báo cáo IFRS đọc mọi sổ <b>trừ</b> sổ "Chỉ VAS".</li>
+  <li>Bút toán điều chỉnh IFRS dùng tài khoản VAS; báo cáo IFRS tự xếp chúng vào đúng dòng theo ánh xạ ở mục 7.</li>
+  <li>Điều chỉnh mang tính ước tính tại ngày báo cáo (ECL, thuế hoãn lại) nên ghi dạng <b>tự đảo</b> đầu kỳ sau, để mỗi kỳ chỉ phản ánh số mới nhất.</li>
+  <li>Điều chỉnh không chạm tài khoản tiền: tiền theo IFRS luôn bằng tiền theo VAS.</li>
+  <li>Báo cáo cảnh báo khi: tổng tài sản khác tổng nguồn vốn; có tài khoản có số dư nhưng chưa vào dòng nào; tiền cuối kỳ của báo cáo lưu chuyển tiền khác số dư tiền trên sổ.</li>
+  <li>Mẫu báo cáo IFRS sửa được công thức (nhân bản mẫu rồi sửa) nếu khách hàng có cách trình bày riêng.</li>
+</ol>
+
+<h2>11. Tiêu chí nghiệm thu</h2>
+<table>
+  <tr><th style="width:6%">#</th><th>Tiêu chí</th><th style="width:16%">Kết quả demo</th></tr>
+  <tr><td>1</td><td>Sau khi ghi bút toán vào sổ "Điều chỉnh IFRS", mọi báo cáo VAS (B01, B02, B03, hợp nhất) không đổi</td><td class="check">Đạt</td></tr>
+  <tr><td>2</td><td>Báo cáo IFRS tình hình tài chính cân (tổng tài sản = tổng nguồn vốn), không cảnh báo tài khoản chưa ánh xạ</td><td class="check">Đạt</td></tr>
+  <tr><td>3</td><td>Vốn chủ IFRS = vốn chủ VAS + tổng ảnh hưởng của sổ điều chỉnh IFRS</td><td class="check">Đạt</td></tr>
+  <tr><td>4</td><td>Lợi nhuận IFRS = lợi nhuận VAS + lãi lỗ của sổ điều chỉnh IFRS trong kỳ</td><td class="check">Đạt</td></tr>
+  <tr><td>5</td><td>Bút toán ở sổ "Chỉ VAS" không xuất hiện trên báo cáo IFRS</td><td class="check">Đạt</td></tr>
+  <tr><td>6</td><td>Hợp nhất IFRS: lợi thế thương mại không phân bổ; lợi ích cổ đông không kiểm soát = tỷ lệ × vốn chủ IFRS của công ty con</td><td class="check">Đạt</td></tr>
+  <tr><td>7</td><td>Xem, so sánh kỳ, xuất Excel, in PDF báo cáo IFRS bằng tiếng Việt và tiếng Anh</td><td class="check">Đạt</td></tr>
+</table>
+
+<h2>12. Câu hỏi thường gặp</h2>
+<table>
+  <tr><th style="width:38%">Câu hỏi</th><th>Trả lời</th></tr>
+  <tr><td>Bút toán IFRS có ảnh hưởng tờ khai thuế, báo cáo nộp cơ quan nhà nước?</td><td>Không. Báo cáo VAS luôn bỏ sổ "Điều chỉnh IFRS". Hoá đơn, thuế GTGT, thuế TNDN vẫn theo sổ VAS.</td></tr>
+  <tr><td>Có cần hệ thống tài khoản riêng cho IFRS?</td><td>Không. Dùng chart VAS; nếu cần chi tiết hơn có thể thêm tài khoản con (TT99 cho phép), báo cáo IFRS tự nhận theo đầu mã.</td></tr>
+  <tr><td>Ai nhập bút toán điều chỉnh? Có tự động không?</td><td>Hiện do chuyên viên IFRS / kế toán trưởng nhập (có thể dùng bút toán định kỳ, tự đảo của Odoo). Công cụ tự sinh bút toán IFRS 16 từ hợp đồng thuê nằm trong lộ trình.</td></tr>
+  <tr><td>Xem chi tiết một dòng IFRS được không?</td><td>Được. Bấm vào dòng để mở danh sách bút toán của các tài khoản tạo nên dòng đó, gồm cả bút toán điều chỉnh.</td></tr>
+  <tr><td>Công ty mẹ yêu cầu báo cáo IFRS bằng USD?</td><td>Chưa hỗ trợ chuyển đổi ngoại tệ khi hợp nhất (IAS 21); hiện mọi công ty trong nhóm phải cùng tiền tệ. Nằm trong lộ trình.</td></tr>
+  <tr><td>Chuyển từ SAP sang thì số dư đầu kỳ IFRS xử lý thế nào?</td><td>Số dư VAS nhập vào sổ thường; phần chênh lệch IFRS luỹ kế tại ngày chuyển đổi nhập một bút toán vào sổ "Điều chỉnh IFRS".</td></tr>
+</table>
+
+<h2>13. Giới hạn và lộ trình</h2>
+<ul>
+  <li>Ánh xạ dòng IFRS được dựng sẵn từ chart VAS; khi triển khai cho khách thật, kế toán / kiểm toán nên duyệt lại cách xếp dòng.</li>
+  <li>Chưa có: chuyển đổi báo cáo ngoại tệ khi hợp nhất (IAS 21); báo cáo thay đổi vốn chủ sở hữu và thuyết minh IFRS; lãi trên cổ phiếu.</li>
+  <li>Báo cáo lưu chuyển tiền IFRS chưa tự chuyển tiền thuê sang hoạt động tài chính (xem mục 7.3).</li>
+  <li>Điều chỉnh IFRS nhập tay. Lộ trình đề xuất: công cụ hợp đồng thuê tự sinh bút toán IFRS 16; tính ECL theo tuổi nợ; tính thuế hoãn lại tự động.</li>
+  <li>Hai sổ (VAS, IFRS). Nếu khách cần thêm chuẩn khác (ví dụ US GAAP) có thể mở rộng cùng cơ chế.</li>
+</ul>
+
+</main>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: false, theme: "neutral", securityLevel: "loose", flowchart: { htmlLabels: true, useMaxWidth: true } });
+  mermaid.run({ querySelector: ".mermaid" }).then(() => { document.body.dataset.diagrams = "ready"; });
+</script>
+</body>
+</html>
