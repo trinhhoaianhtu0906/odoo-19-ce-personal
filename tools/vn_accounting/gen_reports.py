@@ -1,6 +1,6 @@
-"""Generate the TT99 report definition XML files.
+"""Generate the report definition XML files (Circular 99/2025).
 
-Usage (repo root): python tools/tt99/gen_reports.py docs/tt99/research/tt99_b01_b02.csv my_modules/l10n_vn_tt99_reports my_modules/l10n_vn_tt99_consolidation
+Usage (repo root): python tools/vn_accounting/gen_reports.py docs/vn_accounting/research/circular99_b01_b02.csv my_modules/l10n_vn_financial_statements my_modules/l10n_vn_consolidation
 Captions come from the research CSV (gazette text); formulas are mapped here
 onto the account codes of Odoo 19's l10n_vn chart.
 """
@@ -8,7 +8,14 @@ onto the account codes of Odoo 19's l10n_vn chart.
 import csv
 import re
 import sys
+from pathlib import Path
 from xml.sax.saxutils import escape
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from report_terms import english  # noqa: E402
+
+# Report fields written in English; their Vietnamese text goes to i18n/vi.po.
+TRANSLATED_FIELDS = {"name", "form_code", "form_note", "title", "subtitle", "check_message"}
 
 csv_path, reports_dir, conso_dir = sys.argv[1:4]
 rows = list(csv.DictReader(open(csv_path, encoding="utf-8-sig")))
@@ -308,7 +315,7 @@ def xml_lines(prefix, report_ref, items):
             f'        <field name="report_id" ref="{report_ref}"/>\n'
             f'        <field name="sequence">{seq * 10}</field>\n'
             f'        <field name="code">{escape(code)}</field>\n'
-            f'        <field name="name">{escape(caption)}</field>\n'
+            f'        <field name="name">{escape(english(caption))}</field>\n'
             f'        <field name="formula">{escape(formula)}</field>\n'
             f'        <field name="level">{level}</field>\n'
             f'        <field name="bold" eval="{bold}"/>\n'
@@ -321,7 +328,7 @@ def report_record(xmlid, fields):
     body = "\n".join(
         f'        <field name="{k}" eval="{v}"/>'
         if isinstance(v, bool)
-        else f'        <field name="{k}">{escape(str(v))}</field>'
+        else f'        <field name="{k}">{escape(english(v) if k in TRANSLATED_FIELDS else str(v))}</field>'
         for k, v in fields.items()
     )
     return f'    <record id="{xmlid}" model="vn.report">\n{body}\n    </record>'

@@ -59,7 +59,7 @@ const pdf = await send("Page.printToPDF", {
     headerTemplate: "<div></div>",
     footerTemplate:
         "<div style='font-size:8px;width:100%;text-align:center;color:#7b8794;font-family:Segoe UI,Arial'>" +
-        "Kế toán VAS TT99 trên Odoo 19 — trang <span class='pageNumber'></span>/<span class='totalPages'></span></div>",
+        "Kế toán VAS (Thông tư 99) trên Odoo 19 — trang <span class='pageNumber'></span>/<span class='totalPages'></span></div>",
 });
 writeFileSync(output, Buffer.from(pdf.result.data, "base64"));
 ws.close();

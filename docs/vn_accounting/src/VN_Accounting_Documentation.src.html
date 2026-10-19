@@ -48,7 +48,7 @@
   <div class="sub">Tài liệu kỹ thuật và nghiệp vụ: báo cáo tài chính riêng, báo cáo hợp nhất, tra cứu MST VietQR</div>
   <table>
     <tr><td><b>Hệ thống</b></td><td>Odoo 19.0 Community — repo <code>Tricasia/odoo-dev</code></td></tr>
-    <tr><td><b>Module</b></td><td><code>l10n_vn_tt99_reports</code>, <code>l10n_vn_tt99_consolidation</code>, <code>vietqr_tax_lookup</code></td></tr>
+    <tr><td><b>Module</b></td><td><code>l10n_vn_financial_statements</code>, <code>l10n_vn_consolidation</code>, <code>vietqr_tax_lookup</code></td></tr>
     <tr><td><b>Người đọc</b></td><td>BA (nghiệp vụ, luồng, kiểm tra số liệu) và Dev (bảng, field, logic, mở rộng)</td></tr>
     <tr><td><b>Phiên bản</b></td><td>19.0.1.0.0 — {{BUILD_DATE}}</td></tr>
   </table>
@@ -79,11 +79,11 @@
 <p>Bộ module bổ sung cho Odoo 19 Community những phần kế toán Việt Nam mà Odoo không có sẵn:</p>
 <table>
   <tr><th style="width:28%">Module</th><th>Chức năng</th><th style="width:22%">Phụ thuộc</th></tr>
-  <tr><td><code>l10n_vn_tt99_reports</code></td><td>Báo cáo tài chính riêng theo TT99: B01-DN (tình hình tài chính), B02-DN (kết quả kinh doanh), B03-DN (lưu chuyển tiền tệ, trực tiếp và gián tiếp). Mỗi chỉ tiêu có công thức sửa được. Màn hình xem động, so sánh nhiều kỳ, chênh lệch, xuất Excel và PDF đúng mẫu, bấm chỉ tiêu xem bút toán.</td><td><code>account</code>, <code>l10n_vn</code></td></tr>
-  <tr><td><code>l10n_vn_tt99_consolidation</code></td><td>Báo cáo hợp nhất B01-DN/HN, B02-DN/HN cho nhiều công ty trong cùng database. Bút toán loại trừ được <b>tính</b>, không ghi vào sổ các công ty thành viên.</td><td><code>l10n_vn_tt99_reports</code></td></tr>
+  <tr><td><code>l10n_vn_financial_statements</code></td><td>Báo cáo tài chính riêng theo TT99: B01-DN (tình hình tài chính), B02-DN (kết quả kinh doanh), B03-DN (lưu chuyển tiền tệ, trực tiếp và gián tiếp). Mỗi chỉ tiêu có công thức sửa được. Màn hình xem động, so sánh nhiều kỳ, chênh lệch, xuất Excel và PDF đúng mẫu, bấm chỉ tiêu xem bút toán.</td><td><code>account</code>, <code>l10n_vn</code></td></tr>
+  <tr><td><code>l10n_vn_consolidation</code></td><td>Báo cáo hợp nhất B01-DN/HN, B02-DN/HN cho nhiều công ty trong cùng database. Bút toán loại trừ được <b>tính</b>, không ghi vào sổ các công ty thành viên.</td><td><code>l10n_vn_financial_statements</code></td></tr>
   <tr><td><code>vietqr_tax_lookup</code></td><td>Trên khách hàng doanh nghiệp: nút “Lấy thông tin MST” gọi VietQR, tự điền tên, địa chỉ, tỉnh, tên viết tắt, tên quốc tế, tình trạng MST.</td><td><code>contacts</code></td></tr>
 </table>
-<p>Ngoài ra trên server có bộ addon kế toán của Odoo Mates (<code>om_account_accountant</code>, <code>accounting_pdf_reports</code> và 16 module liên quan, bản 19.0). Đây là code bên thứ ba, không sửa; các module ở trên không phụ thuộc vào chúng nhưng chạy chung bình thường (đã kiểm tra trên DB <code>tt99_full</code>).</p>
+<p>Ngoài ra trên server có bộ addon kế toán của Odoo Mates (<code>om_account_accountant</code>, <code>accounting_pdf_reports</code> và 16 module liên quan, bản 19.0). Đây là code bên thứ ba, không sửa; các module ở trên không phụ thuộc vào chúng nhưng chạy chung bình thường (đã kiểm tra trên DB <code>vn_acc_full</code>).</p>
 <div class="note"><b>Nguyên tắc thiết kế.</b> (1) Không viết lại hệ thống tài khoản: dùng chart <code>l10n_vn</code> của Odoo 19 vốn đã theo TT99. (2) Báo cáo đọc trực tiếp sổ cái (<code>account.move.line</code>), không có bảng số liệu trung gian, nên luôn khớp sổ. (3) Hợp nhất là một “nguồn số dư” khác cho cùng engine: số dư các thành viên cộng bút toán loại trừ tính sẵn.</div>
 
 <h2>2. Căn cứ pháp lý và hệ thống tài khoản</h2>
@@ -109,14 +109,14 @@ flowchart LR
     AML[(account.move.line<br/>bút toán đã ghi sổ)]
     ACC[(account.account<br/>chart l10n_vn = TT99)]
   end
-  subgraph l10n_vn_tt99_reports
+  subgraph l10n_vn_financial_statements
     DEF[(vn.report / vn.report.line<br/>mẫu báo cáo + công thức)]
     LP[LedgerProvider<br/>số dư 1 công ty + chi nhánh]
     ENG[ReportEvaluator<br/>tính công thức]
     WIZ[vn.report.wizard<br/>kết quả, xuất file]
     UI[Màn hình báo cáo động<br/>OWL client action]
   end
-  subgraph l10n_vn_tt99_consolidation
+  subgraph l10n_vn_consolidation
     GRP[(vn.consolidation.group<br/>member, unrealized, adjustment)]
     CP[ConsolidationProvider<br/>thành viên + bút toán loại trừ]
   end
@@ -137,23 +137,23 @@ flowchart LR
 
 <h3>3.1 Cấu trúc thư mục</h3>
 <pre>my_modules/
-  l10n_vn_tt99_reports/
+  l10n_vn_financial_statements/
     models/engine.py            engine: parser công thức, provider sổ cái, tính toán, kỳ so sánh
     models/vn_report.py         vn.report, vn.report.line
     wizard/vn_report_wizard.py  vn.report.wizard(.line): tính, PDF, Excel, drill-down, API cho màn hình động
-    data/vn_report_b0{1,2,3}.xml mẫu B01, B02, B03 (trực tiếp + gián tiếp) — sinh bằng tools/tt99/gen_reports.py
+    data/vn_report_b0{1,2,3}.xml mẫu B01, B02, B03 (trực tiếp + gián tiếp) — sinh bằng tools/vn_accounting/gen_reports.py
     report/vn_report_templates.xml  mẫu in PDF
     static/src/dynamic_report/  màn hình báo cáo động (OWL)
-  l10n_vn_tt99_consolidation/
+  l10n_vn_consolidation/
     models/consolidation_engine.py  ConsolidationProvider: mọi bút toán loại trừ
     models/vn_consolidation.py      nhóm, thành viên, số dư ngày mua, lãi chưa thực hiện, điều chỉnh
     wizard/                         mở rộng wizard báo cáo, bảng tính loại trừ
     data/vn_report_hn.xml           mẫu B01-DN/HN, B02-DN/HN
   vietqr_tax_lookup/
-docs/tt99/                    tài liệu này (nguồn HTML + PDF), dữ liệu nghiên cứu TT99
-tools/tt99/                   sinh mẫu báo cáo, sinh dữ liệu mẫu, đối chiếu, kiểm tra giao diện, build tài liệu</pre>
+docs/vn_accounting/                    tài liệu này (nguồn HTML + PDF), dữ liệu nghiên cứu TT99
+tools/vn_accounting/                   sinh mẫu báo cáo, sinh dữ liệu mẫu, đối chiếu, kiểm tra giao diện, build tài liệu</pre>
 
-<h2>4. Module báo cáo tài chính TT99 (<code>l10n_vn_tt99_reports</code>)</h2>
+<h2>4. Module báo cáo tài chính (<code>l10n_vn_financial_statements</code>)</h2>
 <h3>4.1 Mô hình dữ liệu</h3>
 <div class="diagram">
 <pre class="mermaid">
@@ -255,7 +255,7 @@ erDiagram
   <tr><td>B01-DN/HN</td><td>position, HN</td><td class="num">122</td><td>280 = 440</td></tr>
   <tr><td>B02-DN/HN</td><td>period, HN</td><td class="num">24</td><td>—</td></tr>
 </table>
-<p>Toàn bộ công thức ở <b>Phụ lục</b>. Mẫu được sinh từ <code>tools/tt99/gen_reports.py</code>: tên chỉ tiêu lấy từ dữ liệu nghiên cứu (đối chiếu Công báo), công thức theo bảng ánh xạ tài khoản <code>l10n_vn</code> trong script. Sửa ánh xạ thì sửa script rồi sinh lại XML, không sửa tay XML.</p>
+<p>Toàn bộ công thức ở <b>Phụ lục</b>. Mẫu được sinh từ <code>tools/vn_accounting/gen_reports.py</code>: tên chỉ tiêu lấy từ dữ liệu nghiên cứu (đối chiếu Công báo), công thức theo bảng ánh xạ tài khoản <code>l10n_vn</code> trong script. Sửa ánh xạ thì sửa script rồi sinh lại XML, không sửa tay XML.</p>
 
 <h2>5. Ngôn ngữ công thức chỉ tiêu</h2>
 <p>Công thức là biểu thức số học gồm hàm đọc số dư, tham chiếu mã số khác <code>[110]</code>, hằng số, <code>+ - * /</code> và ngoặc. Tham số của hàm là <b>đầu mã tài khoản</b>: <code>131</code> khớp 1311, 1312; dùng chuỗi cho mã giả hợp nhất, vd. <code>BAL("HN_GW")</code>. Công thức được phân tích bằng <code>ast</code> và chỉ chấp nhận các nút trong danh sách cho phép — không bao giờ dùng <code>eval</code>, nên người dùng sửa công thức không thể chạy code.</p>
@@ -328,7 +328,7 @@ flowchart TD
 <pre class="mermaid">
 sequenceDiagram
   actor U as Người dùng
-  participant C as OWL VnTt99DynamicReport
+  participant C as OWL VnFinancialStatementReport
   participant W as vn.report.wizard
   participant E as Engine + Provider
   U->>C: Mở menu Xem báo cáo
@@ -351,13 +351,13 @@ sequenceDiagram
 <div class="caption">Hình 4. Màn hình báo cáo động: mọi tính toán ở server, màn hình chỉ hiển thị.</div>
 </div>
 <ul>
-  <li>Menu: <b>Kế toán → Báo cáo → Báo cáo tài chính TT99</b>: <i>Xem báo cáo</i> (màn hình động), <i>Lập báo cáo (hộp thoại)</i> (wizard cũ), <i>Mẫu báo cáo và công thức</i> (quản trị), <i>Hợp nhất</i> → Xem báo cáo hợp nhất, Bảng tính loại trừ, Nhóm hợp nhất.</li>
+  <li>Menu (tiếng Việt / tiếng Anh): <b>Kế toán → Báo cáo → Báo cáo tài chính VAS</b> (Vietnamese Financial Statements): <i>Xem báo cáo</i> (Statements, màn hình động), <i>Lập báo cáo (hộp thoại)</i> (Statement (Dialog)), <i>Mẫu báo cáo và công thức</i> (Report Templates, quản trị), <i>Hợp nhất</i> (Consolidation) → Báo cáo hợp nhất, Bảng tính loại trừ, Nhóm hợp nhất.</li>
   <li>Bộ lọc: báo cáo; công ty hoặc nhóm hợp nhất; năm; kỳ (cả năm, quý, 6 tháng, 9 tháng, từng tháng, tự chọn ngày); so sánh với; số kỳ; chênh lệch; bút toán đã vào sổ / gồm nháp; ẩn chỉ tiêu bằng 0. Đổi là tự tính lại.</li>
   <li>PDF (QWeb, A4) và Excel (xlsxwriter) in đúng mẫu: đơn vị báo cáo, địa chỉ, MST, mẫu số, căn cứ, tiêu đề, kỳ, đơn vị tính, cột 1–5 (thêm cột khi so sánh nhiều kỳ), số âm trong ngoặc, khối chữ ký Người lập / Kế toán trưởng / Người đại diện theo pháp luật.</li>
   <li>Drill-down chỉ có ở chỉ tiêu đọc trực tiếp tài khoản (không phải tổng của mã số khác). Danh sách bút toán do Odoo lọc theo các công ty đang bật ở bộ chọn công ty; màn hình nhắc bật thêm công ty nếu thiếu.</li>
 </ul>
 
-<h2>8. Module hợp nhất (<code>l10n_vn_tt99_consolidation</code>)</h2>
+<h2>8. Module hợp nhất (<code>l10n_vn_consolidation</code>)</h2>
 <h3>8.1 Nguyên lý</h3>
 <p>Số dư hợp nhất của một khoảng ngày <code>[F, T]</code> được tính là:</p>
 <pre>Σ số dư sổ cái các công ty hợp nhất toàn bộ trong [F, T]  +  E(T)  −  E(F − 1)</pre>
@@ -505,14 +505,21 @@ sequenceDiagram
 <p><b>Đa công ty.</b> Odoo lọc dữ liệu theo các công ty đang bật ở bộ chọn công ty. Báo cáo cần đọc đúng các công ty nó bao phủ, nên provider dùng hàm <code>with_companies(env, companies)</code>: mở quyền đọc cho các công ty đó <b>nếu người dùng đã được cấp quyền</b>; công ty chưa cấp quyền thì báo lỗi rõ ràng. Không dùng <code>sudo</code> để đọc sổ.</p>
 
 <h2>12. Cài đặt, vận hành, dữ liệu mẫu</h2>
+<h3>12.0 Ngôn ngữ: code tiếng Anh, giao diện tiếng Việt qua bản dịch</h3>
+<ul>
+  <li>Mọi chuỗi trong code (field, lựa chọn, thông báo, view, menu, mẫu in, màn hình JS) và dữ liệu mẫu báo cáo (tên chỉ tiêu, tiêu đề, mẫu số, căn cứ) viết bằng <b>tiếng Anh</b>. Tên kỹ thuật cũng bằng tiếng Anh (không dùng “tt99”).</li>
+  <li>Tiếng Việt nằm trong <code>i18n/vi.po</code> của từng module. Người dùng chọn ngôn ngữ Tiếng Việt sẽ thấy đúng chữ của mẫu TT99 (“BÁO CÁO TÌNH HÌNH TÀI CHÍNH”, “Tại ngày … tháng … năm …”, “NGƯỜI LẬP”…); ngôn ngữ tiếng Anh thấy bản tiếng Anh. Có test tự động kiểm tra bản tiếng Việt.</li>
+  <li>Bảng đối chiếu: <code>tools/vn_accounting/report_terms.py</code> (tên chỉ tiêu, tiêu đề mẫu: tiếng Việt theo văn bản ↔ tiếng Anh) và <code>tools/vn_accounting/ui_terms_vi.py</code> (chuỗi giao diện tiếng Anh → tiếng Việt).</li>
+  <li>Khi thêm hoặc sửa chuỗi: cài module vào một DB, xuất file mẫu bằng <code>odoo i18n export</code> (ra <code>i18n/&lt;module&gt;.pot</code>), bổ sung bản dịch vào bảng đối chiếu, chạy <code>python tools/vn_accounting/build_i18n.py</code> để sinh lại <code>vi.po</code> (script báo lỗi nếu còn chuỗi chưa dịch), rồi nâng cấp module.</li>
+</ul>
 <pre># cài / nâng cấp (từ thư mục odoo-dev)
-docker compose run --rm odoo odoo -d &lt;db&gt; -i l10n_vn_tt99_consolidation,vietqr_tax_lookup --stop-after-init
-docker compose run --rm odoo odoo -d &lt;db&gt; -u l10n_vn_tt99_reports,l10n_vn_tt99_consolidation --stop-after-init
+docker compose run --rm odoo odoo -d &lt;db&gt; -i l10n_vn_consolidation,vietqr_tax_lookup --stop-after-init
+docker compose run --rm odoo odoo -d &lt;db&gt; -u l10n_vn_financial_statements,l10n_vn_consolidation --stop-after-init
 
 # chạy test trong DB tạm
-docker compose run --rm -T odoo odoo -d tt99_test -i l10n_vn_tt99_consolidation,vietqr_tax_lookup \
-  --test-tags /l10n_vn_tt99_reports,/l10n_vn_tt99_consolidation,/vietqr_tax_lookup --stop-after-init --log-level=test
-docker compose exec -T postgres sh -c 'dropdb -U "$POSTGRES_USER" --force tt99_test'</pre>
+docker compose run --rm -T odoo odoo -d vn_fs_test -i l10n_vn_consolidation,vietqr_tax_lookup \
+  --test-tags /l10n_vn_financial_statements,/l10n_vn_consolidation,/vietqr_tax_lookup --stop-after-init --log-level=test
+docker compose exec -T postgres sh -c 'dropdb -U "$POSTGRES_USER" --force vn_fs_test'</pre>
 <h3>12.1 Thiết lập cho một doanh nghiệp</h3>
 <ol>
   <li>Công ty: quốc gia Việt Nam, tiền tệ VND, MST, địa chỉ. Đặt trước khi cài <code>account</code> để Odoo tự nạp chart <code>vn</code> (hoặc chọn chart ở Cấu hình kế toán).</li>
@@ -520,7 +527,7 @@ docker compose exec -T postgres sh -c 'dropdb -U "$POSTGRES_USER" --force tt99_t
   <li>Hợp nhất: tạo nhóm, khai thành viên, tỷ lệ, ngày mua; bấm “Lấy số dư tại ngày mua” và rà soát; ghi TK 221/222 của công ty mẹ chi tiết theo đối tượng là công ty con / liên kết; giao dịch nội bộ phải ghi đúng đối tượng là đối tác của công ty thành viên; cuối mỗi kỳ nhập lãi chưa thực hiện.</li>
   <li>Cấp quyền cho kế toán tập đoàn vào mọi công ty của nhóm.</li>
 </ol>
-<h3>12.2 Công cụ trong <code>tools/tt99/</code></h3>
+<h3>12.2 Công cụ trong <code>tools/vn_accounting/</code></h3>
 <table>
   <tr><th style="width:28%">File</th><th>Công dụng</th></tr>
   <tr><td>gen_reports.py</td><td>Sinh <code>data/vn_report_b01/b02/b03.xml</code> và <code>vn_report_hn.xml</code> từ dữ liệu nghiên cứu + bảng ánh xạ tài khoản.</td></tr>
@@ -528,14 +535,16 @@ docker compose exec -T postgres sh -c 'dropdb -U "$POSTGRES_USER" --force tt99_t
   <tr><td>demo_data.py</td><td>Bộ dữ liệu nhỏ cho DB demo (2 công ty).</td></tr>
   <tr><td>verify.py</td><td>Đối chiếu báo cáo với sổ cái bằng phép tính độc lập (101 điểm kiểm tra).</td></tr>
   <tr><td>ui_check.mjs, ui_compare.mjs</td><td>Điều khiển Chrome headless qua DevTools Protocol: mở màn hình, đổi bộ lọc, xuất file, drill-down, ghi lỗi JS, chụp ảnh.</td></tr>
+  <tr><td>report_terms.py, ui_terms_vi.py</td><td>Bảng đối chiếu tiếng Việt ↔ tiếng Anh (chỉ tiêu, tiêu đề mẫu, chuỗi giao diện).</td></tr>
+  <tr><td>build_i18n.py</td><td>Sinh <code>i18n/vi.po</code> của 3 module từ file <code>.pot</code> do Odoo xuất.</td></tr>
   <tr><td>build_docs.py</td><td>Dựng tài liệu này: chèn phụ lục từ data XML, vẽ sơ đồ, in PDF bằng Chrome.</td></tr>
 </table>
-<p>Dữ liệu nghiên cứu TT99 (danh sách tài khoản, chỉ tiêu và căn cứ) ở <code>docs/tt99/research/</code>.</p>
+<p>Dữ liệu nghiên cứu TT99 (danh sách tài khoản, chỉ tiêu và căn cứ) ở <code>docs/vn_accounting/research/</code>.</p>
 
 <h2>13. Kiểm thử và kết quả đối chiếu</h2>
 <h3>13.1 Test tự động (Odoo TransactionCase)</h3>
 {{TEST_TABLE}}
-<h3>13.2 Đối chiếu trên dữ liệu mẫu (<code>verify.py</code>, DB <code>tt99_full</code>)</h3>
+<h3>13.2 Đối chiếu trên dữ liệu mẫu (<code>verify.py</code>, DB <code>vn_acc_full</code>)</h3>
 <p>101/101 điểm kiểm tra khớp, cho cả 3 công ty và báo cáo hợp nhất, tại 31/12/2025 và 30/09/2026. Nhóm kiểm tra:</p>
 <ul>
   <li>B01 không cảnh báo; 280 = 440; 110 = số dư tiền; 141 = số dư hàng tồn kho; 400 = vốn chủ + lãi lỗ chưa kết chuyển; 131 − 312 = số dư 1311.</li>

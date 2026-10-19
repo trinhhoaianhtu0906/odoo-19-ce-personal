@@ -1,4 +1,4 @@
-# Run inside `odoo shell -d tt99_full`. Sample group data, 01/2025 - 09/2026.
+# Run inside `odoo shell -d <db>`. Sample group data, 01/2025 - 09/2026.
 import random
 from collections import defaultdict
 from datetime import date
@@ -32,6 +32,8 @@ A = new_company({"name": "Công ty CP Tricasia Công nghệ", "street": "Quận 
                  "state_id": env.ref("base.state_vn_VN-SG").id, "vat": "0319000003"})
 COMPANIES = [P, S, A]
 env.user.company_ids = [(6, 0, [c.id for c in COMPANIES])]
+# The shell runs as OdooBot: give the admin user the new companies too.
+env.ref("base.user_admin").company_ids = [(6, 0, [c.id for c in COMPANIES])]
 
 
 def cenv(company):

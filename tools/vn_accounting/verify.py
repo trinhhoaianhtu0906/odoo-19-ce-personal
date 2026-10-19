@@ -1,13 +1,13 @@
-# Run inside `odoo shell -d tt99_full`: cross-check the TT99 statements against the ledger.
+# Run inside `odoo shell -d <db>`: cross-check the statements against the ledger.
 from collections import defaultdict
 from datetime import date, timedelta
 
-from odoo.addons.l10n_vn_tt99_reports.models.engine import LedgerProvider, evaluate_report
+from odoo.addons.l10n_vn_financial_statements.models.engine import LedgerProvider, evaluate_report
 
 R = lambda xmlid: env.ref(xmlid)  # noqa: E731
-B01, B02, B03 = (R("l10n_vn_tt99_reports.report_b01"), R("l10n_vn_tt99_reports.report_b02"),
-                 R("l10n_vn_tt99_reports.report_b03_direct"))
-B01HN, B02HN = R("l10n_vn_tt99_consolidation.report_b01_hn"), R("l10n_vn_tt99_consolidation.report_b02_hn")
+B01, B02, B03 = (R("l10n_vn_financial_statements.report_b01"), R("l10n_vn_financial_statements.report_b02"),
+                 R("l10n_vn_financial_statements.report_b03_direct"))
+B01HN, B02HN = R("l10n_vn_consolidation.report_b01_hn"), R("l10n_vn_consolidation.report_b02_hn")
 group = env["vn.consolidation.group"].search([], limit=1)
 P = group.parent_company_id
 S = group.member_ids.filtered(lambda m: m.method == "full").company_id

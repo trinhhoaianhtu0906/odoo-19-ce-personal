@@ -1,4 +1,4 @@
-# Run inside `odoo shell -d tt99_demo`: demo group for the TT99 statements.
+# Run inside `odoo shell -d <db>`: small demo group for the Vietnamese statements.
 from datetime import date
 
 parent = env.company

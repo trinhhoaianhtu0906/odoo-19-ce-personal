@@ -1,10 +1,10 @@
-"""Build docs/tt99/TT99_Documentation.{html,pdf}.
+"""Build docs/vn_accounting/VN_Accounting_Documentation.{html,pdf}.
 
 Fills the source HTML with the formula appendix (read from the modules' data
 XML) and the list of automated tests, then prints it to PDF with Chrome once
-the Mermaid diagrams are drawn (tools/tt99/print_pdf.mjs, needs node >= 22).
+the Mermaid diagrams are drawn (tools/vn_accounting/print_pdf.mjs, needs node >= 22).
 
-Usage, from the repo root:  python tools/tt99/build_docs.py
+Usage, from the repo root:  python tools/vn_accounting/build_docs.py
 """
 
 import ast
@@ -15,22 +15,25 @@ import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from report_terms import vietnamese_by_english  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[2]
 MODULES = ROOT / "my_modules"
-DOCS = ROOT / "docs" / "tt99"
-SOURCE = DOCS / "src" / "TT99_Documentation.src.html"
-OUTPUT_HTML = DOCS / "TT99_Documentation.html"
-OUTPUT_PDF = DOCS / "TT99_Documentation.pdf"
+DOCS = ROOT / "docs" / "vn_accounting"
+SOURCE = DOCS / "src" / "VN_Accounting_Documentation.src.html"
+OUTPUT_HTML = DOCS / "VN_Accounting_Documentation.html"
+OUTPUT_PDF = DOCS / "VN_Accounting_Documentation.pdf"
 
 REPORT_FILES = [
-    MODULES / "l10n_vn_tt99_reports" / "data" / "vn_report_b01.xml",
-    MODULES / "l10n_vn_tt99_reports" / "data" / "vn_report_b02.xml",
-    MODULES / "l10n_vn_tt99_reports" / "data" / "vn_report_b03.xml",
-    MODULES / "l10n_vn_tt99_consolidation" / "data" / "vn_report_hn.xml",
+    MODULES / "l10n_vn_financial_statements" / "data" / "vn_report_b01.xml",
+    MODULES / "l10n_vn_financial_statements" / "data" / "vn_report_b02.xml",
+    MODULES / "l10n_vn_financial_statements" / "data" / "vn_report_b03.xml",
+    MODULES / "l10n_vn_consolidation" / "data" / "vn_report_hn.xml",
 ]
 TEST_DIRS = {
-    "l10n_vn_tt99_reports": MODULES / "l10n_vn_tt99_reports" / "tests",
-    "l10n_vn_tt99_consolidation": MODULES / "l10n_vn_tt99_consolidation" / "tests",
+    "l10n_vn_financial_statements": MODULES / "l10n_vn_financial_statements" / "tests",
+    "l10n_vn_consolidation": MODULES / "l10n_vn_consolidation" / "tests",
     "vietqr_tax_lookup": MODULES / "vietqr_tax_lookup" / "tests",
 }
 
@@ -40,6 +43,7 @@ def esc(text):
 
 
 def appendix():
+    vietnamese = vietnamese_by_english()
     reports, lines = {}, {}
     for path in REPORT_FILES:
         for record in ET.parse(path).getroot().iter("record"):
@@ -62,17 +66,18 @@ def appendix():
         rows = []
         for line in lines[xmlid]:
             indent = "&nbsp;" * 3 * max(line["level"] - 1, 0)
-            name = f"<b>{esc(line['name'])}</b>" if line["bold"] else esc(line["name"])
+            label = f"{esc(vietnamese.get(line['name'], line['name']))}<br><span class='small'>{esc(line['name'])}</span>"
+            name = f"<b>{label}</b>" if line["bold"] else label
             code = "" if line["code"].isalpha() else esc(line["code"])
             formula = f"<code>{esc(line['formula'])}</code>" if line["formula"] else "<i>(nhập tay / để trống)</i>"
             rows.append(f"<tr><td>{code}</td><td>{indent}{name}</td><td>{formula}</td></tr>")
         check = report.get("check_expression")
         blocks.append(
-            f"<h3>{esc(report['name'])}</h3>"
+            f"<h3>{esc(vietnamese.get(report['name'], report['name']))}</h3>"
             f"<p class='small'>Mã <code>{esc(report['code'])}</code> — loại <code>{esc(report['kind'])}</code>"
             + (f" — kiểm tra <code>{esc(check)}</code>" if check else "")
             + "</p>"
-            "<table class='appendix'><tr><th style='width:8%'>Mã số</th><th style='width:46%'>Chỉ tiêu</th>"
+            "<table class='appendix'><tr><th style='width:8%'>Mã số</th><th style='width:46%'>Chỉ tiêu (tiếng Việt / English)</th>"
             "<th>Công thức</th></tr>" + "".join(rows) + "</table>"
         )
     return "\n".join(blocks)

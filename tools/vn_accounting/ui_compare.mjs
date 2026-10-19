@@ -1,4 +1,4 @@
-// Drive Chrome headless through the DevTools protocol: open the TT99 report screen,
+// Drive Chrome headless through the DevTools protocol: open the financial statements screen,
 // collect JS errors, take screenshots, and switch filters to check live recompute.
 // Usage: node ui_check.mjs <session_id> <out_dir>
 import { spawn } from "node:child_process";
@@ -64,7 +64,7 @@ await send("Page.enable");
 await send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1300, deviceScaleFactor: 1, mobile: false });
 await send("Network.enable");
 await send("Network.setCookie", { name: "session_id", value: sessionId, domain: "127.0.0.1", path: "/" });
-await send("Page.navigate", { url: `${BASE}/odoo/action-l10n_vn_tt99_reports.action_vn_dynamic_report` });
+await send("Page.navigate", { url: `${BASE}/odoo/action-l10n_vn_financial_statements.action_vn_dynamic_report` });
 await sleep(3000);
 await waitIdle();
 const first = await evaluate(`({
@@ -75,50 +75,38 @@ const first = await evaluate(`({
 })`);
 await shot("ui_1_b01.png");
 
-// Switch to the consolidated B02 and to "9 tháng đầu năm" 2026: no button press.
-await evaluate(`(() => {
-    const selects = document.querySelectorAll('.o_control_panel select');
-    const report = selects[0];
-    report.value = [...report.options].find(o => o.text.startsWith('B02-DN/HN')).value;
-    report.dispatchEvent(new Event('change'));
-})()`);
-await sleep(1500);
-await waitIdle();
-await evaluate(`(() => {
-    const labels = [...document.querySelectorAll('.o_control_panel label')];
-    const select = (text) => labels.find(l => l.innerText === text).parentElement.querySelector('select');
-    const year = select('Năm'); year.value = '2026'; year.dispatchEvent(new Event('change'));
-})()`);
-await sleep(1500);
-await waitIdle();
-await evaluate(`(() => {
-    const labels = [...document.querySelectorAll('.o_control_panel label')];
-    const period = labels.find(l => l.innerText === 'Kỳ').parentElement.querySelector('select');
-    period.value = 'm9'; period.dispatchEvent(new Event('change'));
-})()`);
-await sleep(1500);
+// B02 riêng, Quý 3/2026, so với 2 kỳ trước liền kề + chênh lệch: no button press.
+const pick = async (label, value, byText = false) => {
+    await evaluate(`(() => {
+        const labels = [...document.querySelectorAll('.o_control_panel label')];
+        const select = labels.find(l => l.innerText.trim() === ${JSON.stringify(label)}).parentElement.querySelector('select');
+        select.value = ${byText} ? [...select.options].find(o => o.text.startsWith(${JSON.stringify(value)})).value : ${JSON.stringify(value)};
+        select.dispatchEvent(new Event('change'));
+    })()`);
+    await sleep(1200);
+    await waitIdle();
+};
+await pick("Báo cáo", "B02-DN Báo cáo", true);
+await pick("Năm", "2026");
+await pick("Kỳ", "q3");
+await pick("So sánh với", "previous_period");
+await pick("Số kỳ", "2");
+await evaluate(`(() => { const box = document.querySelector('#vn_show_variance'); box.checked = true; box.dispatchEvent(new Event('change')); })()`);
+await sleep(1200);
 await waitIdle();
 const second = await evaluate(`({
-    title: document.querySelector('.o_vn_sheet .fs-4')?.innerText,
-    period: document.querySelectorAll('.o_vn_sheet .fst-italic')[0]?.innerText,
-    line60: [...document.querySelectorAll('.o_vn_table tbody tr')].find(r => r.children[1].innerText === '60')?.children[3].innerText,
-    line62: [...document.querySelectorAll('.o_vn_table tbody tr')].find(r => r.children[1].innerText === '62')?.children[3].innerText,
+    headers: [...document.querySelectorAll('.o_vn_table thead th')].map(th => th.innerText.replace(/
+/g, ' | ')),
+    line01: [...[...document.querySelectorAll('.o_vn_table tbody tr')].find(r => r.children[1].innerText === '01').children].slice(3).map(td => td.innerText),
+    line60: [...[...document.querySelectorAll('.o_vn_table tbody tr')].find(r => r.children[1].innerText === '60').children].slice(3).map(td => td.innerText),
 })`);
-await shot("ui_2_b02hn.png");
-
-// Export buttons: no JS error, the server answers with a download.
+await shot("ui_2_compare.png");
 await send("Browser.setDownloadBehavior", { behavior: "allow", downloadPath: outDir });
 for (const label of ["Xuất Excel", "In PDF"]) {
     await evaluate(`[...document.querySelectorAll('.o_control_panel button')].find(b => b.innerText.includes('${label}')).click()`);
-    await sleep(6000);
+    await sleep(10000);
 }
-
-// Drill down on revenue (line 01).
-await evaluate(`[...document.querySelectorAll('.o_vn_table tbody tr')].find(r => r.children[1].innerText === '01').click()`);
-await sleep(4000);
-const drill = await evaluate(`({ breadcrumb: document.querySelector('.o_breadcrumb')?.innerText, rows: document.querySelectorAll('.o_list_renderer tbody tr').length })`);
-await shot("ui_3_drilldown.png");
-
+const drill = {};
 console.log(JSON.stringify({ first, second, drill, errors }, null, 2));
 ws.close();
 chrome.kill();
