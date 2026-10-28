@@ -1,0 +1,32 @@
+.o_vn_stock_report {
+    .o_vn_table {
+        td,
+        th {
+            vertical-align: middle;
+        }
+
+        .o_vn_name {
+            min-width: 16rem;
+        }
+
+        .o_vn_group td {
+            background-color: var(--table-striped-bg, rgba(0, 0, 0, 0.04));
+        }
+
+        .o_vn_drillable {
+            cursor: pointer;
+
+            &:hover .o_vn_name {
+                text-decoration: underline;
+            }
+        }
+
+        tfoot td {
+            border-top-width: 2px;
+        }
+    }
+
+    .o_vn_loading {
+        z-index: 10;
+    }
+}

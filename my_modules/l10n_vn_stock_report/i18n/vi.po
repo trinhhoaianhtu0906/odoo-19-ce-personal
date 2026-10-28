@@ -1,0 +1,606 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_vn_stock_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "(Signature, full name)"
+msgstr "(Ký, họ tên)"
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "(Signature, full name, seal)"
+msgstr "(Ký, họ tên, đóng dấu)"
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "<b>Address:</b>"
+msgstr "<b>Địa chỉ:</b>"
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "<b>Chief Accountant</b>"
+msgstr "<b>Kế toán trưởng</b>"
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "<b>Company:</b>"
+msgstr "<b>Đơn vị:</b>"
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "<b>Legal Representative</b>"
+msgstr "<b>Người đại diện theo pháp luật</b>"
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "<b>Prepared by</b>"
+msgstr "<b>Người lập biểu</b>"
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Address: %s"
+msgstr "Địa chỉ: %s"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "All Categories"
+msgstr "Tất cả nhóm sản phẩm"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "All Warehouses"
+msgstr "Tất cả các kho"
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "All warehouses"
+msgstr "Tất cả các kho"
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_wizard_view_form
+msgid "Analyze"
+msgstr "Phân tích"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,help:l10n_vn_stock_report.field_vn_stock_inout_line__revaluation_value
+msgid ""
+"Change in stock value not explained by the receipts and issues: cost "
+"revaluation, landed costs, vendor bill price corrections."
+msgstr "Phần thay đổi giá trị tồn kho không do nhập, xuất: đánh giá lại giá vốn, chi phí mua hàng phân bổ (landed cost), điều chỉnh giá theo hóa đơn nhà cung cấp."
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Click to see the stock moves"
+msgstr "Bấm để xem các dịch chuyển kho"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__closing_qty
+msgid "Closing Qty"
+msgstr "SL tồn cuối kỳ"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Closing Stock"
+msgstr "Tồn cuối kỳ"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__closing_value
+msgid "Closing Value"
+msgstr "Giá trị tồn cuối kỳ"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__default_code
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "Code"
+msgstr "Mã hàng"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Code or product name..."
+msgstr "Mã hoặc tên hàng..."
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__company_id
+msgid "Company"
+msgstr "Công ty"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Company:"
+msgstr "Đơn vị:"
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Company: %s"
+msgstr "Đơn vị: %s"
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_wizard_view_form
+msgid "Compute"
+msgstr "Tính toán"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__computed
+msgid "Computed"
+msgstr "Đã tính"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Computing..."
+msgstr "Đang tính..."
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__create_uid
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__create_uid
+msgid "Created by"
+msgstr "Được tạo bởi"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__create_date
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__create_date
+msgid "Created on"
+msgstr "Được tạo vào"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__currency_id
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__currency_id
+msgid "Currency"
+msgstr "Tiền tệ"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "Currency:"
+msgstr "Đơn vị tính:"
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Currency: %s"
+msgstr "Đơn vị tính: %s"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "Custom Dates"
+msgstr "Tùy chọn ngày"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__date_from
+msgid "Date From"
+msgstr "Từ ngày"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__date_to
+msgid "Date To"
+msgstr "Đến ngày"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,help:l10n_vn_stock_report.field_vn_stock_inout_line__uom_id
+msgid "Default unit of measure used for all stock operations."
+msgstr "Đơn vị tính mặc định cho mọi hoạt động kho."
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__display_name
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__display_name
+msgid "Display Name"
+msgstr "Tên hiển thị"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_wizard_view_form
+msgid "Export to Excel"
+msgstr "Xuất Excel"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "First 6 Months"
+msgstr "6 tháng đầu năm"
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "From %(date_from)s to %(date_to)s"
+msgstr "Từ ngày %(date_from)s đến ngày %(date_to)s"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "Full Year"
+msgstr "Cả năm"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Group by Category"
+msgstr "Nhóm theo nhóm sản phẩm"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__has_revaluation
+msgid "Has Revaluation"
+msgstr "Có điều chỉnh giá trị"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__hide_zero
+msgid "Hide Empty Lines"
+msgstr "Ẩn dòng trống"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__id
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_line_view_search
+msgid "In Stock at Closing"
+msgstr "Còn tồn cuối kỳ"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__out_qty
+msgid "Issued Qty"
+msgstr "SL xuất"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__out_value
+msgid "Issued Value"
+msgstr "Giá trị xuất"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Issues"
+msgstr "Xuất trong kỳ"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__write_uid
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Cập nhật lần cuối bởi"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__write_date
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__write_date
+msgid "Last Updated on"
+msgstr "Cập nhật lần cuối vào"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,help:l10n_vn_stock_report.field_vn_stock_inout_wizard__warehouse_id
+msgid ""
+"Leave empty for the whole company. For one warehouse, transfers with the "
+"other warehouses count as receipts and issues."
+msgstr "Để trống để xem toàn công ty. Khi chọn một kho, hàng chuyển qua lại với các kho khác được tính là nhập, xuất."
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__line_ids
+msgid "Lines"
+msgstr "Chi tiết"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "Month %s"
+msgstr "Tháng %s"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "No Category"
+msgstr "Chưa phân nhóm"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "No stock movements for these filters."
+msgstr "Không có số liệu nhập xuất tồn với bộ lọc này."
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__sequence
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "No."
+msgstr "STT"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__opening_qty
+msgid "Opening Qty"
+msgstr "SL tồn đầu kỳ"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Opening Stock"
+msgstr "Tồn đầu kỳ"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__opening_value
+msgid "Opening Value"
+msgstr "Giá trị tồn đầu kỳ"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Period"
+msgstr "Kỳ"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_wizard_view_form
+msgid "Print PDF"
+msgstr "In PDF"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__product_id
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "Product"
+msgstr "Tên hàng"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__categ_ids
+msgid "Product Categories"
+msgstr "Nhóm sản phẩm"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__categ_id
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_line_view_search
+msgid "Product Category"
+msgstr "Nhóm sản phẩm"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__product_name
+msgid "Product Name"
+msgstr "Tên hàng"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__product_ids
+msgid "Products"
+msgstr "Sản phẩm"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Quantity"
+msgstr "Số lượng"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "Quarter 1"
+msgstr "Quý 1"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "Quarter 2"
+msgstr "Quý 2"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "Quarter 3"
+msgstr "Quý 3"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "Quarter 4"
+msgstr "Quý 4"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Receipts"
+msgstr "Nhập trong kỳ"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__in_qty
+msgid "Received Qty"
+msgstr "SL nhập"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__in_value
+msgid "Received Value"
+msgstr "Giá trị nhập"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__revaluation_value
+msgid "Revaluation"
+msgstr "Điều chỉnh giá trị"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "STOCK MOVEMENT SUMMARY"
+msgstr "BÁO CÁO TỔNG HỢP NHẬP - XUẤT - TỒN"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Search"
+msgstr "Tìm kiếm"
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Stock Movement"
+msgstr "Nhập xuất tồn"
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model:ir.actions.act_window,name:l10n_vn_stock_report.vn_stock_inout_wizard_action
+#: model:ir.actions.client,name:l10n_vn_stock_report.action_vn_stock_inout_dynamic
+#: model:ir.actions.report,name:l10n_vn_stock_report.action_report_vn_stock_inout
+#: model:ir.ui.menu,name:l10n_vn_stock_report.menu_vn_stock_inout_account
+#: model:ir.ui.menu,name:l10n_vn_stock_report.menu_vn_stock_inout_stock
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_wizard_view_form
+msgid "Stock Movement Summary"
+msgstr "Báo cáo nhập xuất tồn"
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_line_view_list
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_wizard_view_form
+msgid "Stock Moves"
+msgstr "Dịch chuyển kho"
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Stock Moves: %s"
+msgstr "Dịch chuyển kho: %s"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model,name:l10n_vn_stock_report.model_vn_stock_inout_wizard
+msgid "Stock movement summary"
+msgstr "Báo cáo nhập xuất tồn"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model,name:l10n_vn_stock_report.model_vn_stock_inout_line
+msgid "Stock movement summary line"
+msgstr "Dòng báo cáo nhập xuất tồn"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.constraint,message:l10n_vn_stock_report.constraint_vn_stock_inout_wizard_check_dates
+msgid "The start date must be before the end date."
+msgstr "Ngày bắt đầu phải trước ngày kết thúc."
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_line_view_list
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_wizard_view_form
+msgid "Total"
+msgstr "Tổng cộng"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__uom_id
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "UoM"
+msgstr "ĐVT"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Value"
+msgstr "Giá trị"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__warehouse_id
+msgid "Warehouse"
+msgstr "Kho"
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Warehouse: %s"
+msgstr "Kho: %s"
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_line_view_search
+msgid "With Movements"
+msgstr "Có phát sinh"
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_line_view_search
+msgid "With Revaluation"
+msgstr "Có điều chỉnh giá trị"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__wizard_id
+msgid "Wizard"
+msgstr "Wizard"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__xlsx_file
+msgid "Xlsx File"
+msgstr "Tệp Xlsx"
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__xlsx_filename
+msgid "Xlsx Filename"
+msgstr "Tên tệp Xlsx"
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Year"
+msgstr "Năm"
+
+#. module: l10n_vn_stock_report
+#: model:ir.actions.report,print_report_name:l10n_vn_stock_report.action_report_vn_stock_inout
+msgid "object._export_filename()"
+msgstr "object._export_filename()"

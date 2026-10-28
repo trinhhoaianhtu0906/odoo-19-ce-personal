@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vn_stock_inout_wizard_stock,vn.stock.inout.wizard stock manager,model_vn_stock_inout_wizard,stock.group_stock_manager,1,1,1,1
+access_vn_stock_inout_line_stock,vn.stock.inout.line stock manager,model_vn_stock_inout_line,stock.group_stock_manager,1,1,1,1
+access_vn_stock_inout_wizard_account,vn.stock.inout.wizard accountant,model_vn_stock_inout_wizard,account.group_account_readonly,1,1,1,1
+access_vn_stock_inout_line_account,vn.stock.inout.line accountant,model_vn_stock_inout_line,account.group_account_readonly,1,1,1,1
+access_vn_stock_ledger_stock,vn.stock.ledger stock manager,model_vn_stock_ledger,stock.group_stock_manager,1,0,0,0
+access_vn_stock_ledger_account,vn.stock.ledger accountant,model_vn_stock_ledger,account.group_account_readonly,1,0,0,0
+access_vn_stock_ledger_product_stock,vn.stock.ledger.product stock manager,model_vn_stock_ledger_product,stock.group_stock_manager,1,0,0,0
+access_vn_stock_ledger_product_account,vn.stock.ledger.product accountant,model_vn_stock_ledger_product,account.group_account_readonly,1,0,0,0
+access_vn_stock_ledger_sync_stock,vn.stock.ledger.sync stock manager,model_vn_stock_ledger_sync,stock.group_stock_manager,1,0,0,0
+access_vn_stock_ledger_sync_account,vn.stock.ledger.sync accountant,model_vn_stock_ledger_sync,account.group_account_readonly,1,0,0,0

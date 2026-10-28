@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="vn_stock_inout_wizard_view_form" model="ir.ui.view">
+        <field name="name">vn.stock.inout.wizard.form</field>
+        <field name="model">vn.stock.inout.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Stock Movement Summary">
+                <header>
+                    <button name="action_compute" type="object" string="Compute" class="btn-primary"/>
+                    <button name="action_open_lines" type="object" string="Analyze" icon="fa-list"/>
+                    <button name="action_print_pdf" type="object" string="Print PDF" icon="fa-file-pdf-o"/>
+                    <button name="action_export_xlsx" type="object" string="Export to Excel" icon="fa-file-excel-o"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Stock Movement Summary</h1>
+                    </div>
+                    <group name="options">
+                        <group name="scope">
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                            <field name="warehouse_id" options="{'no_create': True}"/>
+                            <field name="hide_zero"/>
+                        </group>
+                        <group name="period">
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group name="products">
+                            <field name="categ_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                            <field name="product_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <field name="computed" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="has_revaluation" invisible="1"/>
+                    <field name="line_ids" invisible="not computed" nolabel="1" readonly="1">
+                        <list limit="500" create="0" delete="0">
+                            <field name="currency_id" column_invisible="1"/>
+                            <field name="sequence"/>
+                            <field name="default_code"/>
+                            <field name="product_name"/>
+                            <field name="uom_id"/>
+                            <field name="opening_qty"/>
+                            <field name="opening_value" sum="Total"/>
+                            <field name="in_qty"/>
+                            <field name="in_value" sum="Total"/>
+                            <field name="out_qty"/>
+                            <field name="out_value" sum="Total"/>
+                            <field name="revaluation_value" sum="Total" column_invisible="not parent.has_revaluation"/>
+                            <field name="closing_qty"/>
+                            <field name="closing_value" sum="Total"/>
+                            <button name="action_open_move_lines" type="object" icon="fa-search" title="Stock Moves"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="vn_stock_inout_wizard_action" model="ir.actions.act_window">
+        <field name="name">Stock Movement Summary</field>
+        <field name="res_model">vn.stock.inout.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="vn_stock_inout_line_view_list" model="ir.ui.view">
+        <field name="name">vn.stock.inout.line.list</field>
+        <field name="model">vn.stock.inout.line</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" delete="0">
+                <field name="currency_id" column_invisible="1"/>
+                <field name="sequence" optional="hide"/>
+                <field name="default_code"/>
+                <field name="product_id"/>
+                <field name="categ_id" optional="hide"/>
+                <field name="uom_id"/>
+                <field name="opening_qty"/>
+                <field name="opening_value" sum="Total"/>
+                <field name="in_qty"/>
+                <field name="in_value" sum="Total"/>
+                <field name="out_qty"/>
+                <field name="out_value" sum="Total"/>
+                <field name="revaluation_value" sum="Total" optional="show"/>
+                <field name="closing_qty"/>
+                <field name="closing_value" sum="Total"/>
+                <button name="action_open_move_lines" type="object" icon="fa-search" title="Stock Moves"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="vn_stock_inout_line_view_search" model="ir.ui.view">
+        <field name="name">vn.stock.inout.line.search</field>
+        <field name="model">vn.stock.inout.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id"/>
+                <field name="categ_id"/>
+                <filter name="with_closing_stock" string="In Stock at Closing" domain="[('closing_qty', '!=', 0)]"/>
+                <filter name="with_movements" string="With Movements"
+                        domain="['|', ('in_qty', '!=', 0), ('out_qty', '!=', 0)]"/>
+                <filter name="with_revaluation" string="With Revaluation" domain="[('revaluation_value', '!=', 0)]"/>
+                <group>
+                    <filter name="group_categ" string="Product Category" context="{'group_by': 'categ_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

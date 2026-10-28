@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_vn_stock_inout_dynamic" model="ir.actions.client">
+        <field name="name">Stock Movement Summary</field>
+        <field name="tag">l10n_vn_stock_report.dynamic_report</field>
+    </record>
+
+    <menuitem id="menu_vn_stock_inout_stock"
+              name="Stock Movement Summary"
+              parent="stock.menu_warehouse_report"
+              action="action_vn_stock_inout_dynamic"
+              sequence="15"
+              groups="stock.group_stock_manager,account.group_account_readonly"/>
+    <menuitem id="menu_vn_stock_inout_account"
+              name="Stock Movement Summary"
+              parent="account.menu_finance_reports"
+              action="action_vn_stock_inout_dynamic"
+              sequence="40"
+              groups="account.group_account_readonly"/>
+</odoo>

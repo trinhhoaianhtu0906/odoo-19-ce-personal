@@ -1,3 +1,24 @@
 [submodule "my_modules/rfm_segmentation"]
 	path = my_modules/rfm_segmentation
-	url = git@github.com:Tricasia/rfm_segmentation.git
+	url = https://github.com/trinhhoaianhtu0906/rfm_segmentation.git
+[submodule "my_modules/tricasia_llm_provider"]
+	path = my_modules/tricasia_llm_provider
+	url = https://github.com/trinhhoaianhtu0906/tricasia_llm_provider.git
+[submodule "my_modules/tricasia_order_ocr"]
+	path = my_modules/tricasia_order_ocr
+	url = https://github.com/trinhhoaianhtu0906/tricasia_order_ocr.git
+[submodule "my_modules/tricasia_stock_map"]
+	path = my_modules/tricasia_stock_map
+	url = https://github.com/trinhhoaianhtu0906/tricasia_stock_map.git
+[submodule "my_modules/l10n_vn_consolidation"]
+	path = my_modules/l10n_vn_consolidation
+	url = https://github.com/trinhhoaianhtu0906/l10n_vn_consolidation.git
+[submodule "my_modules/l10n_vn_financial_statements"]
+	path = my_modules/l10n_vn_financial_statements
+	url = https://github.com/trinhhoaianhtu0906/l10n_vn_financial_statements.git
+[submodule "my_modules/l10n_vn_ifrs"]
+	path = my_modules/l10n_vn_ifrs
+	url = https://github.com/trinhhoaianhtu0906/l10n_vn_ifrs.git
+[submodule "my_modules/vietqr_tax_lookup"]
+	path = my_modules/vietqr_tax_lookup
+	url = https://github.com/trinhhoaianhtu0906/vietqr_tax_lookup.git

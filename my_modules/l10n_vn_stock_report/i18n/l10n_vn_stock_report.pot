@@ -1,0 +1,609 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_vn_stock_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20261015\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-19 16:22+0000\n"
+"PO-Revision-Date: 2026-10-19 16:22+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "(Signature, full name)"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "(Signature, full name, seal)"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "<b>Address:</b>"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "<b>Chief Accountant</b>"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "<b>Company:</b>"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "<b>Legal Representative</b>"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "<b>Prepared by</b>"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Address: %s"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "All Categories"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "All Warehouses"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "All warehouses"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_wizard_view_form
+msgid "Analyze"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,help:l10n_vn_stock_report.field_vn_stock_inout_line__revaluation_value
+msgid ""
+"Change in stock value not explained by the receipts and issues: cost "
+"revaluation, landed costs, vendor bill price corrections."
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Click to see the stock moves"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__closing_qty
+msgid "Closing Qty"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Closing Stock"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__closing_value
+msgid "Closing Value"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__default_code
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "Code"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Code or product name..."
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__company_id
+msgid "Company"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Company:"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Company: %s"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_wizard_view_form
+msgid "Compute"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__computed
+msgid "Computed"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Computing..."
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__create_uid
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__create_date
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__currency_id
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "Currency:"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Currency: %s"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "Custom Dates"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__date_from
+msgid "Date From"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__date_to
+msgid "Date To"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,help:l10n_vn_stock_report.field_vn_stock_inout_line__uom_id
+msgid "Default unit of measure used for all stock operations."
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__display_name
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_wizard_view_form
+msgid "Export to Excel"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "First 6 Months"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "From %(date_from)s to %(date_to)s"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "Full Year"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Group by Category"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__has_revaluation
+msgid "Has Revaluation"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__hide_zero
+msgid "Hide Empty Lines"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__id
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_line_view_search
+msgid "In Stock at Closing"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__out_qty
+msgid "Issued Qty"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__out_value
+msgid "Issued Value"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Issues"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__write_uid
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__write_date
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,help:l10n_vn_stock_report.field_vn_stock_inout_wizard__warehouse_id
+msgid ""
+"Leave empty for the whole company. For one warehouse, transfers with the "
+"other warehouses count as receipts and issues."
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__line_ids
+msgid "Lines"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "Month %s"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "No Category"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "No stock movements for these filters."
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__sequence
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "No."
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__opening_qty
+msgid "Opening Qty"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Opening Stock"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__opening_value
+msgid "Opening Value"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Period"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_wizard_view_form
+msgid "Print PDF"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__product_id
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "Product"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__categ_ids
+msgid "Product Categories"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__categ_id
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_line_view_search
+msgid "Product Category"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__product_name
+msgid "Product Name"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__product_ids
+msgid "Products"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Quantity"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "Quarter 1"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "Quarter 2"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "Quarter 3"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+msgid "Quarter 4"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Receipts"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__in_qty
+msgid "Received Qty"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__in_value
+msgid "Received Value"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.js:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__revaluation_value
+msgid "Revaluation"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "STOCK MOVEMENT SUMMARY"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Search"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Stock Movement"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model:ir.actions.act_window,name:l10n_vn_stock_report.vn_stock_inout_wizard_action
+#: model:ir.actions.client,name:l10n_vn_stock_report.action_vn_stock_inout_dynamic
+#: model:ir.actions.report,name:l10n_vn_stock_report.action_report_vn_stock_inout
+#: model:ir.ui.menu,name:l10n_vn_stock_report.menu_vn_stock_inout_account
+#: model:ir.ui.menu,name:l10n_vn_stock_report.menu_vn_stock_inout_stock
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_wizard_view_form
+msgid "Stock Movement Summary"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_line_view_list
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_wizard_view_form
+msgid "Stock Moves"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Stock Moves: %s"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model,name:l10n_vn_stock_report.model_vn_stock_inout_wizard
+msgid "Stock movement summary"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model,name:l10n_vn_stock_report.model_vn_stock_inout_line
+msgid "Stock movement summary line"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.constraint,message:l10n_vn_stock_report.constraint_vn_stock_inout_wizard_check_dates
+msgid "The start date must be before the end date."
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_line_view_list
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_wizard_view_form
+msgid "Total"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__uom_id
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.report_vn_stock_inout
+msgid "UoM"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Value"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__warehouse_id
+msgid "Warehouse"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-python
+#: code:addons/l10n_vn_stock_report/wizard/stock_inout_wizard.py:0
+msgid "Warehouse: %s"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_line_view_search
+msgid "With Movements"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model_terms:ir.ui.view,arch_db:l10n_vn_stock_report.vn_stock_inout_line_view_search
+msgid "With Revaluation"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_line__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__xlsx_file
+msgid "Xlsx File"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.model.fields,field_description:l10n_vn_stock_report.field_vn_stock_inout_wizard__xlsx_filename
+msgid "Xlsx Filename"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#. odoo-javascript
+#: code:addons/l10n_vn_stock_report/static/src/dynamic_report/dynamic_report.xml:0
+msgid "Year"
+msgstr ""
+
+#. module: l10n_vn_stock_report
+#: model:ir.actions.report,print_report_name:l10n_vn_stock_report.action_report_vn_stock_inout
+msgid "object._export_filename()"
+msgstr ""
